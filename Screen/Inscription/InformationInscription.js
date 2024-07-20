@@ -46,14 +46,6 @@ const InformationInscription = ({ navigation }) => {
                 keyboardType="email-address"
                 onChangeText={ (text) => setEmail(text)}
               />
-              <CustomPhoneInput
-                defaultValue={phoneNumber}
-                onChangeText={(text) => setPhoneNumber(text)}
-                containerStyle={styles.phoneInputContainer}
-                textContainerStyle={styles.phoneInputTextContainer}
-                textInputStyle={styles.phoneInputText}
-               
-              />
               <IconTextInput
                 iconName="lock"
                 placeholder="Créer un mot de passe"
@@ -82,25 +74,5 @@ const InformationInscription = ({ navigation }) => {
 export default InformationInscription
 
 const styles = StyleSheet.create({
-  phoneInputContainer: {
-    width: '100%',
-    height: 50,
-    marginBottom: 10,
-    borderRadius: 50,
-    borderColor: Color.grisContainer,
-    backgroundColor:Color.grisContainer,
-    borderWidth: 1,
-    paddingLeft: 20,
-  },
-  phoneInputTextContainer: {
-    borderColor: Color.grisContainer,
-    backgroundColor:Color.grisContainer,
-    borderRadius: 50,
-    paddingVertical: 0,
-    paddingHorizontal: 10,
-  },
-  phoneInputText: {
-    height: 50,
-    fontSize: 16,
-  },
+  
 });

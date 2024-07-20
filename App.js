@@ -12,6 +12,8 @@ import InformationInscription from './Screen/Inscription/InformationInscription'
 import AdresseInscription from './Screen/Inscription/AdresseInscription';
 import SkipPage from './Screen/Connexion/SkipPage';
 import DrawerNavigator from './Component/DrawerNavigator';
+import VerifierNumeroTelephone from './Screen/Inscription/VerifierNumeroTelephone';
+import EnvoieCode from './Screen/Inscription/EnvoieCode';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +26,8 @@ export default function App() {
         <Stack.Screen name="Connexion" component={Connexion} options={{ headerShown: false }} />
         <Stack.Screen name="MotDePasseOublie" component={MotDePasseOublie} options={{ headerShown: false }} />
         <Stack.Screen name="VerificationMotDePasse" component={VerificationMotDePasse} options={{ headerShown: false }} />
+        <Stack.Screen name="VerifierNumeroTelephone" component={VerifierNumeroTelephone} options={{ headerShown: false }} />
+        <Stack.Screen name="EnvoieCode" component={EnvoieCode} options={{ headerShown: false }} />
         <Stack.Screen name="InformationInscription" component={InformationInscription} options={{ headerShown: false }} />
         <Stack.Screen name="AdresseInscription" component={AdresseInscription} options={{ headerShown: false }} />
         <Stack.Screen name="Accueil" component={DrawerNavigator} options={{ headerShown: false }} />
