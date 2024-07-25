@@ -5,6 +5,7 @@ import Accueil from '../CompteClient/Screen/Accueil';
 import Boutique from '../CompteClient/Screen/Boutique';
 import Panier from '../CompteClient/Screen/Panier';
 import Profil from '../CompteClient/Screen/Profil';
+import Color from '../Styles/Color';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,8 +26,8 @@ const TabNavigator = () => {
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: 'tomato',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: Color.orange,
+        tabBarInactiveTintColor: Color.grisIcone,
       })}
     >
       <Tab.Screen name="Accueil" component={Accueil} options={{ headerShown: false }} />

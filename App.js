@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
+
 import Bienvenue from './Screen/Connexion/Bienvenue';
 import Connexion from './Screen/Connexion/Connexion';
 import MotDePasseOublie from './Screen/Connexion/MotDePasseOublie';
@@ -29,7 +30,7 @@ export default function App() {
         <Stack.Screen name="VerifierNumeroTelephone" component={VerifierNumeroTelephone} options={{ headerShown: false }} />
         <Stack.Screen name="EnvoieCode" component={EnvoieCode} options={{ headerShown: false }} />
         <Stack.Screen name="InformationInscription" component={InformationInscription} options={{ headerShown: false }} />
-        <Stack.Screen name="AdresseInscription" component={AdresseInscription} options={{ headerShown: false }} />
+        <Stack.Screen name="AdresseInscription" component={AdresseInscription} options={{ headerShown: false,gestureEnabled: false, }} />
         <Stack.Screen name="Accueil" component={DrawerNavigator} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>

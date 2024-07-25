@@ -35,6 +35,10 @@ const SkipPage = ({ navigation }) => {
     const pageIndex = Math.floor(contentOffsetY / screenHeight);
     if (pageIndex === images.length - 1) {
       setShowButton(true);
+      // Passer automatiquement à la page de connexion après un délai
+      setTimeout(() => {
+        navigation.navigate('Bienvenue');
+      }, 1000); // Délai de 1 seconde avant de naviguer
     } else {
       setShowButton(false);
     }
@@ -52,7 +56,7 @@ const SkipPage = ({ navigation }) => {
 
     Animated.stagger(500, animations).start();
 
-    // animation mouvement icone
+    // Animation mouvement icône
     Animated.loop(
       Animated.sequence([
         Animated.timing(iconPosition, {
@@ -73,6 +77,10 @@ const SkipPage = ({ navigation }) => {
     inputRange: [0, 1],
     outputRange: [0, 10],
   });
+
+  const scrollToEnd = () => {
+    scrollViewRef.current.scrollToEnd({ animated: true });
+  };
 
   return (
     <View style={styles.container}>
@@ -114,7 +122,7 @@ const SkipPage = ({ navigation }) => {
         })}
       </View>
       {!showButton && (
-        <TouchableOpacity style={styles.iconButton} >
+        <TouchableOpacity style={styles.iconButton} onPress={scrollToEnd}>
           <Animated.View style={[{ transform: [{ translateY: iconTranslateY }] }]}>
             <Entypo name="arrow-long-down" size={24} color="white" />
           </Animated.View>

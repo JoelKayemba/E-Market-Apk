@@ -12,7 +12,7 @@ const Connexion = ({ navigation }) => {
   
     setTimeout(() => {
       setLoading(false);
-      navigation.navigate('Accueil'); // Redirection vers la page d'accueil ou une autre page après connexion
+      navigation.navigate('Accueil'); // Redirection vers la page d'accueil 
     }, 2000); 
   };
 
@@ -63,7 +63,7 @@ const Connexion = ({ navigation }) => {
               </Pressable>
               <View style={GlobalStyles.inscriptionContainer}>
                 <Text style={GlobalStyles.inscriptionText}>Vous n'avez pas de compte?</Text>
-                <Pressable onPress={() => navigation.navigate('VerifierNumeroTelephone')}>
+                <Pressable onPress={() => navigation.navigate('InformationInscription')}>
                   <Text style={GlobalStyles.inscriptionLien}>S'inscrire</Text>
                 </Pressable>
               </View>
