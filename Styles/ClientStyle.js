@@ -32,64 +32,31 @@ const ClientStyle = StyleSheet.create({
         fontWeight:'100',
       },
       containerCategorie: {
-        marginHorizontal: 10,
-        marginTop: 10,
+        paddingStart:2,
+        paddingTop: 10,
       },
       iconeCategorie: {
-        height: 40,
-        width: 40,
+        height: '100%',
+        width: '100%'
       },
       cercleCategorie: {
         width: 70,
         height: 70,
-        borderRadius: 50,
+        borderRadius: 35,
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
-        borderColor: Color.grisIcone,
-        backgroundColor:'#fff',
-        marginRight: 30,
-        marginVertical: 10,
-        borderWidth:1,
-        borderColor:Color.orange
-      },
-      firstCategorie: {
-        flexDirection: 'row',
-        
-      },
-      secondCategorie: {
-        flexDirection: 'row',
-        
+        marginRight: 10,
+        borderWidth: 1,
+        borderColor: Color.orange,
       },
       categorieText: {
-        fontSize: 15,
-        fontWeight: 'bold',
-      },
-      typeCategorie: {
         fontSize: 10,
-        marginTop: -10,
-        fontWeight: '500',
-      },
-      typeCategorie1: {
-        fontSize: 10,
-        marginTop: -10,
-        fontWeight: '500',
-        paddingTop: 0,
-        paddingLeft: 15,
-      },
-      typeCategorie2: {
-        fontSize: 10,
-        marginTop: -10,
-        fontWeight: '500',
-        paddingTop: 0,
-        paddingLeft: 10,
-      },
-      typeCategorie3: {
-        fontSize: 10,
-        marginTop: -10,
-        fontWeight: '500',
-        paddingTop: 0,
-        paddingLeft: 20,
+        fontWeight: 200,
+        marginTop: 5, 
+        textAlign: 'center', 
+        width: 100, 
+        paddingRight:10
       },
       textPub: {
         flexDirection: 'row',
@@ -157,21 +124,28 @@ const ClientStyle = StyleSheet.create({
         marginHorizontal:10,
         marginTop:10
       },
-      containerProduitRecommander:{
-        flexDirection:'row',
-        marginHorizontal:10,
+      containerProduitRecommander: {
+        marginHorizontal: 5,
+        marginVertical: 5,
+       
+      },
+      produitRecommander: {
+        width: 180, 
+        borderRadius: 10,
+        marginBottom: 10,
+        
+      },
+      nomProduitContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
         justifyContent:'space-between',
-        marginVertical:10
+        marginTop: 2,
+        marginLeft: 5,
       },
-      produitRecommander:{
-        height:280,
-  
-        borderRadius:10
-      },
-      imageProduit:{
-        width:180,
-        height:170,
-        borderRadius:10
+      imageProduit: {
+        width: '100%',
+        height: 170,
+        borderRadius: 10,
       },
       heartIconContainer: {
         position: 'absolute',
@@ -179,23 +153,25 @@ const ClientStyle = StyleSheet.create({
         right: 10,
         width: 25,
         height: 25,
-        borderRadius: 10,
+        borderRadius: 5,
         backgroundColor: 'rgba(255, 255, 255, 0.5)', 
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 5,
       },
-      nomProduit:{
-        fontSize:16,
-        fontWeight:'600',
-        marginTop:2,
-        marginLeft:5
+      nomProduit: {
+        fontSize: 16,
+        fontWeight: '600',
+       
       },
-      prixProduit:{
-        marginTop:5,
-        marginLeft:5,
-        fontSize:20,
-        color:Color.orange
+      prixProduit: {
+        marginTop: 5,
+        marginLeft: 5,
+        fontSize: 20,
+        color: Color.orange,
+      },
+      columnWrapper: {
+        justifyContent: 'space-between',
       },
       nomBoutique:{
         fontSize:13,

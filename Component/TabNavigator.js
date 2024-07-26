@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Entypo, AntDesign } from '@expo/vector-icons';
 import Accueil from '../CompteClient/Screen/Accueil';
 import Boutique from '../CompteClient/Screen/Boutique';
 import Panier from '../CompteClient/Screen/Panier';
@@ -15,16 +15,24 @@ const TabNavigator = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
+          let IconComponent;
+
+          // Déterminer quel composant d'icône utiliser en fonction du nom de la route
           if (route.name === 'Accueil') {
             iconName = focused ? 'home' : 'home-outline';
+            IconComponent = Ionicons;
           } else if (route.name === 'Boutique') {
-            iconName = focused ? 'cart' : 'cart-outline';
+            iconName = focused ? 'shop' : 'shop';
+            IconComponent = Entypo; 
           } else if (route.name === 'Panier') {
-            iconName = focused ? 'basket' : 'basket-outline';
+            iconName = focused ? 'cart' : 'cart-outline';
+            IconComponent = Ionicons;
           } else if (route.name === 'Profil') {
-            iconName = focused ? 'person' : 'person-outline';
+            iconName = focused ? 'user' : 'user';
+            IconComponent = AntDesign; 
           }
-          return <Ionicons name={iconName} size={size} color={color} />;
+
+          return <IconComponent name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: Color.orange,
         tabBarInactiveTintColor: Color.grisIcone,
