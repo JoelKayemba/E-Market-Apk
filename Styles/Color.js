@@ -6,5 +6,6 @@ export default{
     grisSousTitre:'#979797',
     vert:'#138A00',
     desactiver:'#C2C2C2',
-    cerlce:'#D6D6D6'
+    cerlce:'#D6D6D6',
+    bleu:'#060234'
 }

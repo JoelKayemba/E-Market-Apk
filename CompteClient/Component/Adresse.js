@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput, Button, FlatList, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput, FlatList, Alert } from 'react-native';
 import * as Location from 'expo-location';
 import ClientStyle from '../../Styles/ClientStyle';
 import Color from '../../Styles/Color';
-import { Entypo, AntDesign, FontAwesome, EvilIcons, Ionicons, Octicons } from '@expo/vector-icons';
+import { Entypo, Ionicons, Octicons, EvilIcons } from '@expo/vector-icons';
 import Loading from '../../Component/Loading';
 
 const Adresse = () => {
@@ -22,9 +22,15 @@ const Adresse = () => {
 
     const ajouterAdresse = () => {
         if (nouvelleAdresse.trim() !== '') {
-            setAdresses([...adresses, { id: (adresses.length + 1).toString(), adresse: nouvelleAdresse, parDefaut: false, coordinates: currentLocation }]);
+            const newAdresse = { id: (adresses.length + 1).toString(), adresse: nouvelleAdresse, parDefaut: false, coordinates: currentLocation };
+            setAdresses([...adresses, newAdresse]);
             setNouvelleAdresse('');
             setCurrentLocation(null);
+            if (!adresses.some(adresse => adresse.parDefaut)) {
+                setAdresses(adresses.map(adresse =>
+                    adresse.id === newAdresse.id ? { ...adresse, parDefaut: true } : adresse
+                ));
+            }
         }
     };
 
@@ -32,12 +38,19 @@ const Adresse = () => {
         setAdresses(adresses.map(adresse =>
             adresse.id === id ? { ...adresse, parDefaut: true } : { ...adresse, parDefaut: false }
         ));
-    
         setModalVisible(false);
     };
 
     const supprimerAdresse = (id) => {
-        setAdresses(adresses.filter(adresse => adresse.id !== id));
+        const updatedAdresses = adresses.filter(adresse => adresse.id !== id);
+        if (updatedAdresses.length === 0) {
+            Alert.alert('Erreur', 'Vous devez avoir au moins une adresse par défaut.');
+            return;
+        }
+        if (adresses.find(adresse => adresse.id === id).parDefaut) {
+            updatedAdresses[0].parDefaut = true;
+        }
+        setAdresses(updatedAdresses);
     };
 
     const obtenirLocalisationActuelle = async () => {
@@ -100,8 +113,12 @@ const Adresse = () => {
                         value={nouvelleAdresse}
                         onChangeText={setNouvelleAdresse}
                     />
-                    <Button title={editId ? 'Mettre à jour' : 'Ajouter'} color={Color.orange} onPress={editId ? handleUpdate : ajouterAdresse} />
-                    <Button title="Utiliser ma localisation actuelle" color={Color.orange} onPress={obtenirLocalisationActuelle} />
+                    <TouchableOpacity style={styles.bouton1} onPress={editId ? handleUpdate : ajouterAdresse}>
+                        <Text style={styles.boutonTexte}>{editId ? 'Mettre à jour' : 'Ajouter'}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.bouton2} onPress={obtenirLocalisationActuelle}>
+                        <Text style={styles.boutonTexte}>Utiliser ma localisation actuelle</Text>
+                    </TouchableOpacity>
                     {loading ? (
                         <Loading />
                     ) : (
@@ -130,7 +147,9 @@ const Adresse = () => {
                             )}
                         />
                     )}
-                    <Button title="Fermer" color={Color.orange} onPress={() => setModalVisible(false)} />
+                    <TouchableOpacity style={styles.bouton3} onPress={() => setModalVisible(false)}>
+                        <Text style={styles.boutonTexte}>Fermer</Text>
+                    </TouchableOpacity>
                 </View>
             </Modal>
         </View>
@@ -150,6 +169,7 @@ const styles = StyleSheet.create({
         color: Color.vert,
     },
     modalContent: {
+        height: '70%', // 70% de la hauteur de l'écran
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
@@ -189,6 +209,39 @@ const styles = StyleSheet.create({
     },
     supprimer: {
         marginRight: 20,
+    },
+
+    bouton1: {
+        backgroundColor: Color.vert,
+        borderRadius: 50,
+        marginBottom: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    bouton2: {
+        backgroundColor: Color.bleu,
+        borderRadius: 50,
+        marginBottom: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    bouton3: {
+        backgroundColor: Color.orange,
+        borderRadius: 50,
+        marginBottom: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width:300
+    },
+    boutonTexte: {
+        color: 'white',
+        fontSize: 18,
     },
 });
 

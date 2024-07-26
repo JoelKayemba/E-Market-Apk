@@ -54,7 +54,7 @@ const ClientStyle = StyleSheet.create({
       },
       categorieText: {
         fontSize: 10,
-        fontWeight: 200,
+       
         marginTop: 5, 
         textAlign: 'center', 
         width: 100, 
@@ -123,12 +123,13 @@ const ClientStyle = StyleSheet.create({
       containerRecommandation:{
         flexDirection:'row',
         justifyContent:'space-between',
-        marginHorizontal:10,
+        marginHorizontal:5,
         marginTop:10
       },
       containerProduitRecommander: {
         marginHorizontal: 5,
         marginVertical: 5,
+
        
       },
       produitRecommander: {
@@ -149,6 +150,7 @@ const ClientStyle = StyleSheet.create({
         height: 170,
         borderRadius: 10,
       },
+      
       heartIconContainer: {
         position: 'absolute',
         top: 10,
@@ -167,10 +169,10 @@ const ClientStyle = StyleSheet.create({
        
       },
       prixProduit: {
-        marginTop: 5,
+        marginTop: 1,
         marginLeft: 5,
         fontSize: 20,
-        color: Color.orange,
+        fontWeight:'bold'
       },
       columnWrapper: {
         justifyContent: 'space-between',

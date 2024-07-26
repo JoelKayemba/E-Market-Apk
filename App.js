@@ -14,6 +14,9 @@ import SkipPage from './Screen/Connexion/SkipPage';
 import DrawerNavigator from './Component/DrawerNavigator';
 import VerifierNumeroTelephone from './Screen/Inscription/VerifierNumeroTelephone';
 import EnvoieCode from './Screen/Inscription/EnvoieCode';
+import RechercheScreen from './CompteClient/Component/RechercheScreen';
+import Recherche from './CompteClient/Component/Recherche';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +33,9 @@ export default function App() {
         <Stack.Screen name="EnvoieCode" component={EnvoieCode} options={{ headerShown: false }} />
         <Stack.Screen name="InformationInscription" component={InformationInscription} options={{ headerShown: false }} />
         <Stack.Screen name="Accueil" component={DrawerNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="Recherche" component={Recherche} />
+        <Stack.Screen name="RechercheScreen" component={RechercheScreen}  options={{ headerShown: false }}/>
+       
       </Stack.Navigator>
     </NavigationContainer>
   );
