@@ -26,14 +26,16 @@ const ClientStyle = StyleSheet.create({
       adresse: {
         flexDirection: 'row',
         marginTop: 5,
+        
       },
       textAdresse: {
         fontSize: 12,
-        fontWeight:'100',
+        fontWeight:'800',
+        
       },
       containerCategorie: {
         paddingStart:2,
-        paddingTop: 10,
+        paddingTop: 0,
       },
       iconeCategorie: {
         height: '100%',

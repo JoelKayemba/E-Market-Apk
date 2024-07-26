@@ -1,9 +1,20 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Video } from 'expo-av';
 import Color from '../../Styles/Color';
 
 const Bienvenue = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handlePress = () => {
+    setLoading(true);
+    
+    setTimeout(() => {
+      setLoading(false);
+      navigation.navigate('Connexion');
+    }, 2000); 
+  };
+
   return (
     <View style={styles.container}>
       <Video
@@ -16,15 +27,19 @@ const Bienvenue = ({ navigation }) => {
       <View style={styles.overlay}>
         <Text style={styles.title}>Bienvenue sur E-Market, votre marché en ligne de référence</Text>
         <Text style={styles.subtitle}>Trouvez et vendez en quelques clics seulement</Text>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('Connexion')}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>Commencer</Text>
-          </View>
-        </TouchableOpacity>
+        {loading ? (
+          <ActivityIndicator size="large" color="white" />
+        ) : (
+          <TouchableOpacity style={styles.buttonContainer} onPress={handlePress}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Commencer</Text>
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
-}
+};
 
 export default Bienvenue;
 

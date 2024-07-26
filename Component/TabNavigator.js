@@ -2,9 +2,9 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, Entypo, AntDesign } from '@expo/vector-icons';
 import Accueil from '../CompteClient/Screen/Accueil';
-import Boutique from '../CompteClient/Screen/Boutique';
-import Panier from '../CompteClient/Screen/Panier';
-import Profil from '../CompteClient/Screen/Profil';
+import Boutique from '../CompteClient/Screen/PageBoutique';
+import Panier from '../CompteClient/Screen/PagePanier';
+import Profil from '../CompteClient/Screen/PageProfil';
 import Color from '../Styles/Color';
 
 const Tab = createBottomTabNavigator();

@@ -10,7 +10,6 @@ import Connexion from './Screen/Connexion/Connexion';
 import MotDePasseOublie from './Screen/Connexion/MotDePasseOublie';
 import VerificationMotDePasse from './Screen/Connexion/VerificationMotDePasse';
 import InformationInscription from './Screen/Inscription/InformationInscription';
-import AdresseInscription from './Screen/Inscription/AdresseInscription';
 import SkipPage from './Screen/Connexion/SkipPage';
 import DrawerNavigator from './Component/DrawerNavigator';
 import VerifierNumeroTelephone from './Screen/Inscription/VerifierNumeroTelephone';
@@ -30,7 +29,6 @@ export default function App() {
         <Stack.Screen name="VerifierNumeroTelephone" component={VerifierNumeroTelephone} options={{ headerShown: false }} />
         <Stack.Screen name="EnvoieCode" component={EnvoieCode} options={{ headerShown: false }} />
         <Stack.Screen name="InformationInscription" component={InformationInscription} options={{ headerShown: false }} />
-        <Stack.Screen name="AdresseInscription" component={AdresseInscription} options={{ headerShown: false,gestureEnabled: false, }} />
         <Stack.Screen name="Accueil" component={DrawerNavigator} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>

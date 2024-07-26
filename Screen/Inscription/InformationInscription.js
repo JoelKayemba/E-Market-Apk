@@ -46,7 +46,7 @@ const InformationInscription = () => {
         Alert.alert("Succès", result.message || 'Inscription réussie');
         navigation.reset({
           index: 0,
-          routes: [{ name: 'AdresseInscription' }],
+          routes: [{ name: 'Accueil' }],
         });
       } else {
         setErrorMessage(result.message || 'Une erreur est survenue');
