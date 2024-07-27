@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, FlatList, Image, Text, TouchableOpacity, Alert } from 'react-native';
 import ClientStyle from '../../Styles/ClientStyle';
 import Color from '../../Styles/Color';
-import { AntDesign, MaterialCommunityIcons ,FontAwesome} from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 
 const ImageWithFallback = ({ source, style }) => {
     const [loading, setLoading] = useState(true);
@@ -17,8 +17,6 @@ const ImageWithFallback = ({ source, style }) => {
         setLoading(false);
         setError(true);
     };
-
-    
 
     return (
         <View style={{ position: 'relative' }}>
@@ -49,7 +47,9 @@ const Produit = ({ produits }) => {
                 <AntDesign name="hearto" size={15} color={Color.orange} />
             </View>
             <View style={ClientStyle.nomProduitContainer}>
-                <Text style={ClientStyle.nomProduit}>{item.nom}</Text>
+                <Text style={ClientStyle.nomProduit} numberOfLines={1} ellipsizeMode='tail'>
+                    {item.nom}
+                </Text>
                 <MaterialCommunityIcons
                     name="truck-delivery"
                     size={20}
@@ -57,13 +57,12 @@ const Produit = ({ produits }) => {
                     style={ClientStyle.iconDelivery}
                 />
             </View>
-            <View style={styles.ligne2}> 
+            <View style={styles.ligne2}>
                 <Text style={ClientStyle.prixProduit}>${item.prix}</Text>
                 <TouchableOpacity style={styles.location} onPress={() => alert('Localisation')}>
                     <FontAwesome name="location-arrow" size={15} color="white" />
                 </TouchableOpacity>
             </View>
-            
         </TouchableOpacity>
     );
 
@@ -81,19 +80,21 @@ const Produit = ({ produits }) => {
 };
 
 const styles = StyleSheet.create({
-   ligne2:{
-    flexDirection:'row',
-    justifyContent:'space-between'
-   },
-   location:{
-    backgroundColor:Color.grisIcone,
-    width:30,
-    height:20,
-    borderRadius:50,
-    alignItems:'center',
-    justifyContent:'center',
-    marginTop:5
-   }
+    ligne2: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    location: {
+        backgroundColor: Color.orange,
+        width: 20,
+        height: 20,
+        borderRadius: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 5,
+        marginRight: 5
+    },
+   
 });
 
 export default Produit;

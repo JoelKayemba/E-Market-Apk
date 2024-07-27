@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity ,Text} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Color from '../../Styles/Color';
@@ -15,12 +15,7 @@ const Recherche = () => {
     return (
         <TouchableOpacity onPress={handlePress} style={styles.rechercheContainer}>
             <Ionicons name="search" size={20} color={Color.grisIcone} />
-            <TextInput
-                style={styles.input}
-                placeholder="Recherche"
-                placeholderTextColor={Color.grisIcone}
-                editable={false} // Rendre le TextInput non éditable pour imiter WhatsApp
-            />
+            <Text style={styles.input}>Recherche</Text>
         </TouchableOpacity>
     );
 };
@@ -38,7 +33,7 @@ const styles = StyleSheet.create({
         height: 40,
     },
     input: {
-        flex: 1,
+        color:'gray',
         marginLeft: 10,
     },
 });

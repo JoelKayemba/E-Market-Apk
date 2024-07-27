@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10,
-    fontWeight: 'bold',
+    fontWeight: '700',
   },
   description: {
     fontSize: 15,
@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10,
     fontWeight: '300',
+  
   },
   iconButton: {
     position: 'absolute',

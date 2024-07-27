@@ -30,7 +30,8 @@ const ClientStyle = StyleSheet.create({
       },
       textAdresse: {
         fontSize: 12,
-        fontWeight:'800',
+        fontFamily:'InriaSerif',
+        
         
       },
       containerCategorie: {
@@ -54,7 +55,7 @@ const ClientStyle = StyleSheet.create({
       },
       categorieText: {
         fontSize: 10,
-       
+        fontFamily:'InriaSerif',
         marginTop: 5, 
         textAlign: 'center', 
         width: 100, 
@@ -71,6 +72,7 @@ const ClientStyle = StyleSheet.create({
       },
       textPourToi: {
         fontWeight: 'bold',
+        
         
       },
       textVoirTout:{
@@ -124,18 +126,23 @@ const ClientStyle = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         marginHorizontal:5,
-        marginTop:10
+        marginTop:10,
+        
       },
       containerProduitRecommander: {
         marginHorizontal: 5,
         marginVertical: 5,
-
+        
        
       },
       produitRecommander: {
         width: 180, 
-        borderRadius: 10,
+        borderTopEndRadius: 10,
         marginBottom: 10,
+        backgroundColor:'white',
+        borderRadius:10,
+        height:230
+
         
       },
       nomProduitContainer: {
@@ -148,7 +155,8 @@ const ClientStyle = StyleSheet.create({
       imageProduit: {
         width: '100%',
         height: 170,
-        borderRadius: 10,
+        borderTopLeftRadius:10,
+        borderTopRightRadius:10,
       },
       
       heartIconContainer: {
@@ -164,7 +172,7 @@ const ClientStyle = StyleSheet.create({
         elevation: 5,
       },
       nomProduit: {
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '600',
        
       },
@@ -172,7 +180,8 @@ const ClientStyle = StyleSheet.create({
         marginTop: 1,
         marginLeft: 5,
         fontSize: 20,
-        fontWeight:'bold'
+        fontWeight:'bold',
+        fontFamily:'InriaSerif',
       },
       columnWrapper: {
         justifyContent: 'space-between',

@@ -6,7 +6,12 @@ import Color from '../../Styles/Color';
 import { Entypo, Ionicons, Octicons, EvilIcons } from '@expo/vector-icons';
 import Loading from '../../Component/Loading';
 
+
+
 const Adresse = () => {
+
+    
+
     const [modalVisible, setModalVisible] = useState(false);
     const [nouvelleAdresse, setNouvelleAdresse] = useState('');
     const [currentLocation, setCurrentLocation] = useState(null);

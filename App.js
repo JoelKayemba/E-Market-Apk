@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { FontProvider } from './Component/FontContext';
+import * as SplashScreen from 'expo-splash-screen';
 
 
 
@@ -19,25 +21,29 @@ import Recherche from './CompteClient/Component/Recherche';
 
 
 const Stack = createNativeStackNavigator();
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='SkipPage'>
-        <Stack.Screen name="SkipPage" component={SkipPage} options={{ headerShown: false }} />
-        <Stack.Screen name="Bienvenue" component={Bienvenue} options={{ headerShown: false }} />
-        <Stack.Screen name="Connexion" component={Connexion} options={{ headerShown: false }} />
-        <Stack.Screen name="MotDePasseOublie" component={MotDePasseOublie} options={{ headerShown: false }} />
-        <Stack.Screen name="VerificationMotDePasse" component={VerificationMotDePasse} options={{ headerShown: false }} />
-        <Stack.Screen name="VerifierNumeroTelephone" component={VerifierNumeroTelephone} options={{ headerShown: false }} />
-        <Stack.Screen name="EnvoieCode" component={EnvoieCode} options={{ headerShown: false }} />
-        <Stack.Screen name="InformationInscription" component={InformationInscription} options={{ headerShown: false }} />
-        <Stack.Screen name="Accueil" component={DrawerNavigator} options={{ headerShown: false }} />
-        <Stack.Screen name="Recherche" component={Recherche} />
-        <Stack.Screen name="RechercheScreen" component={RechercheScreen}  options={{ headerShown: false }}/>
-       
-      </Stack.Navigator>
+    <FontProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName='SkipPage'>
+          <Stack.Screen name="SkipPage" component={SkipPage} options={{ headerShown: false }} />
+          <Stack.Screen name="Bienvenue" component={Bienvenue} options={{ headerShown: false }} />
+          <Stack.Screen name="Connexion" component={Connexion} options={{ headerShown: false }} />
+          <Stack.Screen name="MotDePasseOublie" component={MotDePasseOublie} options={{ headerShown: false }} />
+          <Stack.Screen name="VerificationMotDePasse" component={VerificationMotDePasse} options={{ headerShown: false }} />
+          <Stack.Screen name="VerifierNumeroTelephone" component={VerifierNumeroTelephone} options={{ headerShown: false }} />
+          <Stack.Screen name="EnvoieCode" component={EnvoieCode} options={{ headerShown: false }} />
+          <Stack.Screen name="InformationInscription" component={InformationInscription} options={{ headerShown: false }} />
+          <Stack.Screen name="Accueil" component={DrawerNavigator} options={{ headerShown: false }} />
+          <Stack.Screen name="Recherche" component={Recherche} />
+          <Stack.Screen name="RechercheScreen" component={RechercheScreen}  options={{ headerShown: false }}/>
+        
+        </Stack.Navigator>
     </NavigationContainer>
+    </FontProvider>
+    
   );
 }
 

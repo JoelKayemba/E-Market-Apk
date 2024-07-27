@@ -122,7 +122,7 @@ const InformationInscription = () => {
                   {loading ? (
                     <ActivityIndicator size="small" color="#fff" /> // Indicateur de chargement
                   ) : (
-                    <Text style={GlobalStyles.buttonText}>Continuer</Text>
+                    <Text style={GlobalStyles.buttonText}>S'inscrire</Text>
                   )}
                 </View>
               </TouchableOpacity>

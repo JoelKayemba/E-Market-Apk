@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     marginBottom: 20,
+    fontFamily:'InriaSerif'
   },
   buttonContainer: {
     marginTop: 20,

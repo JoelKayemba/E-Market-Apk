@@ -3,6 +3,7 @@ import { StyleSheet, View, FlatList, Image, Text, TouchableOpacity } from 'react
 import ClientStyle from '../../Styles/ClientStyle';
 import Color from '../../Styles/Color';
 
+
 // Exemple de données pour les catégories
 const categories = [
   { id: '1', nom: 'Electronique', image: require('../../assets/Images/Categorie/eletronic.jpg') },
@@ -18,6 +19,9 @@ const categories = [
 ];
 
 const Categorie = () => {
+
+  
+
   const renderItem = ({ item }) => (
     <View style={{ alignItems: 'center', marginRight:5 }}>
         <TouchableOpacity style={ClientStyle.cercleCategorie}>
