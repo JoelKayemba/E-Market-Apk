@@ -3,9 +3,8 @@ import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react
 import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import Color from '../../Styles/Color';
 import ClientStyle from '../../Styles/ClientStyle';
-import boutiqueProcheData from '../data/boutiqueProcheData';
 
-const BoutiqueProche = () => {
+const ToutesLesBoutiques = ({ boutiques }) => {
     const renderItem = ({ item }) => (
         <TouchableOpacity style={styles.card}>
             <Image source={item.image} style={styles.image} />
@@ -40,7 +39,7 @@ const BoutiqueProche = () => {
 
     return (
         <FlatList
-            data={boutiqueProcheData}
+            data={boutiques}
             renderItem={renderItem}
             keyExtractor={item => item.id}
             showsVerticalScrollIndicator={false}
@@ -50,7 +49,7 @@ const BoutiqueProche = () => {
 
 const styles = StyleSheet.create({
     card: {
-        marginHorizontal: 5,
+        marginHorizontal: 10,
         marginVertical: 10,
         backgroundColor: '#FFF',
         borderRadius: 10,
@@ -73,7 +72,6 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         flex: 1,
         marginRight: 5,
-     
     },
     iconDelivery: {
         marginRight: 5,
@@ -92,7 +90,7 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         fontSize: 12,
         color: 'gray',
-        fontFamily:'InriaSerif'
+        fontFamily: 'InriaSerif'
     },
     categoryContainer: {
         flexDirection: 'row',
@@ -102,7 +100,7 @@ const styles = StyleSheet.create({
     },
     category: {
         fontSize: 12,
-        fontFamily:'InriaSerif'
+        fontFamily: 'InriaSerif'
     },
     button: {
         backgroundColor: Color.orange,
@@ -113,8 +111,8 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: 12,
-        fontFamily:'InriaSerif'
+        fontFamily: 'InriaSerif'
     }
 });
 
-export default BoutiqueProche;
+export default ToutesLesBoutiques;

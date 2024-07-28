@@ -168,7 +168,9 @@ const styles = StyleSheet.create({
     textTitre: {
         fontSize: 24,
         marginBottom: 10,
-        marginTop: 100,
+        marginTop: 20,
+        fontFamily:'InriaSerif',
+        marginBottom:40
     },
     defaultText: {
         color: Color.vert,
@@ -183,8 +185,7 @@ const styles = StyleSheet.create({
     input: {
         alignItems: 'center',
         backgroundColor: Color.grisContainer,
-        borderRadius: 10,
-        marginTop: 10,
+        borderRadius: 50,
         paddingHorizontal: 10,
         paddingVertical: 10,
         borderColor: Color.grisIcone,

@@ -1,42 +1,41 @@
-// data/BoutiqueProcheData.js
-const boutiqueProcheData = [
+const meilleursBoutiquesData = [
     {
-        id: '6',
+        id: '10',
         nom: 'Librairie Page d’Or',
-        image: require('../../assets/Images/boutique3.jpg'), 
+        image: require('../../assets/Images/boutique6.jpg'), 
         livraison: false,
         note: '4.0',
         adresse: '789 Boulevard des Livres, Marseille',
-        categorie: 'Books'
+        categorie: 'Clothes'
     },
     {
-        id: '7',
+        id: '11',
         nom: 'Cuisine Évasion',
-        image: require('../../assets/Images/boutique4.jpg'), 
+        image: require('../../assets/Images/boutique7.jpg'), 
         livraison: true,
         note: '4.3',
         adresse: '101 Rue des Saveurs, Toulouse',
         categorie: 'Food'
     },
     {
-        id: '8',
+        id: '12',
         nom: 'Boutique Sara',
-        image: require('../../assets/Images/boutique1.jpg'), 
+        image: require('../../assets/Images/boutique8.jpg'), 
         livraison: true,
         note: '4.7',
         adresse: '101 Rue des Saveurs, Toulouse',
         categorie: 'Food'
     },
     {
-        id: '9',
+        id: '13',
         nom: 'Kin Marché',
-        image: require('../../assets/Images/boutique2.jpg'), 
+        image: require('../../assets/Images/boutique9.jpg'), 
         livraison: true,
         note: '4.1',
         adresse: '101 Rue des Saveurs, Toulouse',
-        categorie: 'Food'
+        categorie: 'Fashions'
     },
     
 ];
 
-export default boutiqueProcheData;
+export default meilleursBoutiquesData;

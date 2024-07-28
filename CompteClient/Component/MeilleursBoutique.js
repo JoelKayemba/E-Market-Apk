@@ -3,9 +3,9 @@ import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react
 import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import Color from '../../Styles/Color';
 import ClientStyle from '../../Styles/ClientStyle';
-import boutiqueProcheData from '../data/boutiqueProcheData';
+import meilleursBoutiquesData from '../data/meilleursBoutiquesData';
 
-const BoutiqueProche = () => {
+const MeilleursBoutique = () => {
     const renderItem = ({ item }) => (
         <TouchableOpacity style={styles.card}>
             <Image source={item.image} style={styles.image} />
@@ -40,10 +40,11 @@ const BoutiqueProche = () => {
 
     return (
         <FlatList
-            data={boutiqueProcheData}
+            horizontal
+            data={meilleursBoutiquesData}
             renderItem={renderItem}
             keyExtractor={item => item.id}
-            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
         />
     );
 };
@@ -54,7 +55,8 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         backgroundColor: '#FFF',
         borderRadius: 10,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        width: 290
     },
     image: {
         width: '100%',
@@ -72,11 +74,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '600',
         flex: 1,
-        marginRight: 5,
-     
+        marginRight: 5
     },
     iconDelivery: {
-        marginRight: 5,
+        marginRight: 5
     },
     rating: {
         fontSize: 12,
@@ -117,4 +118,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default BoutiqueProche;
+export default MeilleursBoutique;

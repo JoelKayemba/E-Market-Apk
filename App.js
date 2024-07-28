@@ -18,6 +18,8 @@ import VerifierNumeroTelephone from './Screen/Inscription/VerifierNumeroTelephon
 import EnvoieCode from './Screen/Inscription/EnvoieCode';
 import RechercheScreen from './CompteClient/Component/RechercheScreen';
 import Recherche from './CompteClient/Component/Recherche';
+import PageMaBoutique from './CompteClient/Screen/PageMaBoutique';
+import ToutesLesBoutiques from './CompteClient/Component/ToutesLesBoutiques';
 
 
 const Stack = createNativeStackNavigator();
@@ -39,6 +41,8 @@ export default function App() {
           <Stack.Screen name="Accueil" component={DrawerNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="Recherche" component={Recherche} />
           <Stack.Screen name="RechercheScreen" component={RechercheScreen}  options={{ headerShown: false }}/>
+          <Stack.Screen name="PageMaBoutique" component={PageMaBoutique} options={{headerShown: false}}/>
+          <Stack.Screen name="ToutesLesBoutiques" component={ToutesLesBoutiques} options={{headerShown: false}}/>
         
         </Stack.Navigator>
     </NavigationContainer>

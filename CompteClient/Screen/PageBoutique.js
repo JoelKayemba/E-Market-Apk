@@ -5,6 +5,7 @@ import Publicite from '../Component/Publicite';
 import BoutiquePourToi from '../Component/BoutiquePourToi';
 import BoutiqueProche from '../Component/BoutiqueProche';
 import ClientStyle from '../../Styles/ClientStyle';
+import MeilleursBoutique from '../Component/MeilleursBoutique';
 
 const Boutique = () => {
   // Données pour les sections
@@ -16,6 +17,11 @@ const Boutique = () => {
     },
     {
       id: '2', // Identifiant unique pour chaque section
+      title: 'Nos Meilleurs Boutiques',
+      component: <MeilleursBoutique />
+    },
+    {
+      id: '3', // Identifiant unique pour chaque section
       title: 'Proche de Vous',
       component: <BoutiqueProche />
     }
@@ -44,7 +50,7 @@ const Boutique = () => {
         </View>
       )}
       keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.container} // Ajoutez du style ici si nécessaire
+      contentContainerStyle={styles.container} 
     />
   );
 };

@@ -180,7 +180,6 @@ const ClientStyle = StyleSheet.create({
         marginTop: 1,
         marginLeft: 5,
         fontSize: 20,
-        fontWeight:'bold',
         fontFamily:'InriaSerif',
       },
       columnWrapper: {

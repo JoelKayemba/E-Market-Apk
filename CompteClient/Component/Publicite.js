@@ -4,6 +4,7 @@ import { StyleSheet,Text, View, Image, Animated, Pressable,Dimensions } from 're
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import ClientStyle from '../../Styles/ClientStyle';
 import Color from '../../Styles/Color';
+import { useNavigation } from '@react-navigation/native';
 
 const { width: viewportWidth } = Dimensions.get('window');
 
@@ -11,6 +12,7 @@ const Publicite = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef(null);
+  const navigation = useNavigation();
 
   const images = [
     { source: require('../../assets/Images/pub.jpg'), text: 'Texte sur l\'image 1' },
@@ -41,9 +43,7 @@ const Publicite = () => {
     <View style={ClientStyle.containerPub}>
       <View style={ClientStyle.textPub}>
         <Text style={ClientStyle.textPourToi}>#PourToi</Text>
-        <Pressable onPress={() => alert('Voir tout')}>
-          <Text style={ClientStyle.textVoirTout}>Voir tout</Text>
-        </Pressable>
+        
       </View>
       <View style={ClientStyle.containerImagePub}>
         <Animated.ScrollView
