@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 50,
-        width: 80,
+        width: 90,
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
@@ -255,6 +255,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         textAlign: 'center',
+        fontFamily: 'InriaSerif',
     },
     textProduit: {
         fontSize: 18,
