@@ -105,7 +105,8 @@ const styles = {
     padding: 5,
     backgroundColor: 'white',
     marginHorizontal:10,
-    borderWidth: 1,
+    borderWidth:1,
+    borderColor:Color.bleu,
     height:40,
     width:40
   },
@@ -114,7 +115,8 @@ const styles = {
     borderRadius: 10,
     padding: 5,
     backgroundColor: 'white',
-    borderWidth: 1,
+    borderWidth:1,
+    borderColor:Color.bleu,
     height:40,
     width:40
   }

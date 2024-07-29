@@ -141,6 +141,8 @@ const styles = StyleSheet.create({
         borderColor: Color.grisIcone,
         height: 40,
         marginHorizontal: 10,
+        borderWidth:1,
+        borderColor:Color.bleu
     },
     input: {
         flex: 1,
@@ -182,7 +184,7 @@ const styles = StyleSheet.create({
     },
     selectorButton: {
         paddingHorizontal: 20,
-        borderRadius: 50,
+        borderRadius: 10,
         backgroundColor: '#e0e0e0',
         marginHorizontal: 5,
         height: 30,
@@ -190,7 +192,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     selected: {
-        backgroundColor: Color.orange,
+        backgroundColor: Color.bleuTransparent,
     },
     selectorText: {
         fontSize: 16,

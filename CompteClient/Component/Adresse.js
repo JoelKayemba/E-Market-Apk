@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
+        
     },
     input: {
         alignItems: 'center',
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     bouton2: {
-        backgroundColor: Color.bleu,
+        backgroundColor: Color.bleuTransparent,
         borderRadius: 50,
         marginBottom: 10,
         paddingVertical: 10,

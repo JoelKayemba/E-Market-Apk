@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderColor: Color.grisIcone,
         height: 40,
+        borderWidth:1,
+        borderColor:Color.bleu
     },
     input: {
         color:'gray',

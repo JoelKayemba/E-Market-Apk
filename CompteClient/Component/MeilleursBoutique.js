@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         fontFamily:'InriaSerif'
     },
     button: {
-        backgroundColor: Color.orange,
+        backgroundColor: Color.bleuTransparent,
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 50
