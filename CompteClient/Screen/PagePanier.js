@@ -14,7 +14,7 @@ const PagePanier = () => {
             try {
                 // Simule une demande réseau pour récupérer les produits du panier
                 await new Promise(resolve => setTimeout(resolve, 2000));
-                // Vous devriez remplacer ceci par votre logique pour obtenir les éléments du panier
+                
                 setCartItems([
                     { id: '1', name: 'Produit 1', price: '20.00 €' },
                     { id: '2', name: 'Produit 2', price: '35.00 €' },
