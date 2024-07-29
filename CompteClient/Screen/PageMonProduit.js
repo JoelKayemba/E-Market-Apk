@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { AntDesign, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 import Color from '../../Styles/Color';
@@ -19,10 +19,32 @@ const PageMonProduit = ({ navigation }) => {
     };
 
     const handleAddToCart = async () => {
+        if (!selectedSize || !selectedColor) {
+            Alert.alert("Erreur", "Veuillez sélectionner une taille et une couleur.");
+            return;
+        }
+
         setIsLoading(true);
+
+        // Préparer les données du produit à ajouter au panier
+        const productData = {
+            id: item.id,
+            image: item.image,
+            quantity: quantity,
+            size: selectedSize,
+            color: selectedColor,
+            price: item.prix,
+            name: item.nom
+        };
+
         try {
-            // Simuler une demande d'ajout au panier
+            // Simuler une requête d'ajout au panier
             await new Promise(resolve => setTimeout(resolve, 2000)); // Simule une requête réseau
+
+            // Envoyer les données au panier (vous devrez adapter ceci à votre logique)
+            // Si vous avez un backend, vous pouvez utiliser fetch ou axios pour envoyer les données.
+            // Par exemple : await fetch('URL_DE_VOTRE_API', { method: 'POST', body: JSON.stringify(productData), ... });
+
             // Afficher la notification
             setNotificationVisible(true);
             // Masquer la notification après 3 secondes
@@ -86,10 +108,10 @@ const PageMonProduit = ({ navigation }) => {
                 
                 {/* Couleurs */}
                 <CouleurProduit
-                        couleurs={item.couleur || []}
-                        selectedColor={selectedColor}
-                        onSelectColor={setSelectedColor}
-                    />
+                    couleurs={item.couleur || []}
+                    selectedColor={selectedColor}
+                    onSelectColor={setSelectedColor}
+                />
 
                 {/* Quantity Selector */}
                 <View style={styles.quantityContainer}>
@@ -247,17 +269,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
-        borderColor: Color.bleu,
+        borderColor: 'gray',
         borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+        padding: 5,
     },
     quantityButton: {
-        width: 30,
-        height: 30,
-        backgroundColor: Color.orange,
-        alignItems: 'center',
+        width: 40,
+        height: 40,
         justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Color.orange,
         borderRadius: 5,
     },
     quantityButtonText: {
@@ -272,14 +293,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 20,
+        padding: 15,
+
         borderTopWidth: 1,
-        borderTopColor: '#ccc',
+        borderTopColor: 'lightgray',
     },
     price: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
-        color: Color.orange,
     },
     addButton: {
         flexDirection: 'row',
@@ -299,7 +320,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         padding: 15,
-        backgroundColor: Color.bleuTransparent,
+        backgroundColor: Color.vert,
         alignItems: 'center',
     },
     notificationText: {
