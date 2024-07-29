@@ -19,7 +19,8 @@ const PageMaBoutique = ({ route, navigation }) => {
 
     const handleSearch = (text) => {
         setSearchText(text);
-        // Logique de recherche de produits ici
+        // Logique de recherche de produit, peut etre on va creer une page pour rechercher specifiquement les produits d'une boutique o
+        // ou chercher a utiliser le meme que la page RechercheScreen mais cela demandera beaucoup de modification
     };
 
     const renderHeader = () => (
