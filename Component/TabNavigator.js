@@ -19,7 +19,7 @@ const TabNavigator = () => {
           let iconName;
           let IconComponent;
 
-          // Déterminer quel composant d'icône utiliser en fonction du nom de la route
+          
           if (route.name === 'Accueil') {
             iconName = focused ? 'home' : 'home-outline';
             IconComponent = Ionicons;

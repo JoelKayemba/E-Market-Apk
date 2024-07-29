@@ -3,10 +3,16 @@ import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react
 import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import Color from '../../Styles/Color';
 import ClientStyle from '../../Styles/ClientStyle';
+import { useNavigation } from '@react-navigation/native';
 
 const ToutesLesBoutiques = ({ boutiques }) => {
+    const navigation= useNavigation();
+
+    const handlePress = (boutique) => {
+        navigation.navigate('PageMaBoutique', { boutique });
+    };
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={() => handlePress(item)}>
             <Image source={item.image} style={styles.image} />
             <TouchableOpacity style={ClientStyle.heartIconContainer}>
                 <AntDesign name="hearto" size={15} color={Color.orange} />

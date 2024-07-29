@@ -99,7 +99,7 @@ const PageMaBoutique = ({ route, navigation }) => {
     );
 
     const renderProduit = ({ item }) => (
-        <View style={styles.produitContainer}>
+        <TouchableOpacity style={styles.produitContainer}>
             <Image source={item.image} style={styles.produitImage} />
             <View style={styles.produitDetails}>
                 <Text style={styles.produitName}>{item.nom}</Text>
@@ -118,7 +118,7 @@ const PageMaBoutique = ({ route, navigation }) => {
                     color={Color.orange} 
                 />
             </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
     );
 
     return (
@@ -267,6 +267,10 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 20,
         alignItems: 'center',
+        paddingBottom: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+       
     },
     produitImage: {
         width: 100,
