@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, TextInput, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, TextInput } from 'react-native';
 import { AntDesign, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import Color from '../../Styles/Color';
 
@@ -7,7 +7,7 @@ const PageMaBoutique = ({ route, navigation }) => {
     const { boutique } = route.params;
     const [isSearching, setIsSearching] = useState(false);
     const [searchText, setSearchText] = useState('');
-    
+    const [likedProducts, setLikedProducts] = useState(new Set());
 
     const produits = [
         { id: '1', nom: 'chaussure Nike', prix: '10.00', image: require('../../assets/Images/produit1.jpg'), livraison: false },
@@ -19,8 +19,19 @@ const PageMaBoutique = ({ route, navigation }) => {
 
     const handleSearch = (text) => {
         setSearchText(text);
-        // Logique de recherche de produit, peut etre on va creer une page pour rechercher specifiquement les produits d'une boutique o
-        // ou chercher a utiliser le meme que la page RechercheScreen mais cela demandera beaucoup de modification
+        // Logique de recherche de produit
+    };
+
+    const handleLike = (productId) => {
+        setLikedProducts((prevLikes) => {
+            const updatedLikes = new Set(prevLikes);
+            if (updatedLikes.has(productId)) {
+                updatedLikes.delete(productId);
+            } else {
+                updatedLikes.add(productId);
+            }
+            return updatedLikes;
+        });
     };
 
     const renderHeader = () => (
@@ -88,7 +99,7 @@ const PageMaBoutique = ({ route, navigation }) => {
     );
 
     const renderProduit = ({ item }) => (
-        <TouchableOpacity style={styles.produitContainer}>
+        <View style={styles.produitContainer}>
             <Image source={item.image} style={styles.produitImage} />
             <View style={styles.produitDetails}>
                 <Text style={styles.produitName}>{item.nom}</Text>
@@ -97,8 +108,17 @@ const PageMaBoutique = ({ route, navigation }) => {
                     Livraison {item.livraison ? 'Disponible' : 'Non Disponible'}
                 </Text>
             </View>
-            
-        </TouchableOpacity>
+            <TouchableOpacity 
+                style={styles.likeButton}
+                onPress={() => handleLike(item.id)}
+            >
+                <AntDesign 
+                    name={likedProducts.has(item.id) ? "heart" : "hearto"} 
+                    size={24} 
+                    color={Color.orange} 
+                />
+            </TouchableOpacity>
+        </View>
     );
 
     return (
@@ -234,25 +254,28 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-        fontSize: 12,
-        fontFamily: 'InriaSerif',
+        textAlign: 'center',
     },
     textProduit: {
-        fontSize: 16,
-        fontWeight: '500',
-        marginHorizontal: 30,
+        fontSize: 18,
+        fontWeight: 'bold',
         marginVertical: 10,
+        marginLeft: 20,
     },
     produitContainer: {
         flexDirection: 'row',
+        marginVertical: 10,
+        marginHorizontal: 20,
         alignItems: 'center',
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+    },
+    produitImage: {
+        width: 100,
+        height: 100,
+        borderRadius: 10,
     },
     produitDetails: {
         flex: 1,
-        marginLeft:20
+        marginLeft: 10,
     },
     produitName: {
         fontSize: 16,
@@ -266,10 +289,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: 'gray',
     },
-    produitImage: {
-        width: 100,
-        height: 100,
-        borderRadius: 10,
+    likeButton: {
+        marginLeft: 10,
     },
 });
 
