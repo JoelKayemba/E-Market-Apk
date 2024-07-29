@@ -15,10 +15,12 @@ const Publicite = () => {
   const navigation = useNavigation();
 
   const images = [
-    { source: require('../../assets/Images/pub.jpg'), text: 'Texte sur l\'image 1' },
-    { source: require('../../assets/Images/boutique1.jpg'), text: 'Texte sur l\'image 2' },
-    { source: require('../../assets/Images/boutique2.jpg'), text: 'Texte sur l\'image 3' },
-    { source: require('../../assets/Images/boutique3.jpg'), text: 'Texte sur l\'image 4' },
+    { source: require('../../assets/Images/imagesProduits/fashion3.jpg'), text: 'Texte sur l\'image 1' },
+    { source: require('../../assets/Images/imagesProduits/food3.jpg'), text: 'Texte sur l\'image 2' },
+    { source: require('../../assets/Images/imagesProduits/electronic3.jpg'), text: 'Texte sur l\'image 3' },
+    { source: require('../../assets/Images/imagesProduits/health4.jpg'), text: 'Texte sur l\'image 4' },
+    { source: require('../../assets/Images/imagesProduits/food8.jpg'), text: 'Texte sur l\'image 5' },
+    { source: require('../../assets/Images/imagesProduits/beauty3.jpg'), text: 'Texte sur l\'image 6' },
   ];
 
   useEffect(() => {

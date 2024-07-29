@@ -113,14 +113,15 @@ const ClientStyle = StyleSheet.create({
         marginBottom: 10,
       },
       overlayButton: {
-        backgroundColor: Color.orange,
+        backgroundColor: Color.bleuTransparent,
         padding: 10,
-        borderRadius: 20,
+        borderRadius: 10,
         width:100
       },
       overlayButtonText: {
         color: '#fff',
         textAlign: 'center',
+        fontFamily:'InriaSerif'
       },
       containerRecommandation:{
         flexDirection:'row',

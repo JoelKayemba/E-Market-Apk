@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     location: {
-        backgroundColor: Color.orange,
+        backgroundColor: Color.bleuTransparent,
         width: 20,
         height: 20,
         borderRadius: 50,

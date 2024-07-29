@@ -7,5 +7,7 @@ export default{
     vert:'#138A00',
     desactiver:'#C2C2C2',
     cerlce:'#D6D6D6',
-    bleu:'#7569FF'
+    bleu:'#7569FF',
+    orangeTransparent:'#FF3D0080',
+    bleuTransparent:'#7569FFB3'
 }
