@@ -7,7 +7,7 @@ const PageMaBoutique = ({ route, navigation }) => {
     const { boutique } = route.params;
     const [isSearching, setIsSearching] = useState(false);
     const [searchText, setSearchText] = useState('');
-    const [selectedImage, setSelectedImage] = useState(boutique.images.main);
+    
 
     const produits = [
         { id: '1', nom: 'chaussure Nike', prix: '10.00', image: require('../../assets/Images/produit1.jpg'), livraison: false },
@@ -21,14 +21,11 @@ const PageMaBoutique = ({ route, navigation }) => {
         setSearchText(text);
         // Logique de recherche de produits ici
     };
-    const handleImageSelect = (image) => {
-        setSelectedImage(image);
-    };
 
     const renderHeader = () => (
         <>
             <View style={styles.imageContainer}>
-                <Image source={selectedImage} style={styles.image} />
+                <Image source={boutique.image} style={styles.image} />
                 <View style={styles.overlay}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
                         <Ionicons name="arrow-back" size={24} color={Color.orange} />
