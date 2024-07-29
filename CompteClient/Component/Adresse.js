@@ -73,7 +73,7 @@ const Adresse = () => {
             longitude: location.coords.longitude,
         });
 
-        let adresse = `${result.street}, ${result.city}, ${result.region}, ${result.country}`;
+        let adresse = `${result.number ? result.number + ' ' : ''}${result.street}, ${result.city}, ${result.region}, ${result.country}`;
         setNouvelleAdresse(adresse);
         setCurrentLocation({ latitude: location.coords.latitude, longitude: location.coords.longitude });
         setLoading(false); // Arrêter le chargement
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     textTitre: {
         fontSize: 24,
         marginBottom: 10,
-        marginTop: 20,
+        marginTop: 30,
         fontFamily:'InriaSerif',
         marginBottom:40
     },

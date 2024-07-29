@@ -20,6 +20,10 @@ import RechercheScreen from './CompteClient/Component/RechercheScreen';
 import Recherche from './CompteClient/Component/Recherche';
 import PageMaBoutique from './CompteClient/Screen/PageMaBoutique';
 import ToutesLesBoutiques from './CompteClient/Component/ToutesLesBoutiques';
+import MeilleursBoutique from './CompteClient/Component/MeilleursBoutique';
+import BoutiquePourToi from './CompteClient/Component/BoutiquePourToi';
+import BoutiqueProche from './CompteClient/Component/BoutiqueProche';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -41,8 +45,11 @@ export default function App() {
           <Stack.Screen name="Accueil" component={DrawerNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="Recherche" component={Recherche} />
           <Stack.Screen name="RechercheScreen" component={RechercheScreen}  options={{ headerShown: false }}/>
-          <Stack.Screen name="PageMaBoutique" component={PageMaBoutique} options={{headerShown: false}}/>
           <Stack.Screen name="ToutesLesBoutiques" component={ToutesLesBoutiques} options={{headerShown: false}}/>
+          <Stack.Screen name="MeilleursBoutique" component={MeilleursBoutique} options={{headerShown: false}}/>
+          <Stack.Screen name="BoutiquePourToi" component={BoutiquePourToi} options={{headerShown: false}}/>
+          <Stack.Screen name="BoutiqueProche" component={BoutiqueProche} options={{headerShown: false}}/>
+          <Stack.Screen name="PageMaBoutique" component={PageMaBoutique} options={{headerShown: false}}/>
         
         </Stack.Navigator>
     </NavigationContainer>

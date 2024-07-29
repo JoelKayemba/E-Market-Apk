@@ -8,9 +8,9 @@ const ToutesLesBoutiques = ({ boutiques }) => {
     const renderItem = ({ item }) => (
         <TouchableOpacity style={styles.card}>
             <Image source={item.image} style={styles.image} />
-            <View style={ClientStyle.heartIconContainer}>
+            <TouchableOpacity style={ClientStyle.heartIconContainer}>
                 <AntDesign name="hearto" size={15} color={Color.orange} />
-            </View>
+            </TouchableOpacity>
             <View style={styles.infoContainer}>
                 <View style={styles.nameContainer}>
                     <Text style={styles.name} numberOfLines={1} ellipsizeMode='tail'>{item.nom}</Text>

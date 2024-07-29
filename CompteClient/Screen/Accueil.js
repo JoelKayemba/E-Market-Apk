@@ -33,7 +33,7 @@ const Accueil = ({ navigation }) => {
             data={produits}
             renderItem={({ item }) => (
                 <Produit
-                    produits={[item]} // Passe un tableau contenant un seul produit
+                    produits={[item]} 
                 />
             )}
             keyExtractor={item => item.id}

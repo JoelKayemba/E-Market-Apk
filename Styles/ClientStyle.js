@@ -181,6 +181,7 @@ const ClientStyle = StyleSheet.create({
         marginLeft: 5,
         fontSize: 20,
         fontFamily:'InriaSerif',
+        color:Color.orange
       },
       columnWrapper: {
         justifyContent: 'space-between',

@@ -26,7 +26,7 @@ const RechercheScreen = ({ navigation }) => {
         boutique: fusionnerDonneesBoutiques
     };
 
-    // Use effect to clear results when searchType changes
+    
     useEffect(() => {
         setFilteredItems([]);
         setQuery('');

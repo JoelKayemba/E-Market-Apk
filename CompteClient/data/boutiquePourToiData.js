@@ -7,7 +7,8 @@ const boutiquePourToiData = [
         livraison: true,
         note: '4.5',
         adresse: '123 Rue des Fleurs, Paris',
-        categorie: 'Fashion'
+        categorie: 'Fashion',
+        description:"Bienvenue chez 'SurfingShop', votre destination préférée pour les tendances urbaines et contemporaines. Découvrez notre collection exclusive de vêtements et accessoires soigneusement sélectionnés pour hommes et femmes. Que vous recherchiez un look décontracté pour tous les jours ou quelque chose d'élégant pour une occasion spéciale, notre équipe passionnée est là pour vous guider. Explorez notre univers où le style rencontre la qualité, et laissez-nous vous aider à exprimer votre propre style avec confiance et panache."
     },
     {
         id: '2',
@@ -16,7 +17,9 @@ const boutiquePourToiData = [
         livraison: false,
         note: '4.8',
         adresse: '456 Avenue du Gourmet, Lyon',
-        categorie: 'Food'
+        categorie: 'Food',
+        description:"Bienvenue chez 'SurfingShop', votre destination préférée pour les tendances urbaines et contemporaines. Découvrez notre collection exclusive de vêtements et accessoires soigneusement sélectionnés pour hommes et femmes. Que vous recherchiez un look décontracté pour tous les jours ou quelque chose d'élégant pour une occasion spéciale, notre équipe passionnée est là pour vous guider. Explorez notre univers où le style rencontre la qualité, et laissez-nous vous aider à exprimer votre propre style avec confiance et panache."
+        
     },
     {
         id: '3',
@@ -25,7 +28,8 @@ const boutiquePourToiData = [
         livraison: false,
         note: '4.0',
         adresse: '789 Boulevard des Livres, Marseille',
-        categorie: 'Books'
+        categorie: 'Books',
+        description:"Bienvenue chez 'SurfingShop', votre destination préférée pour les tendances urbaines et contemporaines. Découvrez notre collection exclusive de vêtements et accessoires soigneusement sélectionnés pour hommes et femmes. Que vous recherchiez un look décontracté pour tous les jours ou quelque chose d'élégant pour une occasion spéciale, notre équipe passionnée est là pour vous guider. Explorez notre univers où le style rencontre la qualité, et laissez-nous vous aider à exprimer votre propre style avec confiance et panache."
     },
     {
         id: '4',
@@ -34,7 +38,8 @@ const boutiquePourToiData = [
         livraison: true,
         note: '4.3',
         adresse: '101 Rue des Saveurs, Toulouse',
-        categorie: 'Food'
+        categorie: 'Food',
+        description:"Bienvenue chez 'SurfingShop', votre destination préférée pour les tendances urbaines et contemporaines. Découvrez notre collection exclusive de vêtements et accessoires soigneusement sélectionnés pour hommes et femmes. Que vous recherchiez un look décontracté pour tous les jours ou quelque chose d'élégant pour une occasion spéciale, notre équipe passionnée est là pour vous guider. Explorez notre univers où le style rencontre la qualité, et laissez-nous vous aider à exprimer votre propre style avec confiance et panache."
     },
     
 ];
