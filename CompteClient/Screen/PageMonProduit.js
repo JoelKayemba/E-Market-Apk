@@ -43,7 +43,7 @@ const PageMonProduit = ({ navigation }) => {
 
             // Envoyer les données au panier 
             //  utiliser fetch ou axios pour envoyer les données.
-            // Par exemple : await fetch('URL_DE_VOTRE_API', { method: 'POST', body: JSON.stringify(productData), ... });
+            // Par exemple : await fetch('URL_API', { method: 'POST', body: JSON.stringify(productData), ... });
 
             // Afficher la notification
             setNotificationVisible(true);
