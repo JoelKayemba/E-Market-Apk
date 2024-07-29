@@ -41,8 +41,8 @@ const PageMonProduit = ({ navigation }) => {
             // Simuler une requête d'ajout au panier
             await new Promise(resolve => setTimeout(resolve, 2000)); // Simule une requête réseau
 
-            // Envoyer les données au panier (vous devrez adapter ceci à votre logique)
-            // Si vous avez un backend, vous pouvez utiliser fetch ou axios pour envoyer les données.
+            // Envoyer les données au panier 
+            //  utiliser fetch ou axios pour envoyer les données.
             // Par exemple : await fetch('URL_DE_VOTRE_API', { method: 'POST', body: JSON.stringify(productData), ... });
 
             // Afficher la notification
