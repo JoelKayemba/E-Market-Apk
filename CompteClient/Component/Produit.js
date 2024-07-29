@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, FlatList, Image, Text, TouchableOpacity, Alert, Animated } from 'react-native';
+import { StyleSheet, View, FlatList, Image, Text, TouchableOpacity, Animated } from 'react-native';
 import ClientStyle from '../../Styles/ClientStyle';
 import Color from '../../Styles/Color';
 import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const ImageWithFallback = ({ source, style }) => {
     const [loading, setLoading] = useState(true);
@@ -65,6 +66,7 @@ const LikeNotification = ({ show }) => {
 const Produit = ({ produits }) => {
     const [likedProducts, setLikedProducts] = useState([]);
     const [showNotification, setShowNotification] = useState(false);
+    const navigation = useNavigation();
 
     const toggleLike = (id) => {
         setLikedProducts((prevState) => {
@@ -79,7 +81,7 @@ const Produit = ({ produits }) => {
     };
 
     const handlePress = (item) => {
-        Alert.alert(`Détails du produit`, `Nom: ${item.nom}\nPrix: $${item.prix}\nLivraison: ${item.livraison ? 'Disponible' : 'Non disponible'}`);
+        navigation.navigate('PageMonProduit', { item });
     };
 
     const renderItem = ({ item }) => {

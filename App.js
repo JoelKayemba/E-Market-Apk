@@ -23,6 +23,8 @@ import ToutesLesBoutiques from './CompteClient/Component/ToutesLesBoutiques';
 import MeilleursBoutique from './CompteClient/Component/MeilleursBoutique';
 import BoutiquePourToi from './CompteClient/Component/BoutiquePourToi';
 import BoutiqueProche from './CompteClient/Component/BoutiqueProche';
+import PageMonProduit from './CompteClient/Screen/PageMonProduit';
+import PagePanier from './CompteClient/Screen/PagePanier';
 
 
 
@@ -50,6 +52,8 @@ export default function App() {
           <Stack.Screen name="BoutiquePourToi" component={BoutiquePourToi} options={{headerShown: false}}/>
           <Stack.Screen name="BoutiqueProche" component={BoutiqueProche} options={{headerShown: false}}/>
           <Stack.Screen name="PageMaBoutique" component={PageMaBoutique} options={{headerShown: false}}/>
+          <Stack.Screen name="PageMonProduit" component={PageMonProduit} options={{headerShown: false}}/>
+          <Stack.Screen name="PagePanier" component={PagePanier} options={{headerShown: false}}/>
         
         </Stack.Navigator>
     </NavigationContainer>
