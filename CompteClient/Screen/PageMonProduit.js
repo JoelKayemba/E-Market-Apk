@@ -145,7 +145,7 @@ const PageMonProduit = ({ navigation }) => {
         <ScrollView style={styles.container}>
             {renderHeader()}
             <View style={styles.footer}>
-                <Text style={styles.price}>{item.prix} €</Text>
+                <Text style={styles.price}>${item.prix}</Text>
                 <TouchableOpacity
                     style={styles.addButton}
                     onPress={handleAddToCart}
