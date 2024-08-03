@@ -13,7 +13,6 @@ import MotDePasseOublie from './Screen/Connexion/MotDePasseOublie';
 import VerificationMotDePasse from './Screen/Connexion/VerificationMotDePasse';
 import InformationInscription from './Screen/Inscription/InformationInscription';
 import SkipPage from './Screen/Connexion/SkipPage';
-import DrawerNavigator from './Component/DrawerNavigator';
 import VerifierNumeroTelephone from './Screen/Inscription/VerifierNumeroTelephone';
 import EnvoieCode from './Screen/Inscription/EnvoieCode';
 import RechercheScreen from './CompteClient/Component/RechercheScreen';
@@ -25,6 +24,10 @@ import BoutiquePourToi from './CompteClient/Component/BoutiquePourToi';
 import BoutiqueProche from './CompteClient/Component/BoutiqueProche';
 import PageMonProduit from './CompteClient/Screen/PageMonProduit';
 import PagePanier from './CompteClient/Screen/PagePanier';
+import Accueil from './CompteClient/Screen/Accueil';
+import TabNavigator from './Component/TabNavigator';
+
+
 
 
 
@@ -44,7 +47,7 @@ export default function App() {
           <Stack.Screen name="VerifierNumeroTelephone" component={VerifierNumeroTelephone} options={{ headerShown: false }} />
           <Stack.Screen name="EnvoieCode" component={EnvoieCode} options={{ headerShown: false }} />
           <Stack.Screen name="InformationInscription" component={InformationInscription} options={{ headerShown: false }} />
-          <Stack.Screen name="Accueil" component={DrawerNavigator} options={{ headerShown: false }} />
+          <Stack.Screen name="Accueil" component={Accueil} options={{ headerShown: false }} />
           <Stack.Screen name="Recherche" component={Recherche} />
           <Stack.Screen name="RechercheScreen" component={RechercheScreen}  options={{ headerShown: false }}/>
           <Stack.Screen name="ToutesLesBoutiques" component={ToutesLesBoutiques} options={{headerShown: false}}/>
@@ -54,6 +57,10 @@ export default function App() {
           <Stack.Screen name="PageMaBoutique" component={PageMaBoutique} options={{headerShown: false}}/>
           <Stack.Screen name="PageMonProduit" component={PageMonProduit} options={{headerShown: false}}/>
           <Stack.Screen name="PagePanier" component={PagePanier} options={{headerShown: false}}/>
+          <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
+          
+        
+        
         
         </Stack.Navigator>
     </NavigationContainer>

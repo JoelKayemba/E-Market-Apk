@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     right: 30,
     backgroundColor: Color.orange,
     padding: 10,
-    borderRadius: 50,
+    borderRadius: 10,
   },
   skipButtonText: {
     color: 'white',

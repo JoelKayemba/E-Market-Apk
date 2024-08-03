@@ -43,7 +43,7 @@ const GlobalStyles = StyleSheet.create({
     },
     buttonContainer: {
       width: '100%',
-      borderRadius: 50,
+      borderRadius: 10,
       overflow: 'hidden',
       marginBottom: 10,
       
@@ -53,8 +53,9 @@ const GlobalStyles = StyleSheet.create({
       backgroundColor: Color.orange,
       paddingVertical: 10,
       paddingHorizontal: 20,
-      borderRadius: 50,
-      height:50
+      borderRadius: 10,
+      height:50,
+      
       
     },
     buttonText: {

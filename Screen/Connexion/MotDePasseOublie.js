@@ -13,7 +13,7 @@ const MotDePasseOublie = ({navigation}) => {
               style={styles.container}
           >
             <ScrollView contentContainerStyle={GlobalStyles.scrollViewContent}>
-            
+              
               <View style={GlobalStyles.containerTitre}>
                 <Text style={GlobalStyles.Titre}>Mot de passe oublié</Text>
                 <Text style={GlobalStyles.Titre2}>Entrez votre email pour recevoir un code de vérification et réinitialiser votre mot de passe.</Text>

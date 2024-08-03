@@ -1,17 +1,13 @@
-import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { FontAwesome6 } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons, Entypo, FontAwesome, MaterialIcons, MaterialCommunityIcons, AntDesign, Feather, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
+import Color from '../Styles/Color';
 
 const IconTextInput = ({ iconName, iconType, placeholder, value, onChangeText, secureTextEntry, keyboardType }) => {
-  let IconComponent = Entypo; 
+  const [showPassword, setShowPassword] = useState(false);
+
+  let IconComponent = Entypo;
+  let VisibilityIcon = showPassword ? 'eye-off' : 'eye'; 
 
   switch (iconType) {
     case 'ionicons':
@@ -36,9 +32,8 @@ const IconTextInput = ({ iconName, iconType, placeholder, value, onChangeText, s
       IconComponent = FontAwesome5;
       break;
     case 'fontawesome6':
-        IconComponent = FontAwesome6;
-        break;
-    
+      IconComponent = FontAwesome6;
+      break;
     default:
       IconComponent = Entypo;
   }
@@ -51,9 +46,14 @@ const IconTextInput = ({ iconName, iconType, placeholder, value, onChangeText, s
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
-        secureTextEntry={secureTextEntry}
+        secureTextEntry={secureTextEntry && !showPassword}
         keyboardType={keyboardType}
       />
+      {secureTextEntry && (
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.visibilityIcon}>
+          <Ionicons name={VisibilityIcon} size={30} color="#979797" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -65,11 +65,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 0,
-    backgroundColor: '#DEDEDE',
-    borderRadius: 50,
+    borderRadius: 10,
     marginBottom: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
+    borderWidth: 1,
+    borderColor: Color.bleu,
   },
   icon: {
     marginRight: 10,
@@ -78,5 +79,8 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: 40,
+  },
+  visibilityIcon: {
+    marginLeft: 10,
   },
 });

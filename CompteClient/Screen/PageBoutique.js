@@ -6,8 +6,9 @@ import BoutiquePourToi from '../Component/BoutiquePourToi';
 import BoutiqueProche from '../Component/BoutiqueProche';
 import ClientStyle from '../../Styles/ClientStyle';
 import MeilleursBoutique from '../Component/MeilleursBoutique';
+import CustomHeader from '../../Component/CustomHeader';
 
-const Boutique = () => {
+const Boutique = ({ navigation}) => {
   // Données pour les sections
   const sections = [
     {
@@ -38,20 +39,23 @@ const Boutique = () => {
   );
 
   return (
-    <FlatList
-      ListHeaderComponent={renderHeader}
-      data={sections}
-      renderItem={({ item }) => (
-        <View key={item.id}>
-          <View style={ClientStyle.containerRecommandation}>
-            <Text style={ClientStyle.textPourToi}>{item.title}</Text>
+    <View style={{ flex: 1 }}>
+            <CustomHeader navigation={navigation} />
+      <FlatList
+        ListHeaderComponent={renderHeader}
+        data={sections}
+        renderItem={({ item }) => (
+          <View key={item.id}>
+            <View style={ClientStyle.containerRecommandation}>
+              <Text style={ClientStyle.textPourToi}>{item.title}</Text>
+            </View>
+            {item.component}
           </View>
-          {item.component}
-        </View>
-      )}
-      keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.container} 
-    />
+        )}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.container} 
+      />
+    </View>
   );
 };
 

@@ -6,12 +6,12 @@ import Color from '../../Styles/Color';
 const Bienvenue = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
-  const handlePress = () => {
+  const handlePress = (destination) => {
     setLoading(true);
     
     setTimeout(() => {
       setLoading(false);
-      navigation.navigate('Connexion');
+      navigation.navigate(destination);
     }, 2000); 
   };
 
@@ -25,17 +25,19 @@ const Bienvenue = ({ navigation }) => {
         shouldPlay
       />
       <View style={styles.overlay}>
-        <Text style={styles.title}>Bienvenue sur E-Market, votre marché en ligne de référence</Text>
+        <Text style={styles.title}>Prêt à commencer?</Text>
         <Text style={styles.subtitle}>Trouvez et vendez en quelques clics seulement</Text>
         {loading ? (
           <ActivityIndicator size="large" color="white" />
-        ) : (
-          <TouchableOpacity style={styles.buttonContainer} onPress={handlePress}>
-            <View style={styles.button}>
-              <Text style={styles.buttonText}>Commencer</Text>
-            </View>
-          </TouchableOpacity>
-        )}
+        ) : null}
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={[styles.button, styles.leftButton]} onPress={() => handlePress('Connexion')}>
+          <Text style={styles.buttonText}>Se connecter</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.rightButton]} onPress={() => handlePress('InformationInscription')}>
+          <Text style={styles.buttonText}>S'inscrire</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -62,38 +64,46 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    borderRadius: 10,
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 20,
   },
   subtitle: {
     fontSize: 18,
     color: 'white',
     textAlign: 'center',
-    marginBottom: 20,
-    fontFamily:'InriaSerif'
+    marginBottom: 40,
+    fontFamily: 'InriaSerif',
   },
   buttonContainer: {
-    marginTop: 20,
-    width: '80%', // Largeur du conteneur de bouton pour occuper la largeur disponible
-    borderRadius: 50,
-    overflow: 'hidden', // Assure que le contenu du TouchableOpacity reste visible
+    position: 'absolute',
+    bottom: 50, 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%', 
   },
   button: {
-    backgroundColor: Color.orange,
-    paddingVertical: 15,
-    borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginHorizontal: 5,
   },
   buttonText: {
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  leftButton: {
+    marginRight: 5,
+    backgroundColor: Color.bleuTransparent,
+  },
+  rightButton: {
+    marginLeft: 0, 
+    backgroundColor: Color.orange,
   },
 });

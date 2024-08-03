@@ -1,4 +1,6 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Pressable, ScrollView, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import { AntDesign, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
+import Color from '../../Styles/Color';
 import IconTextInput from '../../Component/IconTextInput';
 import DismissKeyboard from '../../Component/DismissKeyboard';
 import GlobalStyles from '../../Styles/GlobalStyles';
@@ -12,7 +14,7 @@ const Connexion = ({ navigation }) => {
   
     setTimeout(() => {
       setLoading(false);
-      navigation.navigate('Accueil'); // Redirection vers la page d'accueil 
+      navigation.navigate('TabNavigator'); // Redirection vers la page d'accueil 
     }, 2000); 
   };
 
@@ -28,6 +30,12 @@ const Connexion = ({ navigation }) => {
               source={require('../../assets/Images/ImgConnexion2.jpg')}
               style={GlobalStyles.img}
             />
+            <View style={styles.overlay}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
+                        <Ionicons name="arrow-back" size={30} color={Color.orange} />
+                    </TouchableOpacity>
+                  
+            </View>
             <View style={GlobalStyles.containerTitre}>
               <Text style={GlobalStyles.Titre}>Welcome back</Text>
               <Text style={GlobalStyles.Titre2}>Connectez-vous à votre compte</Text>
@@ -73,6 +81,32 @@ const Connexion = ({ navigation }) => {
       </View>
     </DismissKeyboard>
   )
-}
+};
+
+const styles = StyleSheet.create({
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    marginBottom:200
+},
+backIcon: {
+    marginRight: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    borderRadius: 10,
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom:350
+},
+});
 
 export default Connexion

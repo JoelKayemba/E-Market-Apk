@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Alert, ActivityIndicator } from 'react-native';
+import { AntDesign, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import CustomPhoneInput from '../../Component/CustomPhoneInput';
 import IconTextInput from '../../Component/IconTextInput';
 import DismissKeyboard from '../../Component/DismissKeyboard';
@@ -71,6 +72,12 @@ const InformationInscription = () => {
               source={require('../../assets/Images/ImgInscription.jpg')}
               style={GlobalStyles.img2}
             />
+            <View style={styles.overlay}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
+                        <Ionicons name="arrow-back" size={30} color={Color.orange} />
+                    </TouchableOpacity>
+                  
+            </View>
 
             <View style={GlobalStyles.containerTitre}>
               <Text style={GlobalStyles.Titre}>Créer un compte</Text>
@@ -137,15 +144,39 @@ const InformationInscription = () => {
 export default InformationInscription;
 
 const styles = StyleSheet.create({
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    marginBottom:200
+},
+backIcon: {
+    marginRight: 10,
+    backgroundColor:'rgba(255, 255, 255, 0.5)',
+    borderRadius: 10,
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom:450
+},
   phoneInputContainer: {
     width: '100%',
     height: 50,
     marginBottom: 10,
-    borderRadius: 50,
-    borderColor: Color.grisContainer,
-    backgroundColor: Color.grisContainer,
+    borderRadius: 10,
+    borderColor: Color.bleu,
+    
     borderWidth: 1,
     paddingLeft: 20,
+    
   },
   phoneInputTextContainer: {
     borderColor: Color.grisContainer,
@@ -153,6 +184,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingVertical: 0,
     paddingHorizontal: 10,
+    
   },
   phoneInputText: {
     height: 50,
