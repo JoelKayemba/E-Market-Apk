@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { View, ScrollView, Image, Animated, StyleSheet, Dimensions, Text, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import Color from '../../Styles/Color';
+import useAuth from '../../hook/useAuth';
 
 const SkipPage = ({ navigation }) => {
   const scrollViewRef = useRef(null);
@@ -9,6 +10,8 @@ const SkipPage = ({ navigation }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const iconPosition = useRef(new Animated.Value(0)).current;
   const [showButton, setShowButton] = useState(false);
+
+  useAuth(); //permet de rediriger direcement en page d'accueil s'il y a deja eu connexion 
 
   const images = [
     require('../../assets/Images/e.jpg'),

@@ -26,6 +26,7 @@ const InformationInscription = () => {
     console.log("Confirm Password:", confirmPassword);
 
     setLoading(true); // Démarrer le chargement
+    console.log('Numéro de téléphone:', phoneNumber);
 
     try {
       const response = await fetch('http://192.168.21.25:3300/auth/register', {
@@ -47,10 +48,17 @@ const InformationInscription = () => {
         Alert.alert("Succès", result.message || 'Inscription réussie');
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Accueil' }],
+          routes: [{ name: 'Connexion' }],
         });
-      } else {
-        setErrorMessage(result.message || 'Une erreur est survenue');
+      } 
+      else {
+        if (result.message.includes('email est déjà utilisé')) {
+          setErrorMessage('L\'email est déjà utilisé. Veuillez en choisir un autre.');
+        } else if (result.message.includes('compte existe déjà')) {
+          setErrorMessage('Un compte avec ces informations existe déjà.');
+        } else {
+          setErrorMessage(result.message || 'Une erreur est survenue');
+        }
       }
     } catch (error) {
       console.error('Erreur:', error);
@@ -96,7 +104,7 @@ const InformationInscription = () => {
               />
               <CustomPhoneInput
                 defaultValue={phoneNumber}
-                onChangeText={setPhoneNumber}
+                onChangePhoneNumber={setPhoneNumber}
                 containerStyle={styles.phoneInputContainer}
                 textContainerStyle={styles.phoneInputTextContainer}
                 textInputStyle={styles.phoneInputText}

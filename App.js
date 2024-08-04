@@ -26,6 +26,7 @@ import PageMonProduit from './CompteClient/Screen/PageMonProduit';
 import PagePanier from './CompteClient/Screen/PagePanier';
 import Accueil from './CompteClient/Screen/Accueil';
 import TabNavigator from './Component/TabNavigator';
+import AuthLoadingScreen from './CompteClient/Component/AuthLoadingScreen';
 
 
 
@@ -47,6 +48,7 @@ export default function App() {
           <Stack.Screen name="VerifierNumeroTelephone" component={VerifierNumeroTelephone} options={{ headerShown: false }} />
           <Stack.Screen name="EnvoieCode" component={EnvoieCode} options={{ headerShown: false }} />
           <Stack.Screen name="InformationInscription" component={InformationInscription} options={{ headerShown: false }} />
+          <Stack.Screen name="AuthLoading" component={AuthLoadingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Accueil" component={Accueil} options={{ headerShown: false }} />
           <Stack.Screen name="Recherche" component={Recherche} />
           <Stack.Screen name="RechercheScreen" component={RechercheScreen}  options={{ headerShown: false }}/>

@@ -25,12 +25,28 @@ const Adresse = () => {
         setModalVisible(true);
     };
 
-    const ajouterAdresse = () => {
+    const ajouterAdresse = async () => {
         if (nouvelleAdresse.trim() !== '') {
-            const newAdresse = { id: (adresses.length + 1).toString(), adresse: nouvelleAdresse, parDefaut: false, coordinates: currentLocation };
-            setAdresses([...adresses, newAdresse]);
-            setNouvelleAdresse('');
-            setCurrentLocation(null);
+            const newAdresse = { id: (adresses.length + 1).toString(), adresse: nouvelleAdresse, latitude: currentLocation?.latitude, longitude: currentLocation?.longitude, parDefaut: false };
+            try {
+                const response = await fetch('http://192.168.21.25:3300/auth/adresses', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newAdresse),
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    setAdresses([...adresses, result]);
+                    setNouvelleAdresse('');
+                    setCurrentLocation(null);
+                } else {
+                    Alert.alert('Erreur', result.message || 'Une erreur est survenue');
+                }
+            } catch (error) {
+                Alert.alert('Erreur', 'Erreur lors de l\'ajout de l\'adresse.');
+            }
             if (!adresses.some(adresse => adresse.parDefaut)) {
                 setAdresses(adresses.map(adresse =>
                     adresse.id === newAdresse.id ? { ...adresse, parDefaut: true } : adresse

@@ -1,22 +1,58 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Pressable, ScrollView, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { AntDesign, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Color from '../../Styles/Color';
 import IconTextInput from '../../Component/IconTextInput';
 import DismissKeyboard from '../../Component/DismissKeyboard';
 import GlobalStyles from '../../Styles/GlobalStyles';
 import React, { useState } from 'react';
 
+
 const Connexion = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleConnexion = () => {
-    setLoading(true);
+
+ 
+
+  const handleConnexion = async () => {
+    setLoading(true); // Démarrer le chargement
   
-    setTimeout(() => {
+    try {
+      const response = await fetch('http://192.168.21.25:3300/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+  
+      const data = await response.json();
       setLoading(false);
-      navigation.navigate('TabNavigator'); // Redirection vers la page d'accueil 
-    }, 2000); 
+  
+      if (response.ok && data.token) {
+        // Stocker le token dans AsyncStorage
+        await AsyncStorage.setItem('authToken', data.token);
+        alert('Connexion réussie');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'TabNavigator' }],
+        });
+      } else {
+        // Utiliser le message d'erreur retourné par le serveur
+        setErrorMessage(data.message || 'Une erreur est survenue');
+      }
+    } catch (error) {
+      setLoading(false);
+      alert('Erreur lors de la connexion. Veuillez réessayer.');
+    }
   };
+
 
   return (
     <DismissKeyboard>
@@ -45,12 +81,18 @@ const Connexion = ({ navigation }) => {
                 iconName="mail"
                 placeholder="Email"
                 keyboardType="email-address"
+                value={email}
+                onChangeText={setEmail}
               />
               <IconTextInput 
                 iconName="lock"
                 placeholder="Mot de passe"
                 secureTextEntry
+                value={password}
+                onChangeText={setPassword}
               />
+              {errorMessage ? <View style={styles.errorContainer}><Text style={styles.errorText}>{errorMessage}</Text></View> : null}
+
             </View>
             <View style={GlobalStyles.containerConnexion}>
               <TouchableOpacity 
@@ -106,6 +148,19 @@ backIcon: {
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom:350
+},
+errorContainer: {
+  padding: 10,
+  backgroundColor: 'rgba(255, 0, 0, 0.1)',
+  borderRadius: 50,
+  borderColor: 'red',
+  borderWidth: 1,
+  marginHorizontal: 20
+},
+errorText: {
+  color: 'red',
+  textAlign: 'center',
+  justifyContent:'center'
 },
 });
 

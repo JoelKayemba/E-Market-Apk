@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Video } from 'expo-av';
 import Color from '../../Styles/Color';
+import useAuth from '../../hook/useAuth';
 
 const Bienvenue = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
+  useAuth();
 
   const handlePress = (destination) => {
     setLoading(true);
