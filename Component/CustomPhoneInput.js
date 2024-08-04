@@ -1,10 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 
 const CustomPhoneInput = ({
   defaultValue = '',
-  defaultCode = 'us',
   onChangePhoneNumber = () => {},
   containerStyle = {},
   textInputStyle = {},
@@ -14,19 +13,26 @@ const CustomPhoneInput = ({
   React.useEffect(() => {
     if (phoneInput.current) {
       phoneInput.current.setValue(defaultValue);
-      phoneInput.current.selectCountry(defaultCode);
     }
-  }, [defaultValue, defaultCode]);
+  }, [defaultValue]);
 
   return (
-    <PhoneInput
-      ref={phoneInput}
-      initialCountry={defaultCode}
-      defaultValue={defaultValue}
-      onChangePhoneNumber={onChangePhoneNumber}
-      style={[containerStyle, textInputStyle]}
-    />
+    <View style={[styles.container, containerStyle]}>
+      <PhoneInput
+        ref={phoneInput}
+        value={defaultValue}
+        onChangePhoneNumber={onChangePhoneNumber}
+        style={[styles.phoneInput, textInputStyle]}
+        textProps={{
+          placeholder: 'Numéro de téléphone',
+        }}
+      />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  
+});
 
 export default CustomPhoneInput;

@@ -6,7 +6,7 @@ import useAuth from '../../hook/useAuth';
 
 const Bienvenue = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
-  useAuth();
+  //useAuth();
 
   const handlePress = (destination) => {
     setLoading(true);
