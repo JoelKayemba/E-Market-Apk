@@ -28,7 +28,7 @@ const CouleurProduit = ({ couleurs, selectedColor, onSelectColor }) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginVertical: 10,
+        marginVertical: 0,
         padding: 10,
         borderRadius: 10,
         marginLeft:-10
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     textDescription: {
         fontSize: 16,
         fontWeight: '500',
-        marginBottom: 10,
+       
     },
     colorContainer: {
         flexDirection: 'row',

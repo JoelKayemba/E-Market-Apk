@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     height: 100,
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF00',
   },
   headerButton: {
     flexDirection: 'row',

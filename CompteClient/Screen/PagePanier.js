@@ -78,53 +78,61 @@ const PagePanier = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Mon Panier</Text>
-            <FlatList
-                data={cartItems}
-                keyExtractor={item => item.id}
-                renderItem={({ item }) => (
-                    <View style={styles.itemContainer}>
-                        <TouchableOpacity style={styles.item} onPress={() => handlePress(item)}>
-                            <View style={styles.imageContainer}>
-                                <Image source={item.image} style={styles.image} />
+            {cartItems.length === 0 ? (
+                <View style={styles.emptyContainer}>
+                    <Text style={styles.emptyText}>Votre panier est vide.</Text>
+                </View>
+            ) : (
+                <>
+                    <Text style={styles.title}>Mon Panier</Text>
+                    <FlatList
+                        data={cartItems}
+                        keyExtractor={item => item.id}
+                        renderItem={({ item }) => (
+                            <View style={styles.itemContainer}>
+                                <TouchableOpacity style={styles.item} onPress={() => handlePress(item)}>
+                                    <View style={styles.imageContainer}>
+                                        <Image source={item.image} style={styles.image} />
+                                    </View>
+                                    <View style={styles.detailsContainer}>
+                                        <Text style={styles.itemName}>{item.nom}</Text>
+                                        <Text style={styles.itemDescription}>{item.description}</Text>
+                                        <Text style={styles.itemPrice}>${item.prix}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <View style={styles.quantityContainer}>
+                                    <TouchableOpacity onPress={() => handleDecreaseQuantity(item.id)} style={styles.quantityButton}>
+                                        <AntDesign name="minus" size={20} color={Color.bleu} />
+                                    </TouchableOpacity>
+                                    <Text style={styles.quantityText}>{quantities[item.id]}</Text>
+                                    <TouchableOpacity onPress={() => handleIncreaseQuantity(item.id)} style={styles.quantityButton}>
+                                        <AntDesign name="plus" size={20} color={Color.bleu} />
+                                    </TouchableOpacity>
+                                </View>
+                                <TouchableOpacity onPress={() => handleRemoveItem(item.id)} style={styles.removeButton}>
+                                    <AntDesign name="close" size={20} color={Color.bleu} />
+                                </TouchableOpacity>
                             </View>
-                            <View style={styles.detailsContainer}>
-                                <Text style={styles.itemName}>{item.nom}</Text>
-                                <Text style={styles.itemDescription}>{item.description}</Text>
-                                <Text style={styles.itemPrice}>${item.prix}</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <View style={styles.quantityContainer}>
-                            <TouchableOpacity onPress={() => handleDecreaseQuantity(item.id)} style={styles.quantityButton}>
-                                <AntDesign name="minus" size={20} color={Color.bleu} />
+                        )}
+                        contentContainerStyle={{ paddingBottom: 110 }}
+                    />
+                    <View style={styles.footer}>
+                        <View style={styles.totalContainer}>
+                            <Text style={styles.totalText}>Total à payer: </Text>
+                            <Text style={styles.totalPrix}>${getTotalPrice()}</Text>
+                        </View>
+                        
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity style={styles.footerButton1}>
+                                <Text style={styles.buttonText}>Réserver</Text>
                             </TouchableOpacity>
-                            <Text style={styles.quantityText}>{quantities[item.id]}</Text>
-                            <TouchableOpacity onPress={() => handleIncreaseQuantity(item.id)} style={styles.quantityButton}>
-                                <AntDesign name="plus" size={20} color={Color.bleu} />
+                            <TouchableOpacity style={styles.footerButton2}>
+                                <Text style={styles.buttonText}>Commander</Text>
                             </TouchableOpacity>
                         </View>
-                        <TouchableOpacity onPress={() => handleRemoveItem(item.id)} style={styles.removeButton}>
-                            <AntDesign name="close" size={20} color={Color.bleu} />
-                        </TouchableOpacity>
                     </View>
-                )}
-                contentContainerStyle={{ paddingBottom: 110 }}
-            />
-            <View style={styles.footer}>
-                <View style={styles.totalContainer}>
-                    <Text style={styles.totalText}>Total à payer: </Text>
-                    <Text style={styles.totalPrix}>${getTotalPrice()}</Text>
-                </View>
-                
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.footerButton1}>
-                        <Text style={styles.buttonText}>Réserver</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.footerButton2}>
-                        <Text style={styles.buttonText}>Commander</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+                </>
+            )}
         </View>
     );
 };
@@ -248,6 +256,15 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    emptyText: {
+        fontSize: 18,
+        color: '#888',
     },
 });
 

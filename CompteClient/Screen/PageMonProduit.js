@@ -19,8 +19,16 @@ const PageMonProduit = ({ navigation }) => {
     };
 
     const handleAddToCart = async () => {
-        if (!selectedSize || !selectedColor) {
-            Alert.alert("Erreur", "Veuillez sélectionner une taille et une couleur.");
+            // Vérifie si le produit a des tailles ou des couleurs
+        const hasSizeOptions = item.taille && item.taille.length > 0;
+        const hasColorOptions = item.couleur && item.couleur.length > 0;
+
+        // Validation des sélections requises
+        if (
+            (hasSizeOptions && !selectedSize) || 
+            (hasColorOptions && !selectedColor)
+        ) {
+            Alert.alert("Erreur", "Veuillez sélectionner toutes les options requises.");
             return;
         }
 
@@ -88,30 +96,39 @@ const PageMonProduit = ({ navigation }) => {
                 </View>
                 <Text style={styles.textDescription}>Description</Text>
                 <Text style={styles.description}>{item.description}</Text>
-                
-                {/* Tailles */}
-                <Text style={styles.textDescription}>Tailles</Text>
-                <View style={styles.sizeContainer}>
-                    {(item.taille || []).map((taille) => (
-                        <TouchableOpacity
-                            key={taille}
-                            style={[
-                                styles.sizeBox,
-                                selectedSize === taille && styles.selectedSizeBox
-                            ]}
-                            onPress={() => setSelectedSize(taille)}
-                        >
-                            <Text style={styles.sizeText}>{taille}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-                
-                {/* Couleurs */}
-                <CouleurProduit
-                    couleurs={item.couleur || []}
-                    selectedColor={selectedColor}
-                    onSelectColor={setSelectedColor}
-                />
+
+                {/* Tailles (afficher uniquement si des tailles sont disponibles) */}
+                {item.taille && item.taille.length > 0 && (
+                    <>
+                        <Text style={styles.textDescription}>Tailles</Text>
+                        <View style={styles.sizeContainer}>
+                            {item.taille.map((taille) => (
+                                <TouchableOpacity
+                                    key={taille}
+                                    style={[
+                                        styles.sizeBox,
+                                        selectedSize === taille && styles.selectedSizeBox
+                                    ]}
+                                    onPress={() => setSelectedSize(taille)}
+                                >
+                                    <Text style={styles.sizeText}>{taille}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    </>
+                )}
+
+                {/* Couleurs (afficher uniquement si des couleurs sont disponibles) */}
+                {item.couleur && item.couleur.length > 0 && (
+                    <>
+                      
+                        <CouleurProduit
+                            couleurs={item.couleur}
+                            selectedColor={selectedColor}
+                            onSelectColor={setSelectedColor}
+                        />
+                    </>
+                )}
 
                 {/* Quantity Selector */}
                 <View style={styles.quantityContainer}>
@@ -251,25 +268,26 @@ const styles = StyleSheet.create({
     sizeBox: {
         padding: 10,
         borderWidth: 1,
-        borderColor: 'gray',
+        borderColor: Color.orange,
         borderRadius: 5,
         margin: 5,
     },
     selectedSizeBox: {
         borderColor: Color.orange,
+        backgroundColor: Color.orangeLight,
     },
     sizeText: {
         fontSize: 14,
     },
     quantityContainer: {
-        marginVertical: 10,
+        marginTop: 20,
     },
     quantitySelector: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
-        borderColor: 'gray',
+        borderColor: Color.orange,
         borderRadius: 5,
         padding: 5,
     },
@@ -287,32 +305,7 @@ const styles = StyleSheet.create({
     },
     quantityText: {
         fontSize: 18,
-        marginHorizontal: 15,
-    },
-    footer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 15,
-
-        borderTopWidth: 1,
-        borderTopColor: 'lightgray',
-    },
-    price: {
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-    addButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: Color.orange,
-        padding: 10,
-        borderRadius: 5,
-    },
-    addButtonText: {
-        color: 'white',
-        fontSize: 16,
-        marginLeft: 10,
+        marginHorizontal: 10,
     },
     notification: {
         position: 'relative',
@@ -322,11 +315,38 @@ const styles = StyleSheet.create({
         padding: 15,
         backgroundColor: Color.vert,
         alignItems: 'center',
+        marginHorizontal:20,
+        borderRadius:10
     },
     notificationText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    footer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 15,
+        borderTopWidth: 1,
+        borderTopColor: 'lightgray',
+    },
+    price: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    addButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: Color.orange,
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 10,
+    },
+    addButtonText: {
+        color: 'white',
+        fontSize: 16,
+        marginLeft: 5,
     },
 });
 

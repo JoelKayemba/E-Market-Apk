@@ -17,10 +17,7 @@ const PageMaBoutique = ({ route, navigation }) => {
         { id: '5', nom: 'montre Rolex', prix: '40.00', image: require('../../assets/Images/montre.jpg'), livraison: true },
     ];
 
-    const handleSearch = (text) => {
-        setSearchText(text);
-        // Logique de recherche de produit
-    };
+  
 
     const handleLike = (productId) => {
         setLikedProducts((prevLikes) => {
@@ -48,24 +45,14 @@ const PageMaBoutique = ({ route, navigation }) => {
                         </TouchableOpacity>
                         <TouchableOpacity 
                             style={styles.iconContainer} 
-                            onPress={() => setIsSearching(!isSearching)}
+                            onPress={() => navigation.navigate('RechercheScreen')} //creer un nouveau recherche screen qui ne prends aue les produits de la boutique
                         >
                             <AntDesign name="search1" size={24} color={Color.orange} />
                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
-            {isSearching && (
-                <View style={styles.searchContainer}>
-                    <Ionicons name="search" size={20} color={Color.grisIcone} style={styles.searchIcon}/>
-                    <TextInput
-                        style={styles.searchInput}
-                        placeholder="Rechercher des produits..."
-                        value={searchText}
-                        onChangeText={handleSearch}
-                    />
-                </View>
-            )}
+            
             <View style={styles.infoContainer}>
                 <View style={styles.firstContainer}>
                     <Text style={styles.name}>{boutique.nom}</Text>
