@@ -11,7 +11,7 @@ const SkipPage = ({ navigation }) => {
   const iconPosition = useRef(new Animated.Value(0)).current;
   const [showButton, setShowButton] = useState(false);
 
-  //useAuth(); //permet de rediriger direcement en page d'accueil s'il y a deja eu connexion 
+  useAuth(); //permet de rediriger direcement en page d'accueil s'il y a deja eu connexion 
 
   const images = [
     require('../../assets/Images/e.jpg'),

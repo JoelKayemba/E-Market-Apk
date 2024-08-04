@@ -6,7 +6,7 @@ import IconTextInput from '../../Component/IconTextInput';
 import DismissKeyboard from '../../Component/DismissKeyboard';
 import GlobalStyles from '../../Styles/GlobalStyles';
 import React, { useState } from 'react';
-//import useAuth from '../../hook/useAuth';
+import useAuth from '../../hook/useAuth';
 
 const Connexion = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -14,7 +14,7 @@ const Connexion = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
- // useAuth();
+  useAuth();
 
  
 
@@ -38,7 +38,7 @@ const Connexion = ({ navigation }) => {
   
       if (response.ok && data.token) {
         // Stocker le token dans AsyncStorage
-        //await AsyncStorage.setItem('authToken', data.token);
+        await AsyncStorage.setItem('authToken', data.token);
         alert('Connexion réussie');
         navigation.reset({
           index: 0,
