@@ -45,10 +45,9 @@ const InformationInscription = () => {
 
       const result = await response.json();
       if (response.ok) {
-        Alert.alert("Succès", result.message || 'Inscription réussie');
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Connexion' }],
+          routes: [{ name: 'InscriptionLoading' }],
         });
       } 
       else {

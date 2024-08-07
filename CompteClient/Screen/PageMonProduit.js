@@ -330,6 +330,8 @@ const styles = StyleSheet.create({
         padding: 15,
         borderTopWidth: 1,
         borderTopColor: 'lightgray',
+        
+        
     },
     price: {
         fontSize: 24,

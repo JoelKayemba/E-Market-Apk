@@ -50,7 +50,7 @@ const ClientStyle = StyleSheet.create({
         alignItems: 'center',
         overflow: 'hidden',
         marginRight: 10,
-        borderWidth: 1,
+        borderWidth: 3,
         borderColor: Color.orange,
       },
       categorieText: {
@@ -72,8 +72,6 @@ const ClientStyle = StyleSheet.create({
       },
       textPourToi: {
         fontWeight: 'bold',
-        
-        
       },
       textVoirTout:{
         color:Color.orange
@@ -132,7 +130,8 @@ const ClientStyle = StyleSheet.create({
       },
       containerProduitRecommander: {
         marginHorizontal: 5,
-        marginVertical: 5,
+        marginVertical: 50,
+        
         
        
       },

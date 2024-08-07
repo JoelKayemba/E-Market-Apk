@@ -39,10 +39,9 @@ const Connexion = ({ navigation }) => {
       if (response.ok && data.token) {
         // Stocker le token dans AsyncStorage
         await AsyncStorage.setItem('authToken', data.token);
-        alert('Connexion réussie');
         navigation.reset({
           index: 0,
-          routes: [{ name: 'TabNavigator' }],
+          routes: [{ name: 'ConnexionLoading' }],
         });
       } else {
         // Utiliser le message d'erreur retourné par le serveur
@@ -67,12 +66,6 @@ const Connexion = ({ navigation }) => {
               source={require('../../assets/Images/ImgConnexion2.jpg')}
               style={GlobalStyles.img}
             />
-            <View style={styles.overlay}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
-                        <Ionicons name="arrow-back" size={30} color={Color.orange} />
-                    </TouchableOpacity>
-                  
-            </View>
             <View style={GlobalStyles.containerTitre}>
               <Text style={GlobalStyles.Titre}>Welcome back</Text>
               <Text style={GlobalStyles.Titre2}>Connectez-vous à votre compte</Text>

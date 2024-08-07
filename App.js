@@ -27,6 +27,12 @@ import PagePanier from './CompteClient/Screen/PagePanier';
 import Accueil from './CompteClient/Screen/Accueil';
 import TabNavigator from './Component/TabNavigator';
 import AuthLoadingScreen from './CompteClient/Component/AuthLoadingScreen';
+import MapPicker from './Component/MapPicker';
+import Adresse from './CompteClient/Component/Adresse';
+import CategorieProduit from './CompteClient/Screen/CategorieProduit';
+import Deconnexion from './CompteClient/Component/Deconnexion';
+import ConnexionLoading from './CompteClient/Component/ConnexionLoading';
+import InscriptionLoading from './CompteClient/Component/InscriptionLoading';
 
 
 
@@ -60,6 +66,12 @@ export default function App() {
           <Stack.Screen name="PageMonProduit" component={PageMonProduit} options={{headerShown: false}}/>
           <Stack.Screen name="PagePanier" component={PagePanier} options={{headerShown: false}}/>
           <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
+          <Stack.Screen name="Adresse" component={Adresse} options={{ headerShown: false }}/>
+          <Stack.Screen name="MapPicker" component={MapPicker} options={{ headerShown: false }}/>
+          <Stack.Screen name="CategorieProduit" component={CategorieProduit} options={{ headerShown: false }}/>
+          <Stack.Screen name="Deconnexion" component={Deconnexion} options={{ headerShown: false }}/>
+          <Stack.Screen name="ConnexionLoading" component={ConnexionLoading} options={{ headerShown: false }}/>
+          <Stack.Screen name="InscriptionLoading" component={InscriptionLoading} options={{ headerShown: false }}/>
           
         
         

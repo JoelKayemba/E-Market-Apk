@@ -161,7 +161,11 @@ const Adresse = () => {
                 <TouchableOpacity style={ClientStyle.adresse} onPress={handlePress}>
                     <Entypo name="location-pin" size={15} color={Color.orange} />
                     <Text style={ClientStyle.textAdresse}>
-                        {adresseParDefaut.rue.length > 30 ? adresseParDefaut.rue.substring(0, 30) + '...' : adresseParDefaut.rue}
+                        {(() => {
+                            const { rue, numero, ville ,province} = adresseParDefaut;
+                            let adresseComplete = `${numero} ${rue}, ${ville}, ${province}`;
+                            return adresseComplete.length > 30 ? adresseComplete.substring(0, 30) + '...' : adresseComplete;
+                        })()}
                     </Text>
                     <Entypo name="arrow-with-circle-down" size={15} color="black" />
                     {adresseParDefaut.parDefaut && <Text style={styles.defaultText}>(Par défaut)</Text>}

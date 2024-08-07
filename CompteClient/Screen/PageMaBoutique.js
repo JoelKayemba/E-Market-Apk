@@ -8,6 +8,7 @@ const PageMaBoutique = ({ route, navigation }) => {
     const [isSearching, setIsSearching] = useState(false);
     const [searchText, setSearchText] = useState('');
     const [likedProducts, setLikedProducts] = useState(new Set());
+  
 
     const produits = [
         { id: '1', nom: 'chaussure Nike', prix: '10.00', image: require('../../assets/Images/produit1.jpg'), livraison: false },
@@ -17,7 +18,9 @@ const PageMaBoutique = ({ route, navigation }) => {
         { id: '5', nom: 'montre Rolex', prix: '40.00', image: require('../../assets/Images/montre.jpg'), livraison: true },
     ];
 
-  
+    const handlePress = (item) => {
+        navigation.navigate('PageMonProduit', { item });
+    };
 
     const handleLike = (productId) => {
         setLikedProducts((prevLikes) => {
@@ -86,7 +89,7 @@ const PageMaBoutique = ({ route, navigation }) => {
     );
 
     const renderProduit = ({ item }) => (
-        <TouchableOpacity style={styles.produitContainer}>
+        <TouchableOpacity style={styles.produitContainer} onPress={() => handlePress(item)}>
             <Image source={item.image} style={styles.produitImage} />
             <View style={styles.produitDetails}>
                 <Text style={styles.produitName}>{item.nom}</Text>
