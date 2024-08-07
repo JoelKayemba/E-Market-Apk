@@ -39,6 +39,12 @@ const Connexion = ({ navigation }) => {
       if (response.ok && data.token) {
         // Stocker le token dans AsyncStorage
         await AsyncStorage.setItem('authToken', data.token);
+       
+        if (data.userId) {
+          await AsyncStorage.setItem('idclient', data.userId.toString());
+        }
+  
+        
         navigation.reset({
           index: 0,
           routes: [{ name: 'ConnexionLoading' }],
