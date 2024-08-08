@@ -130,7 +130,7 @@ const ClientStyle = StyleSheet.create({
       },
       containerProduitRecommander: {
         marginHorizontal: 5,
-        marginVertical: 50,
+        marginVertical:5,
         
         
        

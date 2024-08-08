@@ -7,6 +7,7 @@ import { Picker } from '@react-native-picker/picker';
 import Color from '../../Styles/Color';
 import { Entypo, Ionicons, EvilIcons } from '@expo/vector-icons';
 import Loading from '../../Component/Loading';
+import adresseStyle from '../../Styles/adresseStyle';
 
 
 
@@ -21,9 +22,7 @@ const Adresse = () => {
     const [appartement, setAppartement] = useState('');
     const [currentLocation, setCurrentLocation] = useState(null);
     const [editId, setEditId] = useState(null);
-    const [adresses, setAdresses] = useState([
-        { id: '0', pays: 'Pays ', province: 'Province ', ville: 'Ville ', rue: 'Rue ', numero: '123', codePostal: '00000', appartement: 'Apt 1', latitude: null, longitude: null, parDefaut: true },
-    ]);
+    const [adresses, setAdresses] = useState([]);
     const [loading, setLoading] = useState(false);
     
 
@@ -41,6 +40,8 @@ const Adresse = () => {
                 Alert.alert('Erreur', 'Erreur lors du chargement des pays.');
             }
         };
+
+        //recuperer les adresses de l'utilisateur
         const fetchAdresses = async () => {
             try {
                 const userId = await AsyncStorage.getItem('idclient');
@@ -48,15 +49,23 @@ const Adresse = () => {
                     Alert.alert('Erreur', 'Impossible de récupérer l\'ID du client. Veuillez vous reconnecter.');
                     return;
                 }
-                const response = await fetch(`http://192.168.21.25:3300/auth/adresses?userId=${userId}`);
+                const response = await fetch(`http://192.168.21.25:3300/adresses?userId=${userId}`);
                 const result = await response.json();
                 if (!response.ok) {
-                    Alert.alert('Erreur', 'Erreur lors du chargement des adresses.');
+                    Alert.alert('Erreur', 'Erreur lors du chargement des adresses .');
                     return;
                 }
-                setAdresses(result);
+                if(result.length==0){
+                    setAdresses([
+                        { id: '0', pays: 'Pays ', province: 'Provinces ', ville: 'Ville ', rue: 'Rue ', numero: '123', codePostal: '00000', appartement: 'Apt 1', latitude: null, longitude: null, parDefaut: true },
+                    ])
+                }
+                if(result.length!=0){
+                    setAdresses(result);
+                }
+                
             } catch (error) {
-                Alert.alert('Erreur', 'Erreur lors du chargement des adresses.');
+                Alert.alert('Erreur', 'Erreur lors du chargement des adresses .');
             }
         };
         fetchCountries();
@@ -73,9 +82,11 @@ const Adresse = () => {
           Alert.alert('Erreur', 'Tous les champs obligatoires doivent être remplis.');
           return;
         }
+        setLoading(true);
       
         try {
           const userId = await AsyncStorage.getItem('idclient');
+          
           if (!userId) {
             Alert.alert('Erreur', 'Impossible de récupérer l\'ID du client. Veuillez vous reconnecter.');
             return;
@@ -95,7 +106,7 @@ const Adresse = () => {
             parDefaut: adresses.length === 0 ? 1 : 0, // Marquer la première adresse comme par défaut
           };
       
-          const response = await fetch('http://192.168.21.25:3300/auth/adresses', {
+          const response = await fetch('http://192.168.21.25:3300/adresses', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -113,19 +124,21 @@ const Adresse = () => {
 
           console.log('Adresse ajoutée:', result);
 
-          if (!result.id) {
+          if (!result.idadresse) {
             console.warn('ID manquant pour l\'adresse ajoutée:', result);
         }
-          setAdresses((prevAdresses) => [...prevAdresses, result]); // Utilisation de la fonction de mise à jour de l'état
-          setPays('');
-          setProvince('');
-          setVille('');
-          setRue('');
-          setNumero('');
-          setCodePostal('');
-          setAppartement('');
-          setCurrentLocation(null);
-          setModalVisible(false);
+
+        // Mise à jour de l'état avec l'ID
+        setAdresses((prevAdresses) => [...prevAdresses, { ...result.adresse, id: result.idadresse }]);
+        setPays('');
+        setProvince('');
+        setVille('');
+        setRue('');
+        setNumero('');
+        setCodePostal('');
+        setAppartement('');
+        setCurrentLocation(null);
+        setLoading(false);
         } catch (error) {
           Alert.alert('Erreur', 'Erreur lors de l\'ajout de l\'adresse .');
         }
@@ -134,7 +147,7 @@ const Adresse = () => {
 
       const choisirParDefaut = async (id) => {
         try {
-            const response = await fetch(`http://192.168.21.25:3300/auth/adresses/${id}/parDefaut`, {
+            const response = await fetch(`http://192.168.21.25:3300/adresses/${id}/parDefaut`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -166,9 +179,9 @@ const Adresse = () => {
         if (adresses.find(adresse => adresse.id === id).parDefaut) {
             updatedAdresses[0].parDefaut = true;
         }
-
+    
         try {
-            const response = await fetch(`http://192.168.21.25:3300/auth/adresses/${id}`, {
+            const response = await fetch(`http://192.168.21.25:3300/adresses/${id}/supprimer`, {
                 method: 'DELETE',
             });
             if (!response.ok) {
@@ -180,6 +193,7 @@ const Adresse = () => {
             Alert.alert('Erreur', 'Erreur lors de la suppression de l\'adresse.');
         }
     };
+    
 
     const obtenirLocalisationActuelle = async () => {
         setLoading(true);
@@ -226,7 +240,7 @@ const Adresse = () => {
         }
 
         try {
-            const response = await fetch(`http://192.168.21.25:3300/auth/adresses/${editId}`, {
+            const response = await fetch(`http://192.168.21.25:3300/adresses/${editId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -236,12 +250,13 @@ const Adresse = () => {
 
             if (!response.ok) {
                 const result = await response.json();
-                Alert.alert('Erreur', result.message || 'Erreur lors de la mise à jour de l\'adresse.');
+                Alert.alert('Erreur', result.message || 'Erreur lors de la mise à jour de l\'adresse .');
                 return;
             }
 
+            // Mise à jour de l'état avec l'adresse modifiée
             setAdresses(adresses.map(adresse =>
-                adresse.id === editId ? { ...adresse, pays, province, ville, rue, numero, codePostal, appartement } : adresse
+                adresse.idadresse === editId ? { ...adresse, pays, province, ville, rue, numero, codePostal, appartement } : adresse
             ));
             setPays('');
             setProvince('');
@@ -251,7 +266,6 @@ const Adresse = () => {
             setCodePostal('');
             setAppartement('');
             setEditId(null);
-            setModalVisible(false);
         } catch (error) {
             Alert.alert('Erreur', 'Erreur lors de la mise à jour de l\'adresse.');
         }
@@ -260,7 +274,7 @@ const Adresse = () => {
     const adresseParDefaut = adresses.find(adresse => adresse.parDefaut);
 
     return (
-        <View style={styles.container}>
+        <View style={adresseStyle.container}>
             {adresseParDefaut && (
                 <TouchableOpacity style={ClientStyle.adresse} onPress={handlePress}>
                     <Entypo name="location-pin" size={15} color={Color.orange} />
@@ -272,13 +286,13 @@ const Adresse = () => {
                         })()}
                     </Text>
                     <Entypo name="arrow-with-circle-down" size={15} color="black" />
-                    {adresseParDefaut.parDefaut && <Text style={styles.defaultText}>(Par défaut)</Text>}
+                    {adresseParDefaut.parDefaut && <Text style={adresseStyle.defaultText}>(Par défaut)</Text>}
                 </TouchableOpacity>
             )}
             <Modal visible={modalVisible} animationType="slide">
-                <View style={styles.modalContent}>
-                    <View style={styles.modalHeader}>
-                        <Text style={styles.textTitre}>{editId ? 'Modifier l\'adresse' : 'Ajouter une nouvelle adresse'}</Text>
+                <View style={adresseStyle.modalContent}>
+                    <View style={adresseStyle.modalHeader}>
+                        <Text style={adresseStyle.textTitre}>{editId ? 'Modifier l\'adresse' : 'Ajouter une nouvelle adresse'}</Text>
                         <TouchableOpacity onPress={() => setModalVisible(false)}>
                             <Ionicons name="close" size={24} color="red" />
                         </TouchableOpacity>
@@ -286,7 +300,7 @@ const Adresse = () => {
                     <Picker
                         selectedValue={pays}
                         onValueChange={(itemValue) => setPays(itemValue)}
-                        style={styles.picker}
+                        style={adresseStyle.picker}
                     >
                         <Picker.Item label="Sélectionner un pays" value="" />
                         {paysOptions.map((paysOption) => (
@@ -294,47 +308,47 @@ const Adresse = () => {
                         ))}
                     </Picker>
                     <TextInput
-                        style={styles.input}
+                        style={adresseStyle.input}
                         placeholder="Province"
                         value={province}
                         onChangeText={setProvince}
                     />
                     <TextInput
-                        style={styles.input}
+                        style={adresseStyle.input}
                         placeholder="Ville"
                         value={ville}
                         onChangeText={setVille}
                     />
                     <TextInput
-                        style={styles.input}
+                        style={adresseStyle.input}
                         placeholder="Rue"
                         value={rue}
                         onChangeText={setRue}
                     />
                     <TextInput
-                        style={styles.input}
+                        style={adresseStyle.input}
                         placeholder="Numéro"
                         keyboardType='numeric'
                         value={numero}
                         onChangeText={setNumero}
                     />
                     <TextInput
-                        style={styles.input}
+                        style={adresseStyle.input}
                         placeholder="Code Postal (optionnel)"
                         value={codePostal}
                         onChangeText={setCodePostal}
                     />
                     <TextInput
-                        style={styles.input}
+                        style={adresseStyle.input}
                         placeholder="Appartement (optionnel)"
                         value={appartement}
                         onChangeText={setAppartement}
                     />
-                    <TouchableOpacity style={styles.bouton1} onPress={editId ? handleUpdate : ajouterAdresse}>
-                        <Text style={styles.boutonTexte}>{editId ? 'Mettre à jour' : 'Ajouter'}</Text>
+                    <TouchableOpacity style={adresseStyle.bouton1} onPress={editId ? handleUpdate : ajouterAdresse}>
+                        <Text style={adresseStyle.boutonTexte}>{editId ? 'Mettre à jour' : 'Ajouter'}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.bouton2} onPress={obtenirLocalisationActuelle}>
-                        <Text style={styles.boutonTexte}>Utiliser ma localisation actuelle</Text>
+                    <TouchableOpacity style={adresseStyle.bouton2} onPress={obtenirLocalisationActuelle}>
+                        <Text style={adresseStyle.boutonTexte}>Utiliser ma localisation actuelle</Text>
                     </TouchableOpacity>
                     {loading ? (
                         <Loading />
@@ -345,7 +359,7 @@ const Adresse = () => {
                             renderItem={({ item }) =>{
                                 
                                 return(
-                                <View style={styles.adresseItem}>
+                                <View style={adresseStyle.adresseItem}>
                                      <TouchableOpacity onPress={() => choisirParDefaut(item.id)}>
                                             <Ionicons
                                                 name={item.parDefaut ? "checkbox-outline" : "square-outline"}
@@ -353,10 +367,10 @@ const Adresse = () => {
                                                 color={item.parDefaut ? "green" : "black"}
                                             />
                                         </TouchableOpacity>
-                                        <Text style={styles.adresseText}>
+                                        <Text style={adresseStyle.adresseText}>
                                             {item.numero} {item.rue}, {item.ville}, {item.province}
                                         </Text>
-                                    <View style={styles.adresseActions}>
+                                    <View style={adresseStyle.adresseActions}>
                                         <TouchableOpacity onPress={() => handleEdit(item.id, item)}>
                                             <Ionicons name="pencil" size={20} color={Color.blue} />
                                         </TouchableOpacity>
@@ -379,81 +393,7 @@ const Adresse = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-       paddingBottom:5
-    },
-    modalContent: {
-        flex: 1,
-        padding: 20,
-        justifyContent: 'center',
-    },
-    modalHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 20,
-        marginTop:30
-    },
-    textTitre: {
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-    input: {
-        borderBottomWidth: 1,
-        borderBottomColor: Color.grey,
-        marginBottom: 15,
-        padding: 10,
-    },
-    bouton1: {
-        backgroundColor: Color.vert,
-        borderRadius: 50,
-        marginBottom: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    bouton2: {
-        backgroundColor: Color.bleuTransparent,
-        borderRadius: 50,
-        marginBottom: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    bouton3: {
-        backgroundColor: Color.orange,
-        borderRadius: 50,
-        marginBottom: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width:300
-    },
-    boutonTexte: {
-        color: 'white',
-        textAlign: 'center',
-    },
-    adresseItem: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: Color.grey,
-    },
-    adresseActions: {
-        flexDirection:'row',
-        
-
-    },
-    defaultText: {
-        color: Color.orange,
-        fontWeight: 'bold',
-    },
+   
 });
 
 export default Adresse;
