@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     backButton: {
-        marginBottom: 50,
+        marginBottom: 20,
         alignSelf: 'flex-start',
     },
     label: {

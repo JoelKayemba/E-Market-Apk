@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, Button, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const defaultProfileImage = require('../../assets/Images/imagesProduits/accessoire1.jpg');
@@ -14,15 +14,18 @@ const PageProfil = () => {
 
     const navigation = useNavigation();
 
-    useEffect(() => {
-        const loadUserData = async () => {
-            const nom = await AsyncStorage.getItem('nom');
-            const email = await AsyncStorage.getItem('email');
-            setUser({ ...user, nom, email });
-        };
+    const loadUserData = async () => {
+        const nom = await AsyncStorage.getItem('nom');
+        const email = await AsyncStorage.getItem('email');
+        setUser({ ...user, nom, email });
+    };
 
-        loadUserData();
-    }, []);
+    // Recharger les données chaque fois que la page de profil est affichée
+    useFocusEffect(
+        React.useCallback(() => {
+            loadUserData();
+        }, [])
+    );
 
     const handleLogout = () => {
         Alert.alert(
@@ -58,13 +61,13 @@ const PageProfil = () => {
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Historique des Commandes</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AjouterAnnonce')}>
                     <Text style={styles.buttonText}>Ajouter une annonce</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('PaymentScreen')}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PaymentScreen')}>
                     <Text style={styles.buttonText}>Payement</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} >
+                <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Nous contactez</Text>
                 </TouchableOpacity>
             </View>

@@ -1,13 +1,13 @@
 export default{
     white:'#fff',
-    orange:'#FF3D00',
+    orange:'#F78C6B',
     grisContainer:'#DEDEDE',
     grisIcone:'#090070',
     grisSousTitre:'#979797',
-    vert:'#138A00',
+    vert:'#06D6A0',
     desactiver:'#C2C2C2',
     cerlce:'#D6D6D6',
-    bleu:'#7569FF',
+    bleu:'#073B4C',
     orangeTransparent:'#FF3D0080',
-    bleuTransparent:'#7569FFB3'
+    bleuTransparent:'#073B4CA8'
 }
