@@ -39,17 +39,26 @@ const Connexion = ({ navigation }) => {
       if (response.ok && data.token) {
         // Stocker le token dans AsyncStorage
         await AsyncStorage.setItem('authToken', data.token);
-       
+    
+        // Stocker l'ID du client
         if (data.userId) {
-          await AsyncStorage.setItem('idclient', data.userId.toString());
+            await AsyncStorage.setItem('idclient', data.userId.toString());
         }
-  
-        
+    
+        // Stocker le nom et l'email si disponibles
+        if (data.username) {
+            await AsyncStorage.setItem('nom', data.username);
+        }
+        if (data.email) {
+            await AsyncStorage.setItem('email', data.email);
+        }
+    
+        // Rediriger vers la page de chargement ou la page d'accueil
         navigation.reset({
-          index: 0,
-          routes: [{ name: 'ConnexionLoading' }],
+            index: 0,
+            routes: [{ name: 'ConnexionLoading' }],
         });
-      } else {
+    }else {
         // Utiliser le message d'erreur retourné par le serveur
         setErrorMessage(data.message || 'Une erreur est survenue');
       }

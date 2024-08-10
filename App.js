@@ -27,12 +27,15 @@ import PagePanier from './CompteClient/Screen/PagePanier';
 import Accueil from './CompteClient/Screen/Accueil';
 import TabNavigator from './Component/TabNavigator';
 import AuthLoadingScreen from './CompteClient/Component/AuthLoadingScreen';
-import MapPicker from './Component/MapPicker';
 import Adresse from './CompteClient/Component/Adresse';
 import CategorieProduit from './CompteClient/Screen/CategorieProduit';
 import Deconnexion from './CompteClient/Component/Deconnexion';
 import ConnexionLoading from './CompteClient/Component/ConnexionLoading';
 import InscriptionLoading from './CompteClient/Component/InscriptionLoading';
+import ModifierProfil from './CompteClient/Screen/ModifierProfil';
+import PageProfil from './CompteClient/Screen/PageProfil';
+import PaymentScreen from './CompteClient/Screen/PaymentScreen';
+import MapScreen from './CompteClient/Screen/MapScreen';
 
 
 
@@ -67,11 +70,15 @@ export default function App() {
           <Stack.Screen name="PagePanier" component={PagePanier} options={{headerShown: false}}/>
           <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="Adresse" component={Adresse} options={{ headerShown: false }}/>
-          <Stack.Screen name="MapPicker" component={MapPicker} options={{ headerShown: false }}/>
           <Stack.Screen name="CategorieProduit" component={CategorieProduit} options={{ headerShown: false }}/>
           <Stack.Screen name="Deconnexion" component={Deconnexion} options={{ headerShown: false }}/>
           <Stack.Screen name="ConnexionLoading" component={ConnexionLoading} options={{ headerShown: false }}/>
           <Stack.Screen name="InscriptionLoading" component={InscriptionLoading} options={{ headerShown: false }}/>
+          <Stack.Screen name="ModifierProfil" component={ModifierProfil} options={{ headerShown: false }}/>
+          <Stack.Screen name="PageProfil" component={PageProfil} options={{ headerShown: false }}/>
+          <Stack.Screen name="PaymentScreen" component={PaymentScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="MapScreen" component={MapScreen} options={{ headerShown: false }}/>
+          
           
         
         

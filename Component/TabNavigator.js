@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { Ionicons, Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import { StyleSheet, TouchableOpacity ,Text } from 'react-native';
+import { Ionicons, Entypo, AntDesign } from '@expo/vector-icons';
 import Accueil from '../CompteClient/Screen/Accueil';
 import Boutique from '../CompteClient/Screen/PageBoutique';
 import Panier from '../CompteClient/Screen/PagePanier';
@@ -14,12 +14,11 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={({ route, navigation }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           let IconComponent;
 
-          
           if (route.name === 'Accueil') {
             iconName = focused ? 'home' : 'home-outline';
             IconComponent = Ionicons;
@@ -32,9 +31,35 @@ const TabNavigator = () => {
           } else if (route.name === 'Profil') {
             iconName = focused ? 'user' : 'user';
             IconComponent = AntDesign;
+          } else if (route.name === 'Annonce') {
+            iconName = 'megaphone';
+            IconComponent = Entypo;
+          }
+
+          // Set the color to white if Annonce is active
+          const activeColor = navigation.getState().index === 2 ? '#fff' : color;
+
+          return <IconComponent name={iconName} size={size} color={activeColor} />;
+        },
+        tabBarLabel: ({ focused, color }) => {
+          const activeColor = navigation.getState().index === 2 ? '#fff' : color;
+          let label;
+
+          if (route.name === 'Accueil') {
+            label = 'Accueil';
+          } else if (route.name === 'Boutique') {
+            label = 'Boutique';
+          } else if (route.name === 'Panier') {
+            label = 'Panier';
+          } else if (route.name === 'Profil') {
+            label = 'Profil';
           } 
 
-          return <IconComponent name={iconName} size={size} color={color} />;
+          return (
+            <Text style={{ color: activeColor, fontSize: 10 }}>
+              {label}
+            </Text>
+          );
         },
         tabBarActiveTintColor: Color.orange,
         tabBarInactiveTintColor: Color.grisIcone,
@@ -42,8 +67,8 @@ const TabNavigator = () => {
           height: 70,
           paddingBottom: 10,
           paddingTop: 10,
-          justifyContent: 'center', 
-          paddingBottom:20
+          justifyContent: 'center',
+          paddingBottom: 20,
         },
       })}
     >
@@ -58,7 +83,7 @@ const TabNavigator = () => {
             <Entypo
               name="megaphone" 
               size={size}
-              color={focused ? Color.orange : Color.grisIcone}
+              color="#fff" // Force white color for Annonce icon
               style={{ backgroundColor: Color.bleu, borderRadius: 50, padding: 10 }}
             />
           ),
@@ -67,7 +92,7 @@ const TabNavigator = () => {
             <TouchableOpacity
               {...props}
               style={{
-                top: -30, 
+                top: -30,
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: Color.bleu,
@@ -83,6 +108,12 @@ const TabNavigator = () => {
               {props.children}
             </TouchableOpacity>
           ),
+          tabBarStyle: {
+            position: 'absolute',
+            backgroundColor: '#00000099', 
+            borderTopWidth: 0, 
+            elevation: 0, 
+          },
         }}
       />
       <Tab.Screen name="Panier" component={Panier} options={{ headerShown: false }} />
@@ -92,7 +123,7 @@ const TabNavigator = () => {
 };
 
 const styles = StyleSheet.create({
-  
+  // Add any styles you need here
 });
 
 export default TabNavigator;

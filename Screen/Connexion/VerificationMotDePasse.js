@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Pressable, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView, KeyboardAvoidingView, Platform, Alert, TouchableOpacity } from 'react-native';
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
 import DismissKeyboard from '../../Component/DismissKeyboard';
 import GlobalStyles from '../../Styles/GlobalStyles';
@@ -7,13 +7,43 @@ import Color from '../../Styles/Color';
 
 const CELL_COUNT = 4;
 
-const VerificationMotDePasse = ({navigation}) => {
+const VerificationMotDePasse = ({ route, navigation }) => {
   const [value, setValue] = useState('');
+  const [loading, setLoading] = useState(false);
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
+
+  const handleVerification = async () => {
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://192.168.21.25:3300/sendEmail/verify-code', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: route.params.email, code: value }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        Alert.alert('Erreur', result.message || 'Erreur lors de la vérification du code.');
+        setLoading(false);
+        return;
+      }
+
+      Alert.alert('Succès', 'Code vérifié. Vous pouvez maintenant changer votre mot de passe.');
+      navigation.navigate('ChangerMotDePasse', { email: route.params.email });
+    } catch (error) {
+      Alert.alert('Erreur', 'Erreur lors de la vérification du code.');
+    }
+
+    setLoading(false);
+  };
 
   return (
     <DismissKeyboard>
@@ -50,9 +80,16 @@ const VerificationMotDePasse = ({navigation}) => {
                 )}
               />
             </View>
+            <View style={GlobalStyles.containerConnexion}>
+              <TouchableOpacity style={GlobalStyles.buttonContainer} onPress={handleVerification} disabled={loading || value.length !== CELL_COUNT}>
+                <View style={[GlobalStyles.button, loading && styles.loadingButton]}>
+                  <Text style={GlobalStyles.buttonText}>{loading ? 'Vérification...' : 'Vérifier'}</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
             <View style={GlobalStyles.renvoiCodeContainer}>
               <Text style={GlobalStyles.renvoiText}>Vous n'avez pas réçu de code?</Text>
-              <Pressable onPress={() => navigation.navigate('VerificationMotDePasse')}>
+              <Pressable onPress={() => navigation.navigate('MotDePasseOublie')}>
                 <Text style={GlobalStyles.renvoyerCode}>Envoyer un nouveau code</Text>
               </Pressable>
             </View>
@@ -89,16 +126,16 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginRight: 10,
     backgroundColor:Color.grisContainer
-    
   },
   focusCell: {
     borderColor: Color.orange,
-    
-
   },
   cellText: {
     textAlign: 'center',
     fontSize: 24,
     marginTop:10
+  },
+  loadingButton: {
+    backgroundColor: Color.grisContainer,
   },
 });

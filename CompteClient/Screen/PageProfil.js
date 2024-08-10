@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, Button, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Exemple d'image de profil
 const defaultProfileImage = require('../../assets/Images/imagesProduits/accessoire1.jpg');
 
 const PageProfil = () => {
     const [user, setUser] = useState({
-        nom: 'John Doe',
-        email: 'john.doe@example.com',
+        nom: '',
+        email: '',
         photo: defaultProfileImage,
     });
 
     const navigation = useNavigation();
+
+    useEffect(() => {
+        const loadUserData = async () => {
+            const nom = await AsyncStorage.getItem('nom');
+            const email = await AsyncStorage.getItem('email');
+            setUser({ ...user, nom, email });
+        };
+
+        loadUserData();
+    }, []);
 
     const handleLogout = () => {
         Alert.alert(
@@ -20,10 +30,13 @@ const PageProfil = () => {
             'Êtes-vous sûr de vouloir vous déconnecter ?',
             [
                 { text: 'Annuler', style: 'cancel' },
-                { text: 'Déconnexion', onPress: () => navigation.reset({
-                          index: 0,
-                          routes: [{ name: 'Deconnexion' }],
-                }) },
+                { text: 'Déconnexion', onPress: () => {
+                    AsyncStorage.clear();
+                    navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'Deconnexion' }],
+                    });
+                }},
             ]
         );
     };
@@ -36,14 +49,23 @@ const PageProfil = () => {
                 <Text style={styles.email}>{user.email}</Text>
             </View>
             <View style={styles.section}>
-                <TouchableOpacity style={styles.button} >
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ModifierProfil')}>
                     <Text style={styles.buttonText}>Modifier le Profil</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} >
+                <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Changer le Mot de Passe</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} >
+                <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Historique des Commandes</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button}>
+                    <Text style={styles.buttonText}>Ajouter une annonce</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('PaymentScreen')}>
+                    <Text style={styles.buttonText}>Payement</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} >
+                    <Text style={styles.buttonText}>Nous contactez</Text>
                 </TouchableOpacity>
             </View>
             <Button title="Déconnexion" onPress={handleLogout} color="red" />
@@ -54,41 +76,49 @@ const PageProfil = () => {
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        padding: 16,
-        backgroundColor: '#f5f5f5',
-        marginTop:40
+        padding: 20,
+        backgroundColor: '#ffffff',
     },
     profileHeader: {
         alignItems: 'center',
-        marginBottom: 24,
+        marginBottom: 30,
+        marginTop: 30,
     },
     profileImage: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
+        width: 120,
+        height: 120,
+        borderRadius: 60,
         marginBottom: 8,
+        borderColor: '#d9d9d9',
+        borderWidth: 2,
     },
     name: {
-        fontSize: 24,
-        fontWeight: 'bold',
+        fontSize: 22,
+        fontWeight: '600',
+        color: '#333',
     },
     email: {
         fontSize: 16,
-        color: 'gray',
+        color: '#666',
+        marginBottom: 8,
     },
     section: {
-        marginBottom: 24,
+        marginBottom: 20,
+        justifyContent:'center'
     },
     button: {
-        backgroundColor: 'white',
-        padding: 15,
-        borderRadius: 5,
-        marginBottom: 10,
+        backgroundColor: '#f8f8f8',
+        padding: 16,
+        borderRadius: 8,
+        marginBottom: 12,
+        borderColor: '#ddd',
+        borderWidth: 0,
     },
     buttonText: {
-        color: 'black',
+        color: '#333',
         textAlign: 'center',
         fontSize: 16,
+        fontWeight: '500',
     },
 });
 
