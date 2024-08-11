@@ -2,7 +2,7 @@ export default{
     white:'#fff',
     orange:'#F78C6B',
     grisContainer:'#DEDEDE',
-    grisIcone:'#090070',
+    grisIcone:'#073B4C',
     grisSousTitre:'#979797',
     vert:'#06D6A0',
     desactiver:'#C2C2C2',

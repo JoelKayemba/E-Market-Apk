@@ -14,10 +14,11 @@ const SkipPage = ({ navigation }) => {
   useAuth(); //permet de rediriger direcement en page d'accueil s'il y a deja eu connexion 
 
   const images = [
-    require('../../assets/Images/e.jpg'),
-    require('../../assets/Images/b.jpg'),
-    require('../../assets/Images/f.jpg'),
-    require('../../assets/Images/ImgConnexion.jpg'),
+    require('../../assets/imageBack/a.jpg'),
+    require('../../assets/imageBack/b.jpg'),
+    require('../../assets/imageBack/c.jpg'),
+    require('../../assets/imageBack/d.jpg'),
+    
   ];
 
   const texts = [

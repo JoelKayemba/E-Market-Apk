@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator, Image, TouchableOpacity, Button } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Color from '../../Styles/Color';
@@ -70,74 +70,95 @@ const PagePanier = () => {
 
     if (isLoading) {
         return (
-            <View style={styles.container}>
+            <View style={styles.loaderContainer}>
                 <ActivityIndicator size="large" color={Color.orange} />
             </View>
         );
     }
 
     return (
-        <View style={styles.container}>
-            {cartItems.length === 0 ? (
-                <View style={styles.emptyContainer}>
-                    <Text style={styles.emptyText}>Votre panier est vide.</Text>
-                </View>
-            ) : (
-                <>
-                    <Text style={styles.title}>Mon Panier</Text>
-                    <FlatList
-                        data={cartItems}
-                        keyExtractor={item => item.id}
-                        renderItem={({ item }) => (
-                            <View style={styles.itemContainer}>
-                                <TouchableOpacity style={styles.item} onPress={() => handlePress(item)}>
-                                    <View style={styles.imageContainer}>
-                                        <Image source={item.image} style={styles.image} />
-                                    </View>
-                                    <View style={styles.detailsContainer}>
-                                        <Text style={styles.itemName}>{item.nom}</Text>
-                                        <Text style={styles.itemDescription}>{item.description}</Text>
-                                        <Text style={styles.itemPrice}>${item.prix}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <View style={styles.quantityContainer}>
-                                    <TouchableOpacity onPress={() => handleDecreaseQuantity(item.id)} style={styles.quantityButton}>
-                                        <AntDesign name="minus" size={20} color={Color.bleu} />
+        <ImageBackground
+            source={require('../../assets/imageBack/panier.jpg')} // Remplacez par l'URL de votre image dans le backend
+            style={styles.backgroundImage}
+        >
+            <View style={styles.overlay} />
+            <View style={styles.container}>
+                {cartItems.length === 0 ? (
+                    <View style={styles.emptyContainer}>
+                        <Text style={styles.emptyText}>Votre panier est vide.</Text>
+                    </View>
+                ) : (
+                    <>
+                        <Text style={styles.title}>Mon Panier</Text>
+                        <FlatList
+                            data={cartItems}
+                            keyExtractor={item => item.id}
+                            renderItem={({ item }) => (
+                                <View style={styles.itemContainer}>
+                                    <TouchableOpacity style={styles.item} onPress={() => handlePress(item)}>
+                                        <View style={styles.imageContainer}>
+                                            <Image source={item.image} style={styles.image} />
+                                        </View>
+                                        <View style={styles.detailsContainer}>
+                                            <Text style={styles.itemName}>{item.nom}</Text>
+                                            <Text style={styles.itemDescription}>{item.description}</Text>
+                                            <Text style={styles.itemPrice}>${item.prix}</Text>
+                                        </View>
                                     </TouchableOpacity>
-                                    <Text style={styles.quantityText}>{quantities[item.id]}</Text>
-                                    <TouchableOpacity onPress={() => handleIncreaseQuantity(item.id)} style={styles.quantityButton}>
-                                        <AntDesign name="plus" size={20} color={Color.bleu} />
+                                    <View style={styles.quantityContainer}>
+                                        <TouchableOpacity onPress={() => handleDecreaseQuantity(item.id)} style={styles.quantityButton}>
+                                            <AntDesign name="minus" size={20} color='white' />
+                                        </TouchableOpacity>
+                                        <Text style={styles.quantityText}>{quantities[item.id]}</Text>
+                                        <TouchableOpacity onPress={() => handleIncreaseQuantity(item.id)} style={styles.quantityButton}>
+                                            <AntDesign name="plus" size={20} color='white' />
+                                        </TouchableOpacity>
+                                    </View>
+                                    <TouchableOpacity onPress={() => handleRemoveItem(item.id)} style={styles.removeButton}>
+                                        <AntDesign name="close" size={20} color={Color.orange} />
                                     </TouchableOpacity>
                                 </View>
-                                <TouchableOpacity onPress={() => handleRemoveItem(item.id)} style={styles.removeButton}>
-                                    <AntDesign name="close" size={20} color={Color.bleu} />
+                            )}
+                            contentContainerStyle={{ paddingBottom: 110 }}
+                        />
+                        <View style={styles.footer}>
+                            <View style={styles.totalContainer}>
+                                <Text style={styles.totalText}>Total à payer: </Text>
+                                <Text style={styles.totalPrix}>${getTotalPrice()}</Text>
+                            </View>
+                            
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity style={styles.footerButton1}>
+                                    <Text style={styles.buttonText}>Réserver</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.footerButton2}>
+                                    <Text style={styles.buttonText}>Commander</Text>
                                 </TouchableOpacity>
                             </View>
-                        )}
-                        contentContainerStyle={{ paddingBottom: 110 }}
-                    />
-                    <View style={styles.footer}>
-                        <View style={styles.totalContainer}>
-                            <Text style={styles.totalText}>Total à payer: </Text>
-                            <Text style={styles.totalPrix}>${getTotalPrice()}</Text>
                         </View>
-                        
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.footerButton1}>
-                                <Text style={styles.buttonText}>Réserver</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.footerButton2}>
-                                <Text style={styles.buttonText}>Commander</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </>
-            )}
-        </View>
+                    </>
+                )}
+            </View>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)', 
+    },
+    loaderContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Color.background, 
+    },
     container: {
         flex: 1,
         padding: 10,
@@ -147,14 +168,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center',
-        marginTop:30
+        marginTop: 30,
+        color: '#fff',
     },
     itemContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        borderBottomColor: 'black',
         paddingVertical: 10,
     },
     item: {
@@ -175,11 +197,13 @@ const styles = StyleSheet.create({
     },
     itemName: {
         fontSize: 18,
+        color: '#fff', 
     },
     itemDescription: {
         fontSize: 11,
         fontFamily: 'InriaSerif',
         marginTop: 10,
+        color: '#ccc', 
     },
     itemPrice: {
         fontSize: 18,
@@ -190,63 +214,61 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginRight: 10,
-       
     },
     quantityButton: {
         paddingHorizontal: 10,
-        backgroundColor:Color.grisContainer,
-        borderRadius:50,
-        
+        backgroundColor: Color.bleuTransparent,
+        borderRadius: 50,
     },
     quantityText: {
         fontSize: 14,
         marginHorizontal: 5,
+        color: '#fff', // Texte en blanc
     },
     removeButton: {
         padding: 10,
-        marginBottom:90
+        marginBottom: 90,
     },
     footer: {
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: '#FFFFFFAB',
+        backgroundColor: '#0B0B0BA6',
         padding: 15,
         borderTopWidth: 1,
-        borderTopColor: '#ccc',
+        borderTopColor: 'black',
         justifyContent: 'space-between',
-        height:120
-        
+        height: 120,
     },
-    totalContainer:{
-        flexDirection:'row',
-        justifyContent:'space-between'   
+    totalContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     totalText: {
         fontSize: 18,
         fontWeight: 'bold',
+        color: '#fff', 
     },
-    totalPrix:{
+    totalPrix: {
         fontSize: 18,
         fontWeight: 'bold',
-        color:Color.bleu
+        color: Color.orange,
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent:'space-between',
-        marginBottom:10
+        justifyContent: 'space-between',
+        marginBottom: 10,
     },
     footerButton1: {
-        backgroundColor: Color.vert,
+        backgroundColor: Color.bleuTransparent,
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 50,
         marginLeft: 10,
-       
     },
     footerButton2: {
-        backgroundColor: Color.orange,
+        backgroundColor: Color.orangeTransparent,
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 50,
@@ -264,7 +286,7 @@ const styles = StyleSheet.create({
     },
     emptyText: {
         fontSize: 18,
-        color: '#888',
+        color: '#fff', 
     },
 });
 

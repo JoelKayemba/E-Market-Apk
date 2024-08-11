@@ -78,11 +78,11 @@ const Connexion = ({ navigation }) => {
         >
           <ScrollView contentContainerStyle={GlobalStyles.scrollViewContent}>
             <Image
-              source={require('../../assets/Images/ImgConnexion2.jpg')}
+              source={require('../../assets/imageBack/connexion.jpg')}
               style={GlobalStyles.img}
             />
             <View style={GlobalStyles.containerTitre}>
-              <Text style={GlobalStyles.Titre}>Welcome back</Text>
+              <Text style={GlobalStyles.Titre}>Bon retour!</Text>
               <Text style={GlobalStyles.Titre2}>Connectez-vous à votre compte</Text>
             </View>
             <View style={GlobalStyles.containerInput}>

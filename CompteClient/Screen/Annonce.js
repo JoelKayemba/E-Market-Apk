@@ -26,23 +26,39 @@ const Annonce = () => {
   useFocusEffect(
     React.useCallback(() => {
       fetchAnnonces();
+
+      return () => {
+        videoRefs.current.forEach((videoRef) => {
+          if (videoRef) {
+            try {
+              videoRef.stopAsync();
+            } catch (error) {
+              console.error('Erreur lors de l\'arrêt de la vidéo:', error);
+            }
+          }
+        });
+      };
     }, [])
   );
 
-  const onViewableItemsChanged = useRef(({ viewableItems }) => {
+  const onViewableItemsChanged = useRef(async ({ viewableItems }) => {
     if (viewableItems.length > 0) {
       const currentIndex = viewableItems[0].index;
       setVisibleIndex(currentIndex);
 
-      videoRefs.current.forEach((videoRef, index) => {
-        if (videoRef && index !== currentIndex) {
-          videoRef.stopAsync();
+      for (let i = 0; i < videoRefs.current.length; i++) {
+        const videoRef = videoRefs.current[i];
+        if (videoRef) {
+          try {
+            if (i === currentIndex) {
+              await videoRef.playAsync();
+            } else {
+              await videoRef.stopAsync();
+            }
+          } catch (error) {
+            console.error(`Erreur lors de la gestion de la vidéo à l'index ${i}:`, error);
+          }
         }
-      });
-
-      const currentVideoRef = videoRefs.current[currentIndex];
-      if (currentVideoRef) {
-        currentVideoRef.playAsync();
       }
     }
   });
@@ -51,13 +67,11 @@ const Annonce = () => {
     itemVisiblePercentThreshold: 50,
   };
 
-  // Filtrer les annonces selon la recherche
   const filteredAnnonces = annonces.filter((annonce) =>
     annonce.titre.toLowerCase().includes(searchText.toLowerCase()) ||
     annonce.description.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  // Utiliser les annonces filtrées ou toutes les annonces si aucune correspondance
   const dataToRender = filteredAnnonces.length > 0 ? filteredAnnonces : annonces;
 
   const renderItem = ({ item, index }) => (
@@ -103,18 +117,40 @@ const VideoItem = ({ uri, profileImage, isVisible, videoRef }) => {
   const [videoSize, setVideoSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    if (isVisible && !isPaused) {
-      videoRefInternal.current.playAsync();
-    }
+    const playVideo = async () => {
+      if (isVisible && !isPaused) {
+        try {
+          await videoRefInternal.current.playAsync();
+        } catch (error) {
+          console.error('Erreur lors de la lecture de la vidéo:', error);
+        }
+      }
+    };
+
+    playVideo();
+
+    return () => {
+      if (videoRefInternal.current) {
+        try {
+          videoRefInternal.current.stopAsync();
+        } catch (error) {
+          console.error('Erreur lors de l\'arrêt de la vidéo:', error);
+        }
+      }
+    };
   }, [isVisible, isPaused]);
 
-  const handleVideoPress = () => {
-    if (isPaused) {
-      videoRefInternal.current.playAsync();
-      setIsPaused(false);
-    } else {
-      videoRefInternal.current.pauseAsync();
-      setIsPaused(true);
+  const handleVideoPress = async () => {
+    try {
+      if (isPaused) {
+        await videoRefInternal.current.playAsync();
+        setIsPaused(false);
+      } else {
+        await videoRefInternal.current.pauseAsync();
+        setIsPaused(true);
+      }
+    } catch (error) {
+      console.error('Erreur lors du contrôle de la vidéo:', error);
     }
   };
 
@@ -142,7 +178,7 @@ const VideoItem = ({ uri, profileImage, isVisible, videoRef }) => {
             isMuted={false}
             resizeMode={isLandscape ? 'contain' : 'cover'}
             shouldPlay={false}
-            isLooping
+            isLooping={true} // La vidéo se répète à l'infini
             onLoad={onVideoLoad}
             style={[
               styles.video,

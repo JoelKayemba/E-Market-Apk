@@ -76,7 +76,7 @@ const InformationInscription = () => {
         >
           <ScrollView contentContainerStyle={GlobalStyles.scrollViewContent}>
             <Image
-              source={require('../../assets/Images/ImgInscription.jpg')}
+              source={require('../../assets/imageBack/inscription.jpg')}
               style={GlobalStyles.img2}
             />
             <View style={styles.overlay}>

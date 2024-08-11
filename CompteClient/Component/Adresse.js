@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput, FlatList, Alert ,KeyboardAvoidingView , Platform , TouchableWithoutFeedback , Keyboard, ScrollView} from 'react-native';
+import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput, FlatList, Alert ,KeyboardAvoidingView , Platform , TouchableWithoutFeedback , Keyboard, ScrollView, ImageBackground, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 import ClientStyle from '../../Styles/ClientStyle';
 import { Picker } from '@react-native-picker/picker';
 import Color from '../../Styles/Color';
 import { Entypo, Ionicons, EvilIcons } from '@expo/vector-icons';
-import Loading from '../../Component/Loading';
 import adresseStyle from '../../Styles/adresseStyle';
 
 const Adresse = () => {
@@ -39,7 +38,6 @@ const Adresse = () => {
         const fetchAdresses = async () => {
             try {
                 const userId = await AsyncStorage.getItem('idclient');
-                console.log('ID utilisateur:', userId); 
                 if (!userId) {
                     Alert.alert('Erreur', 'Impossible de récupérer l\'ID du client. Veuillez vous reconnecter.');
                     return;
@@ -47,7 +45,6 @@ const Adresse = () => {
         
                 const response = await fetch(`http://192.168.21.25:3300/adresses?userId=${userId}}`);
                 const result = await response.json();
-                console.log('Réponse du serveur:', result);  // Vérifiez la réponse du serveur
         
                 if (!response.ok) {
                     Alert.alert('Erreur', result.message || 'Erreur lors du chargement des adresses.');
@@ -69,7 +66,6 @@ const Adresse = () => {
                         latitude: adresseExistante.latitude,
                         longitude: adresseExistante.longitude,
                     });
-                    console.log('Adresses renvoyées:', adresses);
 
                 }else {
                     setAdresses([]);
@@ -121,7 +117,6 @@ const Adresse = () => {
                 longitude: currentLocation?.longitude || null,
                 parDefaut: 1,
             };
-            console.log('Nouvelle adresse envoyée:', newAdresse);
         
             const response = await fetch('http://192.168.21.25:3300/adresses', {
                 method: 'POST',
@@ -139,15 +134,12 @@ const Adresse = () => {
         
             const result = await response.json();
 
-            if (!result.idadresse) {
-                console.warn('ID manquant pour l\'adresse ajoutée:', result);
-            }
-
             setAdresses([result.adresse]); // Remplacer l'adresse précédente par la nouvelle
             setEditId(result.idadresse);
             setModalVisible(false);
             setLoading(false);
         } catch (error) {
+            setLoading(false);
             Alert.alert('Erreur', 'Erreur lors de l\'ajout de l\'adresse.');
         }
     };
@@ -180,6 +172,7 @@ const Adresse = () => {
             setModalVisible(false);
             setLoading(false);
         } catch (error) {
+            setLoading(false);
             Alert.alert('Erreur', 'Erreur lors de la mise à jour de l\'adresse.');
         }
     };
@@ -207,10 +200,6 @@ const Adresse = () => {
         setCodePostal(result.postalCode || '');
         setAppartement(''); 
         setCurrentLocation({ latitude: location.coords.latitude, longitude: location.coords.longitude });
-        console.log('Localisation actuelle:', {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-        });
         setLoading(false);
     };
 
@@ -231,81 +220,138 @@ const Adresse = () => {
                 </TouchableOpacity>
             )}
             <Modal visible={modalVisible} animationType="slide">
-                <View style={adresseStyle.modalContent}>
-                    <View style={adresseStyle.modalHeader}>
-                        <Text style={adresseStyle.textTitre}>{editId ? 'Modifier l\'adresse' : 'Ajouter une nouvelle adresse'}</Text>
-                        <TouchableOpacity onPress={() => setModalVisible(false)}>
-                            <Ionicons name="close" size={24} color="red" />
+                <ImageBackground
+                    source={require('../../assets/imageBack/road.jpg')} // 
+                    style={styles.backgroundImage}
+                >
+                    <View style={styles.overlay} />
+                    <View style={adresseStyle.modalContent}>
+                        <View style={adresseStyle.modalHeader}>
+                            <Text style={styles.textTitre}>{editId ? 'Modifier l\'adresse' : 'Ajouter une nouvelle adresse'}</Text>
+                            <TouchableOpacity onPress={() => setModalVisible(false)}>
+                                <Ionicons name="close" size={24} color="red" />
+                            </TouchableOpacity>
+                        </View>
+                        <Picker
+                            selectedValue={pays}
+                            onValueChange={(itemValue) => setPays(itemValue)}
+                            style={adresseStyle.picker}
+                            itemStyle={{ color: '#fff' }}
+                        >
+                            <Picker.Item label="Sélectionner un pays" value="" />
+                            {paysOptions.map((paysOption) => (
+                                <Picker.Item key={paysOption.code} label={paysOption.name} value={paysOption.code} />
+                            ))}
+                        </Picker>
+                        <KeyboardAvoidingView
+                        style={{ flex: 1 }}
+                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    >
+                        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                            <ScrollView contentContainerStyle={adresseStyle.container}>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Province"
+                                    value={province}
+                                    onChangeText={setProvince}
+                                    placeholderTextColor="#ccc"
+                                />
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Ville"
+                                    value={ville}
+                                    onChangeText={setVille}
+                                    placeholderTextColor="#ccc"
+                                />
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Rue"
+                                    value={rue}
+                                    onChangeText={setRue}
+                                    placeholderTextColor="#ccc"
+                                />
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Numéro"
+                                    keyboardType='numeric'
+                                    value={numero}
+                                    onChangeText={setNumero}
+                                    placeholderTextColor="#ccc"
+                                />
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Code Postal (optionnel)"
+                                    value={codePostal}
+                                    onChangeText={setCodePostal}
+                                    placeholderTextColor="#ccc"
+                                />
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Appartement (optionnel)"
+                                    value={appartement}
+                                    onChangeText={setAppartement}
+                                    placeholderTextColor="#ccc"
+                                />
+                            </ScrollView>
+                        </TouchableWithoutFeedback>
+                    </KeyboardAvoidingView>
+                        
+                        <TouchableOpacity
+                            style={[adresseStyle.bouton1, loading && styles.disabledButton]} 
+                            onPress={editId ? handleUpdate : ajouterAdresse}
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <ActivityIndicator size="small" color="#fff" />
+                            ) : (
+                                <Text style={adresseStyle.boutonTexte}>{editId ? 'Mettre à jour' : 'Ajouter'}</Text>
+                            )}
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[adresseStyle.bouton2, loading && styles.disabledButton]} 
+                            onPress={obtenirLocalisationActuelle}
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <ActivityIndicator size="small" color="#fff" />
+                            ) : (
+                                <Text style={adresseStyle.boutonTexte}>Utiliser ma localisation actuelle</Text>
+                            )}
                         </TouchableOpacity>
                     </View>
-                    <Picker
-                        selectedValue={pays}
-                        onValueChange={(itemValue) => setPays(itemValue)}
-                        style={adresseStyle.picker}
-                    >
-                        <Picker.Item label="Sélectionner un pays" value="" />
-                        {paysOptions.map((paysOption) => (
-                            <Picker.Item key={paysOption.code} label={paysOption.name} value={paysOption.code} />
-                        ))}
-                    </Picker>
-                    <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                >
-                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                        <ScrollView contentContainerStyle={adresseStyle.container}>
-                            <TextInput
-                                style={adresseStyle.input}
-                                placeholder="Province"
-                                value={province}
-                                onChangeText={setProvince}
-                            />
-                            <TextInput
-                                style={adresseStyle.input}
-                                placeholder="Ville"
-                                value={ville}
-                                onChangeText={setVille}
-                            />
-                            <TextInput
-                                style={adresseStyle.input}
-                                placeholder="Rue"
-                                value={rue}
-                                onChangeText={setRue}
-                            />
-                            <TextInput
-                                style={adresseStyle.input}
-                                placeholder="Numéro"
-                                keyboardType='numeric'
-                                value={numero}
-                                onChangeText={setNumero}
-                            />
-                            <TextInput
-                                style={adresseStyle.input}
-                                placeholder="Code Postal (optionnel)"
-                                value={codePostal}
-                                onChangeText={setCodePostal}
-                            />
-                            <TextInput
-                                style={adresseStyle.input}
-                                placeholder="Appartement (optionnel)"
-                                value={appartement}
-                                onChangeText={setAppartement}
-                            />
-                        </ScrollView>
-                    </TouchableWithoutFeedback>
-                </KeyboardAvoidingView>
-                    
-                    <TouchableOpacity style={adresseStyle.bouton1} onPress={editId ? handleUpdate : ajouterAdresse}>
-                        <Text style={adresseStyle.boutonTexte}>{editId ? 'Mettre à jour' : 'Ajouter'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={adresseStyle.bouton2} onPress={obtenirLocalisationActuelle}>
-                        <Text style={adresseStyle.boutonTexte}>Utiliser ma localisation actuelle</Text>
-                    </TouchableOpacity>
-                    {loading && <Loading />}
-                </View>
+                </ImageBackground>
             </Modal>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Couche noire semi-transparente
+    },
+    textTitre: {
+        color: '#fff', // Texte en blanc
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    input: {
+        backgroundColor: '#00000091', 
+        borderWidth: 1,
+        borderColor: Color.bleu,
+        borderRadius: 10,
+        padding: 10,
+        marginBottom: 16,
+        color: '#fff', // Couleur du texte en blanc
+    },
+    disabledButton: {
+        opacity: 0.7,
+    },
+});
 
 export default Adresse;

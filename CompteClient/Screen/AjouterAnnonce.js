@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Alert, Image, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, Alert, Image, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome } from '@expo/vector-icons';
@@ -94,64 +94,78 @@ const AjouterAnnonce = ({ navigation }) => {
     };
 
     return (
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <View style={styles.container}>
-                <Text style={styles.label}>Titre</Text>
-                <TextInput style={styles.input} value={titre} onChangeText={setTitre} />
+        <ImageBackground
+            source={require('../../assets/imageBack/e.jpg') } // Remplacez par le lien de votre image
+            style={styles.backgroundImage}
+        >
+            <View style={styles.overlay} />
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+                <View style={styles.container}>
+                    <Text style={styles.label}>Titre</Text>
+                    <TextInput style={styles.input} value={titre} onChangeText={setTitre} placeholderTextColor="#ddd" />
 
-                <Text style={styles.label}>Description</Text>
-                <TextInput style={styles.input} value={description} onChangeText={setDescription} />
+                    <Text style={styles.label}>Description</Text>
+                    <TextInput style={styles.input} value={description} onChangeText={setDescription} placeholderTextColor="#ddd" />
 
-                <Text style={styles.label}>Lien (optionnel)</Text>
-                <TextInput style={styles.input} value={lien} onChangeText={setLien} />
+                    <Text style={styles.label}>Lien (optionnel)</Text>
+                    <TextInput style={styles.input} value={lien} onChangeText={setLien} placeholderTextColor="#ddd" />
 
-                <View style={styles.mediaContainer}>
-                    <TouchableOpacity style={styles.mediaButton} onPress={pickImage}>
-                        <FontAwesome name="photo" size={24} color="#fff" />
-                        <Text style={styles.mediaButtonText}>Choisir une image</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.mediaButton} onPress={pickVideo}>
-                        <FontAwesome name="video-camera" size={24} color="#fff" />
-                        <Text style={styles.mediaButtonText}>Choisir une vidéo</Text>
+                    <View style={styles.mediaContainer}>
+                        <TouchableOpacity style={styles.mediaButton} onPress={pickImage}>
+                            <FontAwesome name="photo" size={24} color="#fff" />
+                            <Text style={styles.mediaButtonText}>Choisir une image</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.mediaButton} onPress={pickVideo}>
+                            <FontAwesome name="video-camera" size={24} color="#fff" />
+                            <Text style={styles.mediaButtonText}>Choisir une vidéo</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    {image && (
+                        <View style={styles.previewContainer}>
+                            <Text style={styles.previewLabel}>Aperçu de l'image :</Text>
+                            <Image source={{ uri: image }} style={styles.previewImage} />
+                        </View>
+                    )}
+
+                    {video && (
+                        <View style={styles.previewContainer}>
+                            <Text style={styles.previewLabel}>Aperçu de la vidéo :</Text>
+                            <Text style={styles.previewText}>Vidéo sélectionnée</Text>
+                        </View>
+                    )}
+
+                    <TouchableOpacity
+                        style={styles.submitButton}
+                        onPress={handleAjouterAnnonce}
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <ActivityIndicator size="small" color="#fff" />
+                        ) : (
+                            <Text style={styles.submitButtonText}>Ajouter Annonce</Text>
+                        )}
                     </TouchableOpacity>
                 </View>
-
-                {image && (
-                    <View style={styles.previewContainer}>
-                        <Text style={styles.previewLabel}>Aperçu de l'image :</Text>
-                        <Image source={{ uri: image }} style={styles.previewImage} />
-                    </View>
-                )}
-
-                {video && (
-                    <View style={styles.previewContainer}>
-                        <Text style={styles.previewLabel}>Aperçu de la vidéo :</Text>
-                        <Text style={styles.previewText}>Vidéo sélectionnée</Text>
-                    </View>
-                )}
-
-                <TouchableOpacity
-                    style={styles.submitButton}
-                    onPress={handleAjouterAnnonce}
-                    disabled={loading}
-                >
-                    {loading ? (
-                        <ActivityIndicator size="small" color="#fff" />
-                    ) : (
-                        <Text style={styles.submitButtonText}>Ajouter Annonce</Text>
-                    )}
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Couche noire semi-transparente
+    },
     scrollContainer: {
         flexGrow: 1,
         justifyContent: 'center',
         padding: 16,
-        backgroundColor: '#f9f9f9',
     },
     container: {
         flex: 1,
@@ -160,15 +174,17 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 18,
         marginBottom: 8,
+        color: '#FCFCFCE6', 
     },
     input: {
-        backgroundColor: 'white',
+        backgroundColor: '#00000091',
         borderWidth: 1,
         borderColor: Color.bleu,
         borderRadius: 10,
         padding: 8,
         marginBottom: 16,
         height: 50,
+        color: 'white',
     },
     mediaContainer: {
         flexDirection: 'column',
@@ -180,7 +196,7 @@ const styles = StyleSheet.create({
     mediaButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Color.bleu,
+        backgroundColor: Color.bleuTransparent,
         paddingVertical: 10,
         paddingHorizontal: 15,
         borderRadius: 10,
@@ -198,6 +214,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 8,
         fontWeight: 'bold',
+        color: '#fff',
     },
     previewImage: {
         width: '100%',
@@ -206,15 +223,16 @@ const styles = StyleSheet.create({
     },
     previewText: {
         fontSize: 16,
-        color: '#555',
+        color: '#ddd', 
     },
     submitButton: {
-        backgroundColor: Color.vert,
+        backgroundColor: '#FF0000A6',
         paddingVertical: 15,
         paddingHorizontal: 20,
         borderRadius: 10,
         alignItems: 'center',
         marginTop: 10,
+        
     },
     submitButtonText: {
         color: '#fff',

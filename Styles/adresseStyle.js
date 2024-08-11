@@ -29,7 +29,7 @@ const adresseStyle=StyleSheet.create({
         padding: 10,
     },
     bouton1: {
-        backgroundColor: Color.vert,
+        backgroundColor: Color.bleuTransparent,
         borderRadius: 50,
         marginBottom: 10,
         paddingVertical: 10,
@@ -38,7 +38,7 @@ const adresseStyle=StyleSheet.create({
         alignItems: 'center',
     },
     bouton2: {
-        backgroundColor: Color.bleuTransparent,
+        backgroundColor:'#FF0000A6',
         borderRadius: 50,
         marginBottom: 10,
         paddingVertical: 10,
