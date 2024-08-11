@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
     rechercheContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#FFF',
-        borderRadius: 10,
+        backgroundColor: '#FFFFFFA8',
+        borderRadius: 50,
         marginTop: 10,
         paddingHorizontal: 10,
         paddingVertical: 10,

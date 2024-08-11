@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard, ImageBackground } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -160,66 +160,82 @@ const ModifierProfil = () => {
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <ScrollView contentContainerStyle={styles.container}>
-                {loading ? (
-                    <ActivityIndicator size="large" color={Color.orange} />
-                ) : (
-                    <>
-                        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                            <Ionicons name="arrow-back" size={30} color={Color.orange} />
-                        </TouchableOpacity>
-                       
-                        <Text style={styles.label}>Prénom</Text>
-                        <TextInput style={styles.input} value={prenom} onChangeText={setPrenom} />
+                <ImageBackground
+                    source={require('../../assets/imageBack/modifierProfile.jpg')}
+                    style={styles.backgroundImage}
+                >
+                    <ScrollView contentContainerStyle={styles.container}>
+                    {loading ? (
+                        <ActivityIndicator size="large" color={Color.orange} />
+                    ) : (
+                        <>
+                            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                                <Ionicons name="arrow-back" size={30} color={Color.orange} />
+                            </TouchableOpacity>
+                           
+                            <Text style={styles.label}>Prénom</Text>
+                            <TextInput style={styles.input} value={prenom} onChangeText={setPrenom} placeholderTextColor="#ccc" />
 
-                        <Text style={styles.label}>Sexe</Text>
-                        <Picker
-                            selectedValue={sexe}
-                            style={styles.input}
-                            onValueChange={(itemValue) => setSexe(itemValue)}
-                        >
-                            <Picker.Item label="Homme" value="Homme" />
-                            <Picker.Item label="Femme" value="Femme" />
-                            <Picker.Item label="Autre" value="Autre" />
-                        </Picker>
+                            <Text style={styles.label}>Sexe</Text>
+                            <View style={styles.pickerContainer}>
+                                <Picker
+                                    selectedValue={sexe}
+                                    style={styles.picker}
+                                    onValueChange={(itemValue) => setSexe(itemValue)}
+                                    dropdownIconColor="#fff"
+                                    itemStyle={{ color: '#fff' }}
                         
-                        <Text style={styles.label}>Date de Naissance</Text>
-                        <TextInput
-                            style={styles.input}
-                            value={dateNaissance}
-                            onChangeText={(text) => {
-                                setDateNaissance(text);
-                                setDateError('');
-                            }}
-                            placeholder="AAAA-MM-JJ"
-                            keyboardType="text"
-                        />
-                        {dateError ? <Text style={styles.errorText}>{dateError}</Text> : null}
+                                >
+                                    <Picker.Item label="Homme" value="Homme" />
+                                    <Picker.Item label="Femme" value="Femme" />
+                                    <Picker.Item label="Autre" value="Autre" />
+                                </Picker>
+                            </View>
+                            
+                            <Text style={styles.label}>Date de Naissance</Text>
+                            <TextInput
+                                style={styles.input}
+                                value={dateNaissance}
+                                onChangeText={(text) => {
+                                    setDateNaissance(text);
+                                    setDateError('');
+                                }}
+                                placeholder="AAAA-MM-JJ"
+                                placeholderTextColor="#ccc"
+                                keyboardType="text"
+                            />
+                            {dateError ? <Text style={styles.errorText}>{dateError}</Text> : null}
 
-                        <Text style={styles.label}>Email</Text>
-                        <TextInput style={styles.input} value={email} onChangeText={setEmail} />
+                            <Text style={styles.label}>Email</Text>
+                            <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholderTextColor="#ccc" />
 
-                        <Text style={styles.label}>Nom d'utilisateur</Text>
-                        <TextInput style={styles.input} value={nomUtilisateur} onChangeText={setNomUtilisateur} />
+                            <Text style={styles.label}>Nom d'utilisateur</Text>
+                            <TextInput style={styles.input} value={nomUtilisateur} onChangeText={setNomUtilisateur} placeholderTextColor="#ccc" />
 
-                        <TouchableOpacity onPress={handleSave} style={styles.buttonSave}>
-                            <Text style={styles.buttonText}>Enregistrer</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={handleDeleteAccount} style={styles.buttonDelete}>
-                            <Text style={styles.buttonText}>Supprimer mon compte</Text>
-                        </TouchableOpacity>
-                    </>
-                )}
-                </ScrollView>
+                            <TouchableOpacity onPress={handleSave} style={styles.buttonSave}>
+                                <Text style={styles.buttonText}>Enregistrer</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={handleDeleteAccount} style={styles.buttonDelete}>
+                                <Text style={styles.buttonText}>Supprimer mon compte</Text>
+                            </TouchableOpacity>
+                        </>
+                    )}
+                    </ScrollView>
+                </ImageBackground>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );
 };
 
 const styles = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
+    },
     container: {
         padding: 16,
-        backgroundColor: '#fff',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)', 
         flexGrow: 1,
         justifyContent: 'center',
     },
@@ -230,12 +246,26 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 16,
         marginBottom: 8,
+        color: '#ffffff', 
     },
     input: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#00000091', 
+        color: '#fff', 
         padding: 10,
-        borderRadius: 4,
+        borderRadius: 10,
         marginBottom: 16,
+        borderWidth:1,
+        borderColor:Color.bleu
+    },
+    pickerContainer: {
+        backgroundColor: '#00000091',
+        borderRadius: 10,
+        marginBottom: 16,
+        borderWidth:1,
+        borderColor:Color.bleu
+    },
+    picker: {
+        color: '#fff', 
     },
     errorText: {
         color: 'red',

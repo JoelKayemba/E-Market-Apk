@@ -36,7 +36,7 @@ const TabNavigator = () => {
             IconComponent = Entypo;
           }
 
-          // Set the color to white if Annonce is active
+          
           const activeColor = navigation.getState().index === 2 ? '#fff' : color;
 
           return <IconComponent name={iconName} size={size} color={activeColor} />;
@@ -83,7 +83,7 @@ const TabNavigator = () => {
             <Entypo
               name="megaphone" 
               size={size}
-              color="#fff" // Force white color for Annonce icon
+              color="#fff" 
               style={{ backgroundColor: Color.bleu, borderRadius: 50, padding: 10 }}
             />
           ),
@@ -123,7 +123,7 @@ const TabNavigator = () => {
 };
 
 const styles = StyleSheet.create({
-  // Add any styles you need here
+  
 });
 
 export default TabNavigator;

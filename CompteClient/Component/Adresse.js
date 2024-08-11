@@ -232,17 +232,19 @@ const Adresse = () => {
                                 <Ionicons name="close" size={24} color="red" />
                             </TouchableOpacity>
                         </View>
-                        <Picker
-                            selectedValue={pays}
-                            onValueChange={(itemValue) => setPays(itemValue)}
-                            style={adresseStyle.picker}
-                            itemStyle={{ color: '#fff' }}
-                        >
-                            <Picker.Item label="Sélectionner un pays" value="" />
-                            {paysOptions.map((paysOption) => (
-                                <Picker.Item key={paysOption.code} label={paysOption.name} value={paysOption.code} />
-                            ))}
-                        </Picker>
+
+                            <Picker
+                                selectedValue={pays}
+                                onValueChange={(itemValue) => setPays(itemValue)}
+                                style={styles.picker}
+                                itemStyle={{ color: '#fff' }} // Couleur du texte des éléments du Picker
+                            >
+                                <Picker.Item label="Sélectionner un pays" value="" />
+                                {paysOptions.map((paysOption) => (
+                                    <Picker.Item key={paysOption.code} label={paysOption.name} value={paysOption.code} />
+                                ))}
+                            </Picker>
+
                         <KeyboardAvoidingView
                         style={{ flex: 1 }}
                         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -351,6 +353,11 @@ const styles = StyleSheet.create({
     },
     disabledButton: {
         opacity: 0.7,
+    },
+
+    picker: {
+        color: '#fff', 
+
     },
 });
 

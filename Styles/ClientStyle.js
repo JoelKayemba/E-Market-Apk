@@ -67,8 +67,8 @@ const ClientStyle = StyleSheet.create({
         marginBottom:10
       },
       containerPub: {
-        marginHorizontal: 10,
-        marginTop: 20,
+        marginHorizontal:5,
+        marginTop: 10,
       },
       textPourToi: {
         fontWeight: 'bold',
@@ -137,11 +137,12 @@ const ClientStyle = StyleSheet.create({
       },
       produitRecommander: {
         width: 180, 
-        borderTopEndRadius: 10,
+        borderTopEndRadius: 20,
+        borderTopLeftRadius:20,
         marginBottom: 10,
-        backgroundColor:'white',
+        backgroundColor:'#fff',
         borderRadius:10,
-        height:230
+        height:240
 
         
       },
@@ -155,8 +156,8 @@ const ClientStyle = StyleSheet.create({
       imageProduit: {
         width: '100%',
         height: 170,
-        borderTopLeftRadius:10,
-        borderTopRightRadius:10,
+        borderTopLeftRadius:20,
+        borderTopRightRadius:20,
       },
       
       heartIconContainer: {

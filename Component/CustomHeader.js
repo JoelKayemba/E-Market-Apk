@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Modal, ImageBackground, Image , Text} from 'react-native';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import Color from '../Styles/Color';
+import Recherche from '../CompteClient/Component/Recherche';
 
 const CustomHeader = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -16,23 +17,33 @@ const CustomHeader = () => {
 
   return (
     <View>
-      <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.headerButton} onPress={openModal}>
-          <Image
-            source={require('../assets/logo/emarketLogo.png')} 
-            style={styles.profileImage}
-          />
-          <Ionicons name="chevron-down" size={20} color={Color.grisIcone} />
-        </TouchableOpacity>
-        <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={() => alert('Messages')} style={styles.iconButton}>
-            <AntDesign name="mail" size={20} color={Color.grisIcone} />
+      <ImageBackground
+        source={require('../assets/imageBack/header.jpg')} 
+        style={styles.headerBackground}
+      >
+        <View style={styles.overlay} />
+        <View style={styles.headerContainer}>
+          <TouchableOpacity style={styles.headerButton} onPress={openModal}>
+            <Image
+              source={require('../assets/logo/emarketLogo.png')} 
+              style={styles.profileImage}
+            />
+            <Ionicons name="chevron-down" size={20} color='white' />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => alert('Notifications')} style={styles.iconButton}>
-            <Ionicons name="notifications-outline" size={20} color={Color.grisIcone} />
-          </TouchableOpacity>
+          <View style={styles.iconContainer}>
+            <TouchableOpacity onPress={() => alert('Messages')} style={styles.iconButton}>
+              <AntDesign name="mail" size={20} color={Color.orange} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => alert('Notifications')} style={styles.iconButton}>
+              <Ionicons name="notifications-outline" size={20} color={Color.orange} />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+        <View style={styles.rechercheContainer}>
+          <Recherche />
+          
+        </View>
+      </ImageBackground>
 
       <Modal
         transparent={true}
@@ -41,34 +52,49 @@ const CustomHeader = () => {
         animationType="slide"
       >
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
+          <ImageBackground
+            source={require('../assets/imageBack/e.jpg')} 
+            style={styles.modalBackground}
+          >
+            <View style={styles.overlay} />
+            <View style={styles.modalContent}>
+              <TouchableOpacity style={styles.addBoutiqueButton}>
+                <Text style={styles.addBoutiqueText}>Ajouter Boutique</Text>
+              </TouchableOpacity>
+              
+            </View>
             <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
-              <Ionicons name="close" size={24} color="white" />
-            </TouchableOpacity>
-            <Text style={styles.modalText}>Mon profil client</Text>
-            <TouchableOpacity style={styles.addBoutiqueButton}>
-              <Text style={styles.addBoutiqueText}>Ajouter Boutique</Text>
-            </TouchableOpacity>
-          </View>
+                <Text style={styles.textClose}>Fermer</Text>
+              </TouchableOpacity>
+          </ImageBackground>
         </View>
       </Modal>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  headerBackground: {
+    width: '100%',
+    height: 200,
+    position: 'relative', 
+    
+  },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
-    height: 100,
-    backgroundColor: '#FFFFFF00',
+    height: '60%',
+    zIndex: 2, 
+    marginTop:20,
+    borderBottomLeftRadius: 15,  
+    borderBottomRightRadius: 15, 
   },
   headerButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 30,
   },
   profileImage: {
     width: 120,
@@ -78,7 +104,6 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flexDirection: 'row',
-    marginTop: 30,
   },
   iconButton: {
     alignItems: 'center',
@@ -86,37 +111,62 @@ const styles = StyleSheet.create({
     padding: 5,
     marginHorizontal: 5,
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#00000091', 
     borderWidth: 1,
     borderColor: Color.bleu,
     height: 40,
     width: 40,
+  },
+  rechercheContainer: {
+    paddingHorizontal: 10,
+    zIndex: 2, 
+    marginTop:-20
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'flex-end',
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Couche sombre pour améliorer la lisibilité
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    
+  },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor:'transparent',
     padding: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    height: '70%',
-    justifyContent: 'center',
+    width: '100%',
     alignItems: 'center',
+    zIndex: 2, // Assure que le contenu est au-dessus de l'overlay
   },
   modalText: {
     fontSize: 24,
     marginBottom: 20,
+    color: 'white',
   },
   closeButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    backgroundColor: Color.orange,
+    backgroundColor: '#FF0000A8',
     borderRadius: 20,
     padding: 5,
+    marginTop:20,
+    height:50,
+    alignItems:'center',
+    justifyContent:'center',
+    width:170,
+    top:100
+
+  },
+  textClose:{
+    color:'white'
   },
   addBoutiqueButton: {
     backgroundColor: Color.bleu,

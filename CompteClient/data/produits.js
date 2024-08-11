@@ -1,12 +1,13 @@
 const produits = [
     { 
         id: '1', 
-        nom: 'tacos', 
+        nom: 'tacos de docteur who', 
         prix: '10.00', 
         image: require('../../assets/Images/imagesProduits/food9.jpg'), 
         livraison: true, 
         description: 'Délicieux tacos au poulet, garnis de légumes frais et de sauce maison.' ,
-        categorie:'Alimentation'
+        categorie:'Alimentation',
+        nomBoutique:'Mere Sofia'
     },
     { 
         id: '2', 
@@ -15,7 +16,8 @@ const produits = [
         image: require('../../assets/Images/imagesProduits/accessoire1.jpg'), 
         livraison: true, 
         description: 'Ordinateur portable Mac Book, idéal pour le travail et le divertissement.',
-        categorie:'Accesoires'
+        categorie:'Accesoires',
+        nomBoutique:'Mere Nadine'
     },
     { 
         id: '3', 
@@ -24,7 +26,8 @@ const produits = [
         image: require('../../assets/Images/manette.jpg'), 
         livraison: false, 
         description: 'Manette de jeu sans fil, compatible avec plusieurs consoles et PC.' ,
-        categorie:'Accessoires'
+        categorie:'Accessoires',
+        nomBoutique:'Mere Jose'
     },
     { 
         id: '4', 

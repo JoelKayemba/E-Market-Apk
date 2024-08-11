@@ -42,7 +42,7 @@ const SkipPage = ({ navigation }) => {
       // Passer automatiquement à la page de connexion après un délai
       setTimeout(() => {
         navigation.navigate('Bienvenue');
-      }, 1000); // Délai de 1 seconde avant de naviguer
+      }, 3000); // Délai de 3 secondes avant de naviguer
     } else {
       setShowButton(false);
     }

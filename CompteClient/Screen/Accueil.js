@@ -15,7 +15,6 @@ const Accueil = ({ navigation }) => {
     const renderHeader = () => (
         <View>
             <View style={ClientStyle.containerRecherche}  >
-                <Recherche />
                 <Adresse />
             </View>
             <View style={ClientStyle.containerCategorie}>

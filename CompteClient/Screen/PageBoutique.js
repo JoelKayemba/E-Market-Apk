@@ -31,9 +31,6 @@ const Boutique = ({ navigation}) => {
   // Fonction pour rendre l'en-tête
   const renderHeader = () => (
     <View>
-      <View style={ClientStyle.containerRecherche}>
-        <Recherche />
-      </View>
       <Publicite />
     </View>
   );
@@ -61,7 +58,7 @@ const Boutique = ({ navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10
+    padding: 0
   }
 });
 

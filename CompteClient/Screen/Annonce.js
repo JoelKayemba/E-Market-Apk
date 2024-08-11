@@ -41,27 +41,34 @@ const Annonce = () => {
     }, [])
   );
 
-  const onViewableItemsChanged = useRef(async ({ viewableItems }) => {
+  const onViewableItemsChanged = useRef(({ viewableItems }) => {
     if (viewableItems.length > 0) {
       const currentIndex = viewableItems[0].index;
       setVisibleIndex(currentIndex);
+    }
+  });
 
+  useEffect(() => {
+    const manageVideoPlayback = async () => {
       for (let i = 0; i < videoRefs.current.length; i++) {
         const videoRef = videoRefs.current[i];
-        if (videoRef) {
+        if (videoRef && videoRef.current) {
           try {
-            if (i === currentIndex) {
-              await videoRef.playAsync();
+            if (i === visibleIndex) {
+              await videoRef.current.playAsync();
             } else {
-              await videoRef.stopAsync();
+              await videoRef.current.pauseAsync();
             }
           } catch (error) {
             console.error(`Erreur lors de la gestion de la vidéo à l'index ${i}:`, error);
           }
         }
       }
-    }
-  });
+    };
+
+    manageVideoPlayback();
+
+  }, [visibleIndex]);
 
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50,
@@ -124,6 +131,12 @@ const VideoItem = ({ uri, profileImage, isVisible, videoRef }) => {
         } catch (error) {
           console.error('Erreur lors de la lecture de la vidéo:', error);
         }
+      } else {
+        try {
+          await videoRefInternal.current.pauseAsync();
+        } catch (error) {
+          console.error('Erreur lors de la pause de la vidéo:', error);
+        }
       }
     };
 
@@ -132,13 +145,13 @@ const VideoItem = ({ uri, profileImage, isVisible, videoRef }) => {
     return () => {
       if (videoRefInternal.current) {
         try {
-          videoRefInternal.current.stopAsync();
+          videoRefInternal.current.pauseAsync();
         } catch (error) {
           console.error('Erreur lors de l\'arrêt de la vidéo:', error);
         }
       }
     };
-  }, [isVisible, isPaused]);
+  }, [isVisible]);
 
   const handleVideoPress = async () => {
     try {

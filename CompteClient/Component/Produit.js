@@ -84,6 +84,14 @@ const Produit = ({ produits }) => {
         navigation.navigate('PageMonProduit', { item });
     };
 
+    // pour gerer le nombre de lettre
+    const truncateText = (text, maxLength) => {
+        if (text.length > maxLength) {
+          return text.substring(0, maxLength) + '...';
+        }
+        return text;
+      };
+
     const renderItem = ({ item }) => {
         const isLiked = likedProducts.includes(item.id);
 
@@ -101,7 +109,7 @@ const Produit = ({ produits }) => {
                 </TouchableOpacity>
                 <View style={ClientStyle.nomProduitContainer}>
                     <Text style={ClientStyle.nomProduit} numberOfLines={1} ellipsizeMode='tail'>
-                        {item.nom}
+                        {truncateText(item.nom, 15)}
                     </Text>
                     <MaterialCommunityIcons
                         name="truck-delivery"
@@ -109,6 +117,11 @@ const Produit = ({ produits }) => {
                         color={item.livraison ? Color.vert : 'gray'}
                         style={ClientStyle.iconDelivery}
                     />
+                </View>
+                <View style={styles.nomBoutique}>
+                    <Text style={styles.textNomBoutique}>
+                        {item.nomBoutique}
+                    </Text>
                 </View>
                 <View style={styles.ligne2}>
                     <Text style={ClientStyle.prixProduit}>${item.prix}</Text>
@@ -172,6 +185,13 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 14,
         fontWeight: 'bold'
+    },
+    nomBoutique:{
+        marginLeft:5
+    },
+    textNomBoutique:{
+        fontFamily:'InriaSerif',
+        fontSize:10
     }
 });
 

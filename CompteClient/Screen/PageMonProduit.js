@@ -94,6 +94,10 @@ const PageMonProduit = ({ navigation }) => {
                         </View>
                     </View>
                 </View>
+                <TouchableOpacity style={styles.ContainerNomBoutique}>
+                    <Text style={styles.nomBoutique}>{item.nomBoutique}</Text>
+                </TouchableOpacity>
+                
                 <Text style={styles.textDescription}>Description</Text>
                 <Text style={styles.description}>{item.description}</Text>
 
@@ -242,6 +246,19 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 20,
         fontWeight: 'bold',
+    },
+    ContainerNomBoutique:{
+        backgroundColor:Color.bleuTransparent,
+        alignItems:'center',
+        marginTop:10,
+        paddingVertical:10,
+        borderRadius:20
+    },
+    nomBoutique:{
+        color:'white',
+        fontWeight:'bold',
+        fontFamily:'InriaSerif',
+        fontSize:15
     },
     detailsContainer: {
         flexDirection: 'row',
