@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
   },
   profileIcon: {
     marginBottom: 20,
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     width: 40,
     height: 40,
     borderRadius: 25,

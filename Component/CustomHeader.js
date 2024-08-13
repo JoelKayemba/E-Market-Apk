@@ -3,9 +3,11 @@ import { View, TouchableOpacity, StyleSheet, Modal, ImageBackground, Image , Tex
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import Color from '../Styles/Color';
 import Recherche from '../CompteClient/Component/Recherche';
+import { useNavigation } from '@react-navigation/native';
 
 const CustomHeader = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
 
   const openModal = () => {
     setModalVisible(true);
@@ -31,10 +33,10 @@ const CustomHeader = () => {
             <Ionicons name="chevron-down" size={20} color='white' />
           </TouchableOpacity>
           <View style={styles.iconContainer}>
-            <TouchableOpacity onPress={() => alert('Messages')} style={styles.iconButton}>
+            <TouchableOpacity onPress={() => navigation.navigate('MessageList')} style={styles.iconButton}>
               <AntDesign name="mail" size={20} color={Color.orange} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => alert('Notifications')} style={styles.iconButton}>
+            <TouchableOpacity onPress={() => navigation.navigate('Notifications')} style={styles.iconButton}>
               <Ionicons name="notifications-outline" size={20} color={Color.orange} />
             </TouchableOpacity>
           </View>

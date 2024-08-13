@@ -12,6 +12,7 @@ const ModifierProfil = () => {
     const [dateNaissance, setDateNaissance] = useState('');
     const [email, setEmail] = useState('');
     const [nomUtilisateur, setNomUtilisateur] = useState('');
+    const [numeroTelephone, setNumeroTelephone] = useState('');
     const [loading, setLoading] = useState(false);
     const [dateError, setDateError] = useState('');
 
@@ -37,8 +38,9 @@ const ModifierProfil = () => {
                     setDateNaissance(result.date_naissance || '');
                     setEmail(result.email || '');
                     setNomUtilisateur(result.nom_utilisation || '');
+                    setNumeroTelephone(result.numero_telephone || '');  
                 } else {
-                    Alert.alert('Erreur', result.message || 'Erreur lors du chargement du profil.');
+                    Alert.alert('Erreur', result.message || 'Erreur lors du chargement du profil1.');
                 }
             } catch (error) {
                 Alert.alert('Erreur', 'Erreur lors du chargement du profil.');
@@ -101,6 +103,7 @@ const ModifierProfil = () => {
                 date_naissance: dateNaissance,
                 email,
                 nom_utilisation: nomUtilisateur,
+                numero_telephone: numeroTelephone, // Assurez-vous d'envoyer le numéro de téléphone
             }),
         });
 
@@ -212,6 +215,15 @@ const ModifierProfil = () => {
                             <Text style={styles.label}>Nom d'utilisateur</Text>
                             <TextInput style={styles.input} value={nomUtilisateur} onChangeText={setNomUtilisateur} placeholderTextColor="#ccc" />
 
+                            <Text style={styles.label}>Numéro de Téléphone</Text>
+                            <TextInput
+                                style={styles.input}
+                                value={numeroTelephone} // Le numéro de téléphone est maintenant affiché dans l'input
+                                onChangeText={setNumeroTelephone}
+                                placeholderTextColor="#ccc"
+                                keyboardType="phone-pad" 
+                            />
+
                             <TouchableOpacity onPress={handleSave} style={styles.buttonSave}>
                                 <Text style={styles.buttonText}>Enregistrer</Text>
                             </TouchableOpacity>
@@ -240,8 +252,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     backButton: {
-        marginBottom: 20,
+        marginBottom: 10,
         alignSelf: 'flex-start',
+        marginTop:20
     },
     label: {
         fontSize: 16,

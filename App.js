@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { FontProvider } from './Component/FontContext';
 import * as SplashScreen from 'expo-splash-screen';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 
@@ -37,6 +38,9 @@ import PageProfil from './CompteClient/Screen/PageProfil';
 import PaymentScreen from './CompteClient/Screen/PaymentScreen';
 import MapScreen from './CompteClient/Screen/MapScreen';
 import AjouterAnnonce from './CompteClient/Screen/AjouterAnnonce';
+import Notifications from './CompteClient/Screen/Notifications';
+import ChatScreen from './CompteClient/Screen/ChatScreen';
+import MessageList from './CompteClient/Screen/MessageList';
 
 
 
@@ -47,7 +51,8 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   return (
-    <FontProvider>
+    <GestureHandlerRootView >
+       <FontProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='SkipPage'>
           <Stack.Screen name="SkipPage" component={SkipPage} options={{ headerShown: false }} />
@@ -80,6 +85,9 @@ export default function App() {
           <Stack.Screen name="PaymentScreen" component={PaymentScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="MapScreen" component={MapScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="AjouterAnnonce" component={AjouterAnnonce} options={{ headerShown: false }}/>
+          <Stack.Screen name="MessageList" component={MessageList} options={{ headerShown: false }}/>
+          <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="Notifications" component={Notifications} options={{ headerShown: false }}/>
           
           
         
@@ -88,6 +96,8 @@ export default function App() {
         </Stack.Navigator>
     </NavigationContainer>
     </FontProvider>
+    </GestureHandlerRootView>
+   
     
   );
 }
