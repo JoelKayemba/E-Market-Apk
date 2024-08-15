@@ -17,6 +17,11 @@ const CustomHeader = () => {
     setModalVisible(false);
   };
 
+  const ajouterBoutique=()=>{
+    navigation.navigate('AjouterBoutique'),
+    setModalVisible(false);
+  }
+
   return (
     <View>
       <ImageBackground
@@ -60,7 +65,7 @@ const CustomHeader = () => {
           >
             <View style={styles.overlay} />
             <View style={styles.modalContent}>
-              <TouchableOpacity style={styles.addBoutiqueButton}>
+            <TouchableOpacity style={styles.addBoutiqueButton} onPress={ajouterBoutique}>
                 <Text style={styles.addBoutiqueText}>Ajouter Boutique</Text>
               </TouchableOpacity>
               

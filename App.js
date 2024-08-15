@@ -41,6 +41,13 @@ import AjouterAnnonce from './CompteClient/Screen/AjouterAnnonce';
 import Notifications from './CompteClient/Screen/Notifications';
 import ChatScreen from './CompteClient/Screen/ChatScreen';
 import MessageList from './CompteClient/Screen/MessageList';
+import ChangerMotDePasse from './Screen/Connexion/ChangerMotDePasse';
+import ModifierMotDePasse from './CompteClient/Component/ModifierMotDePasse';
+import AjouterBoutique from './CompteBoutique/InscriptionBoutique/AjouterBoutique';
+import BoutiqueCategorie from './CompteBoutique/InscriptionBoutique/BoutiqueCategorie';
+import BoutiqueDescription from './CompteBoutique/InscriptionBoutique/BoutiqueDescription';
+import BoutiqueImages from './CompteBoutique/InscriptionBoutique/BoutiqueImages';
+import BoutiqueInfo from './CompteBoutique/InscriptionBoutique/BoutiqueInfo';
 
 
 
@@ -88,6 +95,13 @@ export default function App() {
           <Stack.Screen name="MessageList" component={MessageList} options={{ headerShown: false }}/>
           <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="Notifications" component={Notifications} options={{ headerShown: false }}/>
+          <Stack.Screen name="ChangerMotDePasse" component={ChangerMotDePasse} options={{ headerShown: false }}/>
+          <Stack.Screen name="ModifierMotDePasse" component={ModifierMotDePasse} options={{ headerShown: false }}/>
+          <Stack.Screen name="AjouterBoutique" component={ AjouterBoutique} options={{ headerShown: false }}/>
+          <Stack.Screen name="BoutiqueCategorie" component={BoutiqueCategorie} options={{ headerShown: false }}/>
+          <Stack.Screen name="BoutiqueDescription" component={BoutiqueDescription} options={{ headerShown: false }}/>
+          <Stack.Screen name="BoutiqueImages" component={BoutiqueImages} options={{ headerShown: false }}/>
+          <Stack.Screen name="BoutiqueInfo" component={BoutiqueInfo} options={{ headerShown: false }}/>
           
           
         

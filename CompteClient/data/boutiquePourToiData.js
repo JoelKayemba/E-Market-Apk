@@ -3,7 +3,10 @@ const boutiquePourToiData = [
     {
         id: '1',
         nom: 'Boutique Mode Éclair',
-        image: require('../../assets/Images/boutique2.jpg'), 
+        image: require('../../assets/Images/boutique2.jpg'),
+        image2: require('../../assets/Images/boutique1.jpg'), 
+        image3: require('../../assets/Images/boutique3.jpg'),
+        image4: require('../../assets/Images/boutique4.jpg'), 
         livraison: true,
         note: '4.5',
         adresse: '123 Rue des Fleurs, Paris',

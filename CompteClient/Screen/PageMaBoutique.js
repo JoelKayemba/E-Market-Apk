@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Animated, Easing } from 'react-native';
 import { AntDesign, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import Color from '../../Styles/Color';
 
@@ -8,7 +8,8 @@ const PageMaBoutique = ({ route, navigation }) => {
     const [isSearching, setIsSearching] = useState(false);
     const [searchText, setSearchText] = useState('');
     const [likedProducts, setLikedProducts] = useState(new Set());
-  
+    const [mainImage, setMainImage] = useState(boutique.image); 
+    const [animationValue] = useState(new Animated.Value(1)); // Pour l'animation de l'image
 
     const produits = [
         { id: '1', nom: 'chaussure Nike', prix: '10.00', image: require('../../assets/Images/produit1.jpg'), livraison: false },
@@ -34,10 +35,30 @@ const PageMaBoutique = ({ route, navigation }) => {
         });
     };
 
+    const animateImageChange = (newImage) => {
+        Animated.timing(animationValue, {
+            toValue: 0, // Réduire l'image à zéro
+            duration: 200,
+            easing: Easing.out(Easing.ease),
+            useNativeDriver: true,
+        }).start(() => {
+            // Changer l'image principale après l'animation
+            setMainImage(newImage);
+
+            // Revenir à la taille normale
+            Animated.timing(animationValue, {
+                toValue: 1,
+                duration: 200,
+                easing: Easing.in(Easing.ease),
+                useNativeDriver: true,
+            }).start();
+        });
+    };
+
     const renderHeader = () => (
         <>
             <View style={styles.imageContainer}>
-                <Image source={boutique.image} style={styles.image} />
+                <Animated.Image source={mainImage} style={[styles.image, { transform: [{ scale: animationValue }] }]} />
                 <View style={styles.overlay}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
                         <Ionicons name="arrow-back" size={24} color={Color.orange} />
@@ -48,11 +69,34 @@ const PageMaBoutique = ({ route, navigation }) => {
                         </TouchableOpacity>
                         <TouchableOpacity 
                             style={styles.iconContainer} 
-                            onPress={() => navigation.navigate('RechercheScreen')} //creer un nouveau recherche screen qui ne prends aue les produits de la boutique
+                            onPress={() => navigation.navigate('RechercheScreen')}
                         >
                             <AntDesign name="search1" size={24} color={Color.orange} />
                         </TouchableOpacity>
                     </View>
+                </View>
+                {/* Images supplémentaires positionnées sous l'image principale */}
+                <View style={styles.thumbnailContainer}>
+                    {/* Miniature de l'image principale */}
+                    <TouchableOpacity onPress={() => animateImageChange(boutique.image)}>
+                        <Image source={boutique.image} style={styles.thumbnail} />
+                    </TouchableOpacity>
+                    {/* Autres miniatures */}
+                    {boutique.image2 && (
+                        <TouchableOpacity onPress={() => animateImageChange(boutique.image2)}>
+                            <Image source={boutique.image2} style={styles.thumbnail} />
+                        </TouchableOpacity>
+                    )}
+                    {boutique.image3 && (
+                        <TouchableOpacity onPress={() => animateImageChange(boutique.image3)}>
+                            <Image source={boutique.image3} style={styles.thumbnail} />
+                        </TouchableOpacity>
+                    )}
+                    {boutique.image4 && (
+                        <TouchableOpacity onPress={() => animateImageChange(boutique.image4)}>
+                            <Image source={boutique.image4} style={styles.thumbnail} />
+                        </TouchableOpacity>
+                    )}
                 </View>
             </View>
             
@@ -165,6 +209,23 @@ const styles = StyleSheet.create({
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    thumbnailContainer: {
+        position: 'absolute',
+        bottom: 10,
+        left: 0,
+        right: 0,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        paddingHorizontal: 10,
+    },
+    thumbnail: {
+        width: 60,
+        height: 60,
+        marginHorizontal: 5,
+        borderWidth: 3,
+        borderColor: '#718355',
+        borderRadius: 10,
     },
     searchContainer: {
         flexDirection: 'row',

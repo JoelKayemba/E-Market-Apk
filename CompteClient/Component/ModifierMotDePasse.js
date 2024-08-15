@@ -5,7 +5,7 @@ import IconTextInput from '../../Component/IconTextInput';
 import GlobalStyles from '../../Styles/GlobalStyles';
 import Color from '../../Styles/Color';
 
-const MotDePasseOublie = ({ navigation }) => {
+const ModifierMotDePasse = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -54,7 +54,7 @@ const MotDePasseOublie = ({ navigation }) => {
           <ScrollView contentContainerStyle={GlobalStyles.scrollViewContent}>
             
             <View style={GlobalStyles.containerTitre}>
-              <Text style={GlobalStyles.Titre}>Mot de passe oublié</Text>
+              <Text style={GlobalStyles.Titre}>Modifer Mot de passe</Text>
               <Text style={GlobalStyles.Titre2}>Entrez votre email pour recevoir un code de vérification et réinitialiser votre mot de passe.</Text>
             </View>
             <View style={GlobalStyles.containerInput}>
@@ -88,7 +88,7 @@ const MotDePasseOublie = ({ navigation }) => {
   );
 }
 
-export default MotDePasseOublie;
+export default ModifierMotDePasse;
 
 const styles = StyleSheet.create({
   container: {

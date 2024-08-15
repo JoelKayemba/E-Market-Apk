@@ -18,7 +18,7 @@ const ConnexionLoading = () => {
                 index: 0,
                 routes: [{ name: 'TabNavigator' }],
               });
-          Alert.alert('Connexion réussie')
+        
         }, 5000); // Délai pour afficher l'écran de chargement
       } catch (error) {
         console.error('Erreur lors de la déconnexion :', error);

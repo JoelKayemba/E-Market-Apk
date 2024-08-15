@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, Button, StyleSheet, ScrollView, TouchableOpacity, Alert, ImageBackground } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Modalize } from 'react-native-modalize';
 import Color from '../../Styles/Color';
 
 const defaultProfileImage = require('../../assets/imageBack/f.jpg');
@@ -13,6 +14,7 @@ const PageProfil = () => {
         photo: defaultProfileImage,
     });
 
+    const modalizeRef = useRef(null);
     const navigation = useNavigation();
 
     const loadUserData = async () => {
@@ -29,20 +31,16 @@ const PageProfil = () => {
     );
 
     const handleLogout = () => {
-        Alert.alert(
-            'Déconnexion',
-            'Êtes-vous sûr de vouloir vous déconnecter ?',
-            [
-                { text: 'Annuler', style: 'cancel' },
-                { text: 'Déconnexion', onPress: () => {
-                    AsyncStorage.clear();
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'Deconnexion' }],
-                    });
-                }},
-            ]
-        );
+        modalizeRef.current?.open();
+    };
+
+    const confirmLogout = () => {
+        AsyncStorage.clear();
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Deconnexion' }],
+        });
+        modalizeRef.current?.close();
     };
 
     return (
@@ -60,7 +58,7 @@ const PageProfil = () => {
                     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ModifierProfil')}>
                         <Text style={styles.buttonText}>Modifier le Profil</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ModifierMotDePasse')}>
                         <Text style={styles.buttonText}>Changer le Mot de Passe</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button}>
@@ -85,8 +83,22 @@ const PageProfil = () => {
                 <TouchableOpacity onPress={handleLogout} style={styles.buttonDeconnexion}>
                     <Text style={styles.deconnexionText}>Deconnexion</Text>
                 </TouchableOpacity>
-                
             </ScrollView>
+
+            <Modalize ref={modalizeRef} snapPoint={180}>
+                <View style={styles.modalContent}>
+                    <Text style={styles.modalTitle}>Déconnexion</Text>
+                    <Text style={styles.modalText}>Êtes-vous sûr de vouloir vous déconnecter ?</Text>
+                    <View style={styles.modalButtons}>
+                        <TouchableOpacity style={styles.cancelButton} onPress={() => modalizeRef.current?.close()}>
+                            <Text style={styles.buttonText}>Annuler</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.confirmButton} onPress={confirmLogout}>
+                            <Text style={styles.buttonText}>Déconnexion</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modalize>
         </ImageBackground>
     );
 };
@@ -155,7 +167,43 @@ const styles = StyleSheet.create({
         color:'white',
         fontFamily:'InriaSerif',
         fontSize:16
-    }
+    },
+    modalContent: {
+        padding: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    modalText: {
+        fontSize: 16,
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    cancelButton: {
+        flex: 1,
+        backgroundColor: '#ccc',
+        padding: 15,
+        borderRadius: 8,
+        marginRight: 10,
+        alignItems: 'center',
+    },
+    confirmButton: {
+        flex: 1,
+        backgroundColor: '#FF0057C2',
+        padding: 15,
+        borderRadius: 8,
+        marginLeft: 10,
+        alignItems: 'center',
+    },
 });
 
 export default PageProfil;

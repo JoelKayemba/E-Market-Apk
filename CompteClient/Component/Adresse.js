@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput, FlatList, Alert ,KeyboardAvoidingView , Platform , TouchableWithoutFeedback , Keyboard, ScrollView, ImageBackground, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput, ScrollView, Alert, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, ImageBackground, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
+import { Modalize } from 'react-native-modalize'; // Importation de Modalize
 import ClientStyle from '../../Styles/ClientStyle';
 import { Picker } from '@react-native-picker/picker';
 import Color from '../../Styles/Color';
-import { Entypo, Ionicons, EvilIcons } from '@expo/vector-icons';
+import { Entypo, Ionicons } from '@expo/vector-icons';
 import adresseStyle from '../../Styles/adresseStyle';
 
 const Adresse = () => {
@@ -22,6 +23,7 @@ const Adresse = () => {
     const [adresses, setAdresses] = useState([]);
     const [loading, setLoading] = useState(false);
     const [paysOptions, setPaysOptions] = useState([]);
+    const modalizeRef = useRef(null); // Référence pour le Modalize
 
     useEffect(() => {
         const fetchCountries = async () => {
@@ -43,7 +45,7 @@ const Adresse = () => {
                     return;
                 }
         
-                const response = await fetch(`http://192.168.21.25:3300/adresses?userId=${userId}}`);
+                const response = await fetch(`http://192.168.21.25:3300/adresses?userId=${userId}`);
                 const result = await response.json();
         
                 if (!response.ok) {
@@ -60,7 +62,7 @@ const Adresse = () => {
                     setVille(adresseExistante.ville);
                     setRue(adresseExistante.rue);
                     setNumero(adresseExistante.numero);
-                    setCodePostal(adresseExistante.code_postal); // Assurez-vous d'utiliser 'code_postal' ici
+                    setCodePostal(adresseExistante.codePostal); 
                     setAppartement(adresseExistante.appartement);
                     setCurrentLocation({
                         latitude: adresseExistante.latitude,
@@ -80,6 +82,17 @@ const Adresse = () => {
         fetchAdresses();
     }, []);
 
+    // Ouvrir le Modalize après quelques secondes une fois que le modal est visible
+    useEffect(() => {
+        if (modalVisible && modalizeRef.current) {
+            const timer = setTimeout(() => {
+                modalizeRef.current?.open();
+            }, 1000); // 1 seconde avant l'apparition du Modalize
+
+            return () => clearTimeout(timer); // Nettoyage du timeout si le modal se ferme
+        }
+    }, [modalVisible]);
+
     const handlePress = () => {
         setModalVisible(true);
     };
@@ -89,7 +102,6 @@ const Adresse = () => {
             Alert.alert('Erreur', 'Tous les champs obligatoires doivent être remplis.');
             return;
         } if (editId) {
-            // Si une adresse existe déjà, mettez-la à jour au lieu d'ajouter une nouvelle
             handleUpdate();
             return;
         }
@@ -134,7 +146,7 @@ const Adresse = () => {
         
             const result = await response.json();
 
-            setAdresses([result.adresse]); // Remplacer l'adresse précédente par la nouvelle
+            setAdresses([result.adresse]); 
             setEditId(result.idadresse);
             setModalVisible(false);
             setLoading(false);
@@ -196,11 +208,12 @@ const Adresse = () => {
         setProvince(result.region || '');
         setVille(result.city || '');
         setRue(result.street || '');
-        setNumero(result.name || '');  // Utilisez `name` pour le numéro
+        setNumero(result.name || '');  
         setCodePostal(result.postalCode || '');
         setAppartement(''); 
         setCurrentLocation({ latitude: location.coords.latitude, longitude: location.coords.longitude });
         setLoading(false);
+        modalizeRef.current?.close();
     };
 
     return (
@@ -221,7 +234,7 @@ const Adresse = () => {
             )}
             <Modal visible={modalVisible} animationType="slide">
                 <ImageBackground
-                    source={require('../../assets/imageBack/road.jpg')} // 
+                    source={require('../../assets/imageBack/road.jpg')} 
                     style={styles.backgroundImage}
                 >
                     <View style={styles.overlay} />
@@ -237,7 +250,7 @@ const Adresse = () => {
                                 selectedValue={pays}
                                 onValueChange={(itemValue) => setPays(itemValue)}
                                 style={styles.picker}
-                                itemStyle={{ color: '#fff' }} // Couleur du texte des éléments du Picker
+                                itemStyle={{ color: '#fff' }} 
                             >
                                 <Picker.Item label="Sélectionner un pays" value="" />
                                 {paysOptions.map((paysOption) => (
@@ -275,7 +288,6 @@ const Adresse = () => {
                                 <TextInput
                                     style={styles.input}
                                     placeholder="Numéro"
-                                    keyboardType='numeric'
                                     value={numero}
                                     onChangeText={setNumero}
                                     placeholderTextColor="#ccc"
@@ -322,6 +334,25 @@ const Adresse = () => {
                         </TouchableOpacity>
                     </View>
                 </ImageBackground>
+
+                {/* Modalize pour la recommandation */}
+                <Modalize ref={modalizeRef} snapPoint={210} modalHeight={210} adjustToContentHeight={false}>
+                    <View style={styles.modalizeContent}>
+                        <Text style={styles.modalizeTitle}>Recommandation!</Text>
+                        <Text style={styles.modalizeText}>Nous vous recommandons d'utiliser votre localisation actuelle pour un meilleur service, la modifier si nécessaire puis l'ajouter ou la mettre à jour.</Text>
+                        <TouchableOpacity
+                            style={[adresseStyle.bouton2, loading && styles.disabledButton]} 
+                            onPress={obtenirLocalisationActuelle}
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <ActivityIndicator size="small" color="#fff" />
+                            ) : (
+                                <Text style={adresseStyle.boutonTexte}>Utiliser ma localisation actuelle</Text>
+                            )}
+                        </TouchableOpacity>
+                    </View>
+                </Modalize>
             </Modal>
         </View>
     );
@@ -335,10 +366,10 @@ const styles = StyleSheet.create({
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Couche noire semi-transparente
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     },
     textTitre: {
-        color: '#fff', // Texte en blanc
+        color: '#fff', 
         fontSize: 18,
         fontWeight: 'bold',
     },
@@ -349,15 +380,27 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginBottom: 16,
-        color: '#fff', // Couleur du texte en blanc
+        color: '#fff', 
     },
     disabledButton: {
         opacity: 0.7,
     },
-
     picker: {
         color: '#fff', 
-
+    },
+    modalizeContent: {
+        padding: 20,
+        alignItems: 'center',
+    },
+    modalizeTitle:{
+        fontSize:24,
+        fontWeight:'bold',
+        marginBottom:10
+    },
+    modalizeText: {
+        fontSize: 16,
+        textAlign: 'center',
+        marginBottom: 15,
     },
 });
 

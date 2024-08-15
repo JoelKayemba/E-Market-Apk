@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard, ImageBackground } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { Modalize } from 'react-native-modalize';
 import Color from '../../Styles/Color';
 
 const ModifierProfil = () => {
@@ -15,6 +16,8 @@ const ModifierProfil = () => {
     const [numeroTelephone, setNumeroTelephone] = useState('');
     const [loading, setLoading] = useState(false);
     const [dateError, setDateError] = useState('');
+    
+    const modalizeRef = useRef(null); // Référence pour le modal
 
     const navigation = useNavigation();
 
@@ -40,7 +43,7 @@ const ModifierProfil = () => {
                     setNomUtilisateur(result.nom_utilisation || '');
                     setNumeroTelephone(result.numero_telephone || '');  
                 } else {
-                    Alert.alert('Erreur', result.message || 'Erreur lors du chargement du profil1.');
+                    Alert.alert('Erreur', result.message || 'Erreur lors du chargement du profil.');
                 }
             } catch (error) {
                 Alert.alert('Erreur', 'Erreur lors du chargement du profil.');
@@ -103,7 +106,7 @@ const ModifierProfil = () => {
                 date_naissance: dateNaissance,
                 email,
                 nom_utilisation: nomUtilisateur,
-                numero_telephone: numeroTelephone, // Assurez-vous d'envoyer le numéro de téléphone
+                numero_telephone: numeroTelephone, 
             }),
         });
 
@@ -120,41 +123,37 @@ const ModifierProfil = () => {
     };
 
     const handleDeleteAccount = async () => {
-        Alert.alert(
-            'Confirmer la suppression',
-            'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.',
-            [
-                { text: 'Annuler', style: 'cancel' },
-                { text: 'Supprimer', onPress: async () => {
-                    setLoading(true);
-                    const idclient = await AsyncStorage.getItem('idclient');
-                    if (!idclient) {
-                        Alert.alert('Erreur', 'Impossible de récupérer l\'ID client');
-                        setLoading(false);
-                        return;
-                    }
-    
-                    const response = await fetch('http://192.168.21.25:3300/profil/supprimer', {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ idclient }),
-                    });
-    
-                    setLoading(false);
-    
-                    if (response.ok) {
-                        Alert.alert('Compte supprimé', 'Votre compte a été supprimé avec succès.');
-                        await AsyncStorage.clear();
-                        navigation.navigate('Connexion'); 
-                    } else {
-                        const result = await response.json();
-                        Alert.alert('Erreur', result.message);
-                    }
-                }},
-            ]
-        );
+        modalizeRef.current?.open(); // Ouvrir le modal lors de la tentative de suppression
+    };
+
+    const confirmDeleteAccount = async () => {
+        setLoading(true);
+        const idclient = await AsyncStorage.getItem('idclient');
+        if (!idclient) {
+            Alert.alert('Erreur', 'Impossible de récupérer l\'ID client');
+            setLoading(false);
+            return;
+        }
+
+        const response = await fetch('http://192.168.21.25:3300/profil/supprimer', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ idclient }),
+        });
+
+        setLoading(false);
+
+        if (response.ok) {
+            Alert.alert('Compte supprimé', 'Votre compte a été supprimé avec succès.');
+            await AsyncStorage.clear();
+            navigation.navigate('Connexion'); 
+        } else {
+            const result = await response.json();
+            Alert.alert('Erreur', result.message);
+        }
+        modalizeRef.current?.close(); // Fermer le modal après la suppression
     };
 
     return (
@@ -168,71 +167,86 @@ const ModifierProfil = () => {
                     style={styles.backgroundImage}
                 >
                     <ScrollView contentContainerStyle={styles.container}>
-                    {loading ? (
-                        <ActivityIndicator size="large" color={Color.orange} />
-                    ) : (
-                        <>
-                            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                                <Ionicons name="arrow-back" size={30} color={Color.orange} />
-                            </TouchableOpacity>
-                           
-                            <Text style={styles.label}>Prénom</Text>
-                            <TextInput style={styles.input} value={prenom} onChangeText={setPrenom} placeholderTextColor="#ccc" />
+                        {loading ? (
+                            <ActivityIndicator size="large" color={Color.orange} />
+                        ) : (
+                            <>
+                                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                                    <Ionicons name="arrow-back" size={30} color={Color.orange} />
+                                </TouchableOpacity>
 
-                            <Text style={styles.label}>Sexe</Text>
-                            <View style={styles.pickerContainer}>
-                                <Picker
-                                    selectedValue={sexe}
-                                    style={styles.picker}
-                                    onValueChange={(itemValue) => setSexe(itemValue)}
-                                    dropdownIconColor="#fff"
-                                    itemStyle={{ color: '#fff' }}
-                        
-                                >
-                                    <Picker.Item label="Homme" value="Homme" />
-                                    <Picker.Item label="Femme" value="Femme" />
-                                    <Picker.Item label="Autre" value="Autre" />
-                                </Picker>
-                            </View>
-                            
-                            <Text style={styles.label}>Date de Naissance</Text>
-                            <TextInput
-                                style={styles.input}
-                                value={dateNaissance}
-                                onChangeText={(text) => {
-                                    setDateNaissance(text);
-                                    setDateError('');
-                                }}
-                                placeholder="AAAA-MM-JJ"
-                                placeholderTextColor="#ccc"
-                                keyboardType="text"
-                            />
-                            {dateError ? <Text style={styles.errorText}>{dateError}</Text> : null}
+                                <Text style={styles.label}>Prénom</Text>
+                                <TextInput style={styles.input} value={prenom} onChangeText={setPrenom} placeholderTextColor="#ccc" />
 
-                            <Text style={styles.label}>Email</Text>
-                            <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholderTextColor="#ccc" />
+                                <Text style={styles.label}>Sexe</Text>
+                                <View style={styles.pickerContainer}>
+                                    <Picker
+                                        selectedValue={sexe}
+                                        style={styles.picker}
+                                        onValueChange={(itemValue) => setSexe(itemValue)}
+                                        dropdownIconColor="#fff"
+                                        itemStyle={{ color: '#fff' }}
+                                    >
+                                        <Picker.Item label="Homme" value="Homme" />
+                                        <Picker.Item label="Femme" value="Femme" />
+                                        <Picker.Item label="Autre" value="Autre" />
+                                    </Picker>
+                                </View>
+                                
+                                <Text style={styles.label}>Date de Naissance</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    value={dateNaissance}
+                                    onChangeText={(text) => {
+                                        setDateNaissance(text);
+                                        setDateError('');
+                                    }}
+                                    placeholder="AAAA-MM-JJ"
+                                    placeholderTextColor="#ccc"
+                                    keyboardType="text"
+                                />
+                                {dateError ? <Text style={styles.errorText}>{dateError}</Text> : null}
 
-                            <Text style={styles.label}>Nom d'utilisateur</Text>
-                            <TextInput style={styles.input} value={nomUtilisateur} onChangeText={setNomUtilisateur} placeholderTextColor="#ccc" />
+                                <Text style={styles.label}>Email</Text>
+                                <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholderTextColor="#ccc" />
 
-                            <Text style={styles.label}>Numéro de Téléphone</Text>
-                            <TextInput
-                                style={styles.input}
-                                value={numeroTelephone} // Le numéro de téléphone est maintenant affiché dans l'input
-                                onChangeText={setNumeroTelephone}
-                                placeholderTextColor="#ccc"
-                                keyboardType="phone-pad" 
-                            />
+                                <Text style={styles.label}>Nom d'utilisateur</Text>
+                                <TextInput style={styles.input} value={nomUtilisateur} onChangeText={setNomUtilisateur} placeholderTextColor="#ccc" />
 
-                            <TouchableOpacity onPress={handleSave} style={styles.buttonSave}>
-                                <Text style={styles.buttonText}>Enregistrer</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={handleDeleteAccount} style={styles.buttonDelete}>
-                                <Text style={styles.buttonText}>Supprimer mon compte</Text>
-                            </TouchableOpacity>
-                        </>
-                    )}
+                                <Text style={styles.label}>Numéro de Téléphone</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    value={numeroTelephone}
+                                    onChangeText={setNumeroTelephone}
+                                    placeholderTextColor="#ccc"
+                                    keyboardType="phone-pad"
+                                />
+
+                                <TouchableOpacity onPress={handleSave} style={styles.buttonSave}>
+                                    <Text style={styles.buttonText}>Enregistrer</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={handleDeleteAccount} style={styles.buttonDelete}>
+                                    <Text style={styles.buttonText}>Supprimer mon compte</Text>
+                                </TouchableOpacity>
+                            </>
+                        )}
                     </ScrollView>
+
+                    {/* Modal for confirming account deletion */}
+                    <Modalize ref={modalizeRef} snapPoint={200}>
+                        <View style={styles.modalContent}>
+                            <Text style={styles.modalTitle}>Confirmer la suppression</Text>
+                            <Text style={styles.modalText}>Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.</Text>
+                            <View style={styles.modalButtons}>
+                                <TouchableOpacity style={styles.cancelButton} onPress={() => modalizeRef.current?.close()}>
+                                    <Text style={styles.buttonText}>Annuler</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.confirmButton} onPress={confirmDeleteAccount}>
+                                    <Text style={styles.buttonText}>Supprimer</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modalize>
                 </ImageBackground>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -302,6 +316,42 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    modalContent: {
+        padding: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    modalText: {
+        fontSize: 16,
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    cancelButton: {
+        flex: 1,
+        backgroundColor: '#ccc',
+        padding: 15,
+        borderRadius: 8,
+        marginRight: 10,
+        alignItems: 'center',
+    },
+    confirmButton: {
+        flex: 1,
+        backgroundColor: 'red',
+        padding: 15,
+        borderRadius: 8,
+        marginLeft: 10,
+        alignItems: 'center',
     },
 });
 

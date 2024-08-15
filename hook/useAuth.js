@@ -14,7 +14,10 @@ const useAuth = () => {
         console.log('Token trouvé dans AsyncStorage:', token); // Afficher le token
         if (token) {
           // Si le token est présent, rediriger vers la page d'accueil
-          navigation.navigate('TabNavigator');
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'TabNavigator' }],
+          });
         }
       } catch (error) {
         console.error('Erreur lors de la récupération du token:', error);

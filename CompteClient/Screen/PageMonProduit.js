@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator, Alert, Animated, Easing } from 'react-native';
 import { AntDesign, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 import Color from '../../Styles/Color';
@@ -13,17 +13,36 @@ const PageMonProduit = ({ navigation }) => {
     const [quantity, setQuantity] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [notificationVisible, setNotificationVisible] = useState(false);
+    const [mainImage, setMainImage] = useState(item.image);
+    const [animationValue] = useState(new Animated.Value(1)); // Pour l'animation de l'image
 
     const handleQuantityChange = (amount) => {
         setQuantity(prevQuantity => Math.max(prevQuantity + amount, 1));
     };
 
+    const animateImageChange = (newImage) => {
+        Animated.timing(animationValue, {
+            toValue: 0, // Réduire l'image à zéro
+            duration: 200,
+            easing: Easing.out(Easing.ease),
+            useNativeDriver: true,
+        }).start(() => {
+            setMainImage(newImage);
+
+            // Revenir à la taille normale
+            Animated.timing(animationValue, {
+                toValue: 1,
+                duration: 200,
+                easing: Easing.in(Easing.ease),
+                useNativeDriver: true,
+            }).start();
+        });
+    };
+
     const handleAddToCart = async () => {
-            // Vérifie si le produit a des tailles ou des couleurs
         const hasSizeOptions = item.taille && item.taille.length > 0;
         const hasColorOptions = item.couleur && item.couleur.length > 0;
 
-        // Validation des sélections requises
         if (
             (hasSizeOptions && !selectedSize) || 
             (hasColorOptions && !selectedColor)
@@ -34,10 +53,9 @@ const PageMonProduit = ({ navigation }) => {
 
         setIsLoading(true);
 
-        // Préparer les données du produit à ajouter au panier
         const productData = {
             id: item.id,
-            image: item.image,
+            image: mainImage, 
             quantity: quantity,
             size: selectedSize,
             color: selectedColor,
@@ -46,16 +64,9 @@ const PageMonProduit = ({ navigation }) => {
         };
 
         try {
-            // Simuler une requête d'ajout au panier
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Simule une requête réseau
+            await new Promise(resolve => setTimeout(resolve, 2000)); 
 
-            // Envoyer les données au panier 
-            //  utiliser fetch ou axios pour envoyer les données.
-            // Par exemple : await fetch('URL_API', { method: 'POST', body: JSON.stringify(productData), ... });
-
-            // Afficher la notification
             setNotificationVisible(true);
-            // Masquer la notification après 3 secondes
             setTimeout(() => {
                 setNotificationVisible(false);
             }, 3000);
@@ -69,7 +80,7 @@ const PageMonProduit = ({ navigation }) => {
     const renderHeader = () => (
         <>
             <View style={styles.imageContainer}>
-                <Image source={item.image} style={styles.image} />
+                <Animated.Image source={mainImage} style={[styles.image, { transform: [{ scale: animationValue }] }]} />
                 <View style={styles.overlay}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
                         <Ionicons name="arrow-back" size={24} color={Color.orange} />
@@ -80,7 +91,29 @@ const PageMonProduit = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
+
+                <View style={styles.thumbnailContainer}>
+                    <TouchableOpacity onPress={() => animateImageChange(item.image)}>
+                        <Image source={item.image} style={styles.thumbnail} />
+                    </TouchableOpacity>
+                    {item.image2 && (
+                        <TouchableOpacity onPress={() => animateImageChange(item.image2)}>
+                            <Image source={item.image2} style={styles.thumbnail} />
+                        </TouchableOpacity>
+                    )}
+                    {item.image3 && (
+                        <TouchableOpacity onPress={() => animateImageChange(item.image3)}>
+                            <Image source={item.image3} style={styles.thumbnail} />
+                        </TouchableOpacity>
+                    )}
+                    {item.image4 && (
+                        <TouchableOpacity onPress={() => animateImageChange(item.image4)}>
+                            <Image source={item.image4} style={styles.thumbnail} />
+                        </TouchableOpacity>
+                    )}
+                </View>
             </View>
+
             <View style={styles.infoContainer}>
                 <View style={styles.firstContainer}>
                     <Text style={styles.name}>{item.nom}</Text>
@@ -101,7 +134,6 @@ const PageMonProduit = ({ navigation }) => {
                 <Text style={styles.textDescription}>Description</Text>
                 <Text style={styles.description}>{item.description}</Text>
 
-                {/* Tailles (afficher uniquement si des tailles sont disponibles) */}
                 {item.taille && item.taille.length > 0 && (
                     <>
                         <Text style={styles.textDescription}>Tailles</Text>
@@ -122,19 +154,14 @@ const PageMonProduit = ({ navigation }) => {
                     </>
                 )}
 
-                {/* Couleurs (afficher uniquement si des couleurs sont disponibles) */}
                 {item.couleur && item.couleur.length > 0 && (
-                    <>
-                      
-                        <CouleurProduit
-                            couleurs={item.couleur}
-                            selectedColor={selectedColor}
-                            onSelectColor={setSelectedColor}
-                        />
-                    </>
+                    <CouleurProduit
+                        couleurs={item.couleur}
+                        selectedColor={selectedColor}
+                        onSelectColor={setSelectedColor}
+                    />
                 )}
 
-                {/* Quantity Selector */}
                 <View style={styles.quantityContainer}>
                     <Text style={styles.textDescription}>Quantité</Text>
                     <View style={styles.quantitySelector}>
@@ -208,7 +235,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         backgroundColor: 'rgba(0, 0, 0, 0)',
-        marginBottom: 200
+        marginBottom: 200,
     },
     backIcon: {
         marginRight: 10,
@@ -231,6 +258,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    thumbnailContainer: {
+        position: 'absolute',
+        bottom: 10,  
+        left: 0,
+        right: 0,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        paddingHorizontal: 10,
+    },
+    thumbnail: {
+        width: 50,
+        height: 50,
+        marginHorizontal: 5,
+        borderWidth: 3,
+        borderColor: '#718355',
+        borderRadius: 10,
+    },
     infoContainer: {
         padding: 10,
         marginHorizontal: 20,
@@ -248,7 +292,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     ContainerNomBoutique:{
-        backgroundColor:Color.bleuTransparent,
+        backgroundColor:'#718355',
         alignItems:'center',
         marginTop:10,
         paddingVertical:10,
@@ -347,8 +391,6 @@ const styles = StyleSheet.create({
         padding: 15,
         borderTopWidth: 1,
         borderTopColor: 'lightgray',
-        
-        
     },
     price: {
         fontSize: 24,

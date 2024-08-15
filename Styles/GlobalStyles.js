@@ -23,7 +23,7 @@ const GlobalStyles = StyleSheet.create({
       marginHorizontal:20
     },
     Titre: {
-      fontSize: 36,
+      fontSize: 30,
       fontWeight: 'bold',
     },
     Titre2: {

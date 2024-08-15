@@ -12,9 +12,9 @@ const CustomPhoneInput = ({
 
   React.useEffect(() => {
     if (phoneInput.current) {
-      phoneInput.current.setValue(defaultValue);
+      phoneInput.current.selectCountry('cd'); // Code ISO 3166-1 alpha-2 pour la RDC
     }
-  }, [defaultValue]);
+  }, []);
 
   return (
     <View style={[styles.container, containerStyle]}>
@@ -31,8 +31,6 @@ const CustomPhoneInput = ({
   );
 };
 
-const styles = StyleSheet.create({
-  
-});
+const styles = StyleSheet.create({});
 
 export default CustomPhoneInput;

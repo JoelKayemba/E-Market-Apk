@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef , useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { Modalize } from 'react-native-modalize';
 import Color from '../../Styles/Color';
 
 const PagePanier = () => {
@@ -9,13 +10,15 @@ const PagePanier = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [quantities, setQuantities] = useState({});
     const navigation = useNavigation();
+    const modalizeRefCommander = useRef(null);
+    const modalizeRefReserver = useRef(null);
 
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 
-                 const items = [
+                const items = [
                     { id: '1', nom: 'tacos', prix: '10.00', image: require('../../assets/Images/imagesProduits/food9.jpg'), livraison: true, description: 'Délicieux tacos au poulet, garnis de légumes frais et de sauce maison.' },
                     { id: '2', nom: 'Mac Book', prix: '1200.00', image: require('../../assets/Images/imagesProduits/accessoire1.jpg'), livraison: true, description: 'Ordinateur portable Mac Book, idéal pour le travail et le divertissement.' },
                     { id: '3', nom: 'manette', prix: '30.00', image: require('../../assets/Images/manette.jpg'), livraison: false, description: 'Manette de jeu sans fil, compatible avec plusieurs consoles et PC.' },
@@ -68,6 +71,14 @@ const PagePanier = () => {
         return cartItems.reduce((total, item) => total + parseFloat(item.prix) * quantities[item.id], 0).toFixed(2);
     };
 
+    const openCommanderModal = () => {
+        modalizeRefCommander.current?.open();
+    };
+
+    const openReserverModal = () => {
+        modalizeRefReserver.current?.open();
+    };
+
     if (isLoading) {
         return (
             <View style={styles.loaderContainer}>
@@ -78,7 +89,7 @@ const PagePanier = () => {
 
     return (
         <ImageBackground
-            source={require('../../assets/imageBack/panier.jpg')} // Remplacez par l'URL de votre image dans le backend
+            source={require('../../assets/imageBack/panier.jpg')}
             style={styles.backgroundImage}
         >
             <View style={styles.overlay} />
@@ -128,10 +139,10 @@ const PagePanier = () => {
                             </View>
                             
                             <View style={styles.buttonContainer}>
-                                <TouchableOpacity style={styles.footerButton1}>
+                                <TouchableOpacity style={styles.footerButton1} onPress={openReserverModal}>
                                     <Text style={styles.buttonText}>Réserver</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.footerButton2}>
+                                <TouchableOpacity style={styles.footerButton2} onPress={openCommanderModal}>
                                     <Text style={styles.buttonText}>Commander</Text>
                                 </TouchableOpacity>
                             </View>
@@ -139,6 +150,38 @@ const PagePanier = () => {
                     </>
                 )}
             </View>
+
+            {/* Modalize pour la commande */}
+            <Modalize ref={modalizeRefCommander} snapPoint={150}> 
+                <View style={styles.modalContent}>
+                    <Text style={styles.modalTitle}>Confirmation de commande</Text>
+                    <Text style={styles.modalMessage}>Voulez-vous confirmer votre commande?</Text>
+                    <View style={styles.modalButtonContainer}>
+                        <TouchableOpacity style={styles.modalButton} onPress={() => modalizeRefCommander.current?.close()}>
+                            <Text style={styles.modalButtonText}>Annuler</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.modalButton, styles.confirmButton]}>
+                            <Text style={styles.modalButtonText}>Confirmer</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modalize>
+
+            {/* Modalize pour la réservation */}
+            <Modalize ref={modalizeRefReserver} snapPoint={150}>
+                <View style={styles.modalContent}>
+                    <Text style={styles.modalTitle}>Confirmation de réservation</Text>
+                    <Text style={styles.modalMessage}>Voulez-vous confirmer votre réservation?</Text>
+                    <View style={styles.modalButtonContainer}>
+                        <TouchableOpacity style={styles.modalButton} onPress={() => modalizeRefReserver.current?.close()}>
+                            <Text style={styles.modalButtonText}>Annuler</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.modalButton, styles.confirmButton]}>
+                            <Text style={styles.modalButtonText}>Confirmer</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modalize>
         </ImageBackground>
     );
 };
@@ -223,7 +266,7 @@ const styles = StyleSheet.create({
     quantityText: {
         fontSize: 14,
         marginHorizontal: 5,
-        color: '#fff', // Texte en blanc
+        color: '#fff', 
     },
     removeButton: {
         padding: 10,
@@ -264,14 +307,14 @@ const styles = StyleSheet.create({
         backgroundColor: Color.bleuTransparent,
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 50,
+        borderRadius: 10,
         marginLeft: 10,
     },
     footerButton2: {
         backgroundColor: Color.orangeTransparent,
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 50,
+        borderRadius: 10,
         marginLeft: 10,
     },
     buttonText: {
@@ -288,6 +331,41 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#fff', 
     },
+    modalContent: {
+        padding: 20,
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center',
+    },
+    modalMessage: {
+        fontSize: 16,
+        textAlign: 'center',
+        marginBottom: 10,
+    },
+    modalButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+    },
+    modalButton: {
+        backgroundColor: Color.orange,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+        marginLeft: 10,
+    },
+    confirmButton: {
+        backgroundColor: Color.vert,
+    },
+    modalButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
 });
 
 export default PagePanier;
+
+

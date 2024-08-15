@@ -10,6 +10,7 @@ const CELL_COUNT = 4;
 const VerificationMotDePasse = ({ route, navigation }) => {
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
@@ -20,7 +21,7 @@ const VerificationMotDePasse = ({ route, navigation }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://192.168.21.25:3300/sendEmail/verify-code', {
+      const response = await fetch('http://192.168.21.25:3300/sendEmail/verifyCode', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,6 +44,34 @@ const VerificationMotDePasse = ({ route, navigation }) => {
     }
 
     setLoading(false);
+  };
+
+  const handleResendCode = async () => {
+    setResending(true);
+
+    try {
+      const response = await fetch('http://192.168.21.25:3300/sendEmail/resendCode', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: route.params.email }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        Alert.alert('Erreur', result.message || 'Erreur lors de l\'envoi du nouveau code.');
+        setResending(false);
+        return;
+      }
+
+      Alert.alert('Succès', 'Un nouveau code a été envoyé à votre adresse email.');
+    } catch (error) {
+      Alert.alert('Erreur', 'Erreur lors de l\'envoi du nouveau code.');
+    }
+
+    setResending(false);
   };
 
   return (
@@ -81,7 +110,11 @@ const VerificationMotDePasse = ({ route, navigation }) => {
               />
             </View>
             <View style={GlobalStyles.containerConnexion}>
-              <TouchableOpacity style={GlobalStyles.buttonContainer} onPress={handleVerification} disabled={loading || value.length !== CELL_COUNT}>
+              <TouchableOpacity 
+                style={GlobalStyles.buttonContainer} 
+                onPress={handleVerification} 
+                disabled={loading || value.length !== CELL_COUNT}
+              >
                 <View style={[GlobalStyles.button, loading && styles.loadingButton]}>
                   <Text style={GlobalStyles.buttonText}>{loading ? 'Vérification...' : 'Vérifier'}</Text>
                 </View>
@@ -89,8 +122,10 @@ const VerificationMotDePasse = ({ route, navigation }) => {
             </View>
             <View style={GlobalStyles.renvoiCodeContainer}>
               <Text style={GlobalStyles.renvoiText}>Vous n'avez pas réçu de code?</Text>
-              <Pressable onPress={() => navigation.navigate('MotDePasseOublie')}>
-                <Text style={GlobalStyles.renvoyerCode}>Envoyer un nouveau code</Text>
+              <Pressable onPress={handleResendCode} disabled={resending}>
+                <Text style={GlobalStyles.renvoyerCode}>
+                  {resending ? 'Renvoi en cours...' : 'Envoyer un nouveau code'}
+                </Text>
               </Pressable>
             </View>
           </ScrollView>
@@ -113,7 +148,7 @@ const styles = StyleSheet.create({
     width: 280,
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginBottom:20
+    marginBottom: 20,
   },
   cell: {
     width: 60,
@@ -125,7 +160,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 50,
     marginRight: 10,
-    backgroundColor:Color.grisContainer
+    backgroundColor: Color.grisContainer,
   },
   focusCell: {
     borderColor: Color.orange,
@@ -133,7 +168,7 @@ const styles = StyleSheet.create({
   cellText: {
     textAlign: 'center',
     fontSize: 24,
-    marginTop:10
+    marginTop: 10,
   },
   loadingButton: {
     backgroundColor: Color.grisContainer,
