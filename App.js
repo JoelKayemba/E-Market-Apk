@@ -59,7 +59,7 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   return (
     <GestureHandlerRootView >
-       <FontProvider>
+      <FontProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='SkipPage'>
           <Stack.Screen name="SkipPage" component={SkipPage} options={{ headerShown: false }} />
@@ -102,11 +102,7 @@ export default function App() {
           <Stack.Screen name="BoutiqueDescription" component={BoutiqueDescription} options={{ headerShown: false }}/>
           <Stack.Screen name="BoutiqueImages" component={BoutiqueImages} options={{ headerShown: false }}/>
           <Stack.Screen name="BoutiqueInfo" component={BoutiqueInfo} options={{ headerShown: false }}/>
-          
-          
-        
-        
-        
+
         </Stack.Navigator>
     </NavigationContainer>
     </FontProvider>

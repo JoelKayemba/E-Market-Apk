@@ -59,7 +59,7 @@ const Connexion = ({ navigation }) => {
             routes: [{ name: 'ConnexionLoading' }],
         });
     }else {
-        // Utiliser le message d'erreur retourné par le serveur
+        
         setErrorMessage(data.message || 'Une erreur est survenue');
       }
     } catch (error) {
