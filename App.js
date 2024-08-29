@@ -48,6 +48,8 @@ import BoutiqueCategorie from './CompteBoutique/InscriptionBoutique/BoutiqueCate
 import BoutiqueDescription from './CompteBoutique/InscriptionBoutique/BoutiqueDescription';
 import BoutiqueImages from './CompteBoutique/InscriptionBoutique/BoutiqueImages';
 import BoutiqueInfo from './CompteBoutique/InscriptionBoutique/BoutiqueInfo';
+import AccueilBoutique from './CompteBoutique/Screen/AccueilBoutique';
+import AjoutLoading from './CompteBoutique/component/ajoutLoading';
 
 
 
@@ -102,6 +104,8 @@ export default function App() {
           <Stack.Screen name="BoutiqueDescription" component={BoutiqueDescription} options={{ headerShown: false }}/>
           <Stack.Screen name="BoutiqueImages" component={BoutiqueImages} options={{ headerShown: false }}/>
           <Stack.Screen name="BoutiqueInfo" component={BoutiqueInfo} options={{ headerShown: false }}/>
+          <Stack.Screen name="AccueilBoutique" component={AccueilBoutique} options={{ headerShown: false }}/>
+          <Stack.Screen name="AjoutLoading" component={AjoutLoading} options={{ headerShown: false }}/>
 
         </Stack.Navigator>
     </NavigationContainer>

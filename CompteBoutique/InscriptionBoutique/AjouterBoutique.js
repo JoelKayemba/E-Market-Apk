@@ -4,6 +4,7 @@ import BoutiqueInfo from './BoutiqueInfo';
 import BoutiqueCategorie from './BoutiqueCategorie';
 import BoutiqueImages from './BoutiqueImages';
 import BoutiqueDescription from './BoutiqueDescription';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AjouterBoutique = ({ navigation }) => {
   const [step, setStep] = useState(1);
@@ -32,24 +33,66 @@ const AjouterBoutique = ({ navigation }) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://votre_api_url/boutique', {
+      const idclient = await AsyncStorage.getItem('idclient');
+
+      const formDataToSend = new FormData();
+      formDataToSend.append('nom', formData.nom);
+      formDataToSend.append('type', formData.type);
+      formDataToSend.append('categorie', formData.categorie);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('numero_telephone', formData.numero_telephone);
+      formDataToSend.append('description', formData.description);
+      formDataToSend.append('idclient', idclient);
+
+      if (formData.image1) {
+        formDataToSend.append('image1', {
+          uri: formData.image1,
+          type: 'image/jpeg',
+          name: 'image1.jpg',
+        });
+      }
+      if (formData.image2) {
+        formDataToSend.append('image2', {
+          uri: formData.image2,
+          type: 'image/jpeg',
+          name: 'image2.jpg',
+        });
+      }
+      if (formData.image3) {
+        formDataToSend.append('image3', {
+          uri: formData.image3,
+          type: 'image/jpeg',
+          name: 'image3.jpg',
+        });
+      }
+      if (formData.image4) {
+        formDataToSend.append('image4', {
+          uri: formData.image4,
+          type: 'image/jpeg',
+          name: 'image4.jpg',
+        });
+      }
+
+      const response = await fetch('http://192.168.21.25:3300/boutique/ajoutBoutique', {
         method: 'POST',
+        body: formDataToSend,
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
-        body: JSON.stringify(formData),
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        alert('Boutique ajoutée avec succès');
-        navigation.navigate('Accueil');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'AjoutLoading' }],
+      });
       } else {
         alert(result.message || 'Erreur lors de l\'ajout de la boutique');
       }
     } catch (error) {
-      alert('Erreur lors de l\'ajout de la boutique');
+      alert('Erreur lors de l\'ajout de la boutique2');
     }
   };
 
