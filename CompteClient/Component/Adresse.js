@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput, ScrollView, Alert, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, ImageBackground, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
-import { Modalize } from 'react-native-modalize'; // Importation de Modalize
+import { Modalize } from 'react-native-modalize'; 
 import ClientStyle from '../../Styles/ClientStyle';
 import { Picker } from '@react-native-picker/picker';
 import Color from '../../Styles/Color';

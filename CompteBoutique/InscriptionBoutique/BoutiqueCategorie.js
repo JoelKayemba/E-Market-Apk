@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import { Checkbox } from 'react-native-paper';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import Color from '../../Styles/Color'; 
 
 const categoriesList = [
   'Electronique', 'Vêtements', 'Alimentation', 'Services', 'Maison',
@@ -9,49 +9,100 @@ const categoriesList = [
 
 const BoutiqueCategorie = ({ nextStep, prevStep, handleChange, formData }) => {
   const toggleCategory = (category) => {
-    let updatedCategories;
-    if (formData.categorie.includes(category)) {
-      updatedCategories = formData.categorie.filter(item => item !== category);
-    } else {
-      updatedCategories = [...formData.categorie, category];
-    }
+    let updatedCategories = formData.categorie.includes(category)
+      ? formData.categorie.filter(item => item !== category)
+      : [...formData.categorie, category];
     handleChange('categorie', updatedCategories);
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.label}>Sélectionnez les catégories :</Text>
-      {categoriesList.map((category) => (
-        <View key={category} style={styles.checkboxContainer}>
-          <Checkbox
-            status={formData.categorie.includes(category) ? 'checked' : 'unchecked'}
+      <View style={styles.grid}>
+        {categoriesList.map((category) => (
+          <TouchableOpacity
+            key={category}
+            style={[styles.categoryBox, formData.categorie.includes(category) ? styles.selected : {}]}
             onPress={() => toggleCategory(category)}
-          />
-          <Text style={styles.checkboxLabel}>{category}</Text>
-        </View>
-      ))}
-      <Button title="Précédent" onPress={prevStep} />
-      <Button title="Suivant" onPress={nextStep} />
-    </View>
+          >
+            <Text style={[styles.categoryText, formData.categorie.includes(category) ? styles.selectedText : {}]}>
+              {category}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={prevStep} style={styles.button1}>
+          <Text style={styles.buttonText}>Précédent</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={nextStep} style={styles.button}>
+          <Text style={styles.buttonText}>Suivant</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    paddingBottom: 50
   },
   label: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: Color.bleu,
+    marginBottom: 20,
+    textAlign: 'center',
+    marginTop:50
   },
-  checkboxContainer: {
+  grid: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    justifyContent:'center'
+  },
+  categoryBox: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: Color.grey,
+    borderRadius: 10,
+    margin: 5,
+    width: '48%', 
     alignItems: 'center',
-    marginBottom: 5,
+    backgroundColor: 'transparent'
   },
-  checkboxLabel: {
-    marginLeft: 8,
+  selected: {
+    backgroundColor: Color.bleu
   },
+  categoryText: {
+    fontSize: 16
+  },
+  selectedText: {
+    color: 'white'
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 40
+  },
+  button: {
+    backgroundColor: Color.orange,
+    padding: 10,
+    borderRadius: 10,
+    width: '48%', 
+  },
+  button1:{
+    backgroundColor: Color.bleu,
+    padding: 10,
+    borderRadius: 10,
+    width: '48%', 
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign:'center'
+  }
 });
 
 export default BoutiqueCategorie;
