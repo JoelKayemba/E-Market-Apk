@@ -4,6 +4,7 @@ import DismissKeyboard from '../../Component/DismissKeyboard';
 import IconTextInput from '../../Component/IconTextInput';
 import GlobalStyles from '../../Styles/GlobalStyles';
 import Color from '../../Styles/Color';
+import API_BASE_URL from '../../ApiConfig';
 
 const ModifierMotDePasse = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ const ModifierMotDePasse = ({ navigation }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://192.168.21.25:3300/sendEmail/sendVerificationCode', {
+      const response = await fetch(`${API_BASE_URL}/sendEmail/sendVerificationCode`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

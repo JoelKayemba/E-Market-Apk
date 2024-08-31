@@ -4,8 +4,9 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Modalize } from 'react-native-modalize';
 import Color from '../../Styles/Color';
+import { AntDesign } from '@expo/vector-icons';
 
-const defaultProfileImage = require('../../assets/imageBack/f.jpg');
+const defaultProfileImage = require('../../assets/imageBack/pp.png');
 
 const PageProfil = () => {
     const [user, setUser] = useState({
@@ -49,11 +50,18 @@ const PageProfil = () => {
             style={styles.backgroundImage}
         >
             <ScrollView contentContainerStyle={styles.container}>
-                <View style={styles.profileHeader}>
-                    <Image source={user.photo} style={styles.profileImage} />
-                    <Text style={styles.name}>{user.nom}</Text>
-                    <Text style={styles.email}>{user.email}</Text>
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={()=> navigation.goBack()} style={styles.backIcon}>
+                        <AntDesign name="left" size={24} color={Color.orange} />
+                    </TouchableOpacity>
+                    
+                    <View style={styles.profileHeader}>
+                        <Image source={user.photo} style={styles.profileImage} />
+                        <Text style={styles.name}>{user.nom}</Text>
+                        <Text style={styles.email}>{user.email}</Text>
+                     </View>
                 </View>
+                
                 <View style={styles.section}>
                     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ModifierProfil')}>
                         <Text style={styles.buttonText}>Modifier le Profil</Text>
@@ -72,9 +80,6 @@ const PageProfil = () => {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PaymentScreen')}>
                         <Text style={styles.buttonText}>Payement</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PaymentScreen')}>
-                        <Text style={styles.buttonText}>FeedBack</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button}>
                         <Text style={styles.buttonText}>Nous contactez</Text>
@@ -114,10 +119,16 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     },
-    profileHeader: {
-        alignItems: 'center',
+    header:{
+        flexDirection:'row',
         marginBottom: 30,
         marginTop: 30,
+        
+    },
+    profileHeader: {
+        alignItems: 'center',
+        marginLeft:50
+        
     },
     profileImage: {
         width: 120,
@@ -161,7 +172,8 @@ const styles = StyleSheet.create({
         height:50,
         alignItems:'center',
         justifyContent:'center',
-        borderRadius:10
+        borderRadius:10,
+        marginBottom:20
     },
     deconnexionText:{
         color:'white',

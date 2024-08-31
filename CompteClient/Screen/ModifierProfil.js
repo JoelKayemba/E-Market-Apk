@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { Modalize } from 'react-native-modalize';
 import Color from '../../Styles/Color';
+import API_BASE_URL from '../../ApiConfig';
 
 const ModifierProfil = () => {
     const [prenom, setPrenom] = useState('');
@@ -32,7 +33,7 @@ const ModifierProfil = () => {
             setLoading(true);
 
             try {
-                const response = await fetch(`http://192.168.21.25:3300/profil?idclient=${idclient}`);
+                const response = await fetch(`${API_BASE_URL}/profil?idclient=${idclient}`);
                 const result = await response.json();
 
                 if (response.ok) {
@@ -94,7 +95,7 @@ const ModifierProfil = () => {
             return;
         }
 
-        const response = await fetch('http://192.168.21.25:3300/profil/modifier', {
+        const response = await fetch(`${API_BASE_URL}/profil/modifier`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -135,7 +136,7 @@ const ModifierProfil = () => {
             return;
         }
 
-        const response = await fetch('http://192.168.21.25:3300/profil/supprimer', {
+        const response = await fetch(`${API_BASE_URL}/profil/supprimer`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -208,7 +209,7 @@ const ModifierProfil = () => {
                                 {dateError ? <Text style={styles.errorText}>{dateError}</Text> : null}
 
                                 <Text style={styles.label}>Email</Text>
-                                <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholderTextColor="#ccc" />
+                                <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholderTextColor="#ccc" editable={false}/>
 
                                 <Text style={styles.label}>Nom d'utilisateur</Text>
                                 <TextInput style={styles.input} value={nomUtilisateur} onChangeText={setNomUtilisateur} placeholderTextColor="#ccc" />

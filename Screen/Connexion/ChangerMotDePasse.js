@@ -4,6 +4,7 @@ import DismissKeyboard from '../../Component/DismissKeyboard';
 import GlobalStyles from '../../Styles/GlobalStyles';
 import Color from '../../Styles/Color';
 import IconTextInput from '../../Component/IconTextInput';
+import API_BASE_URL from '../../ApiConfig';
 
 const ChangerMotDePasse = ({ route, navigation }) => {
   const [newPassword, setNewPassword] = useState('');
@@ -19,7 +20,7 @@ const ChangerMotDePasse = ({ route, navigation }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://192.168.21.25:3300/sendEmail/change-password', {
+      const response = await fetch(`${API_BASE_URL}/sendEmail/change-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

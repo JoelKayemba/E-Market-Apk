@@ -8,6 +8,7 @@ import { Picker } from '@react-native-picker/picker';
 import Color from '../../Styles/Color';
 import { Entypo, Ionicons } from '@expo/vector-icons';
 import adresseStyle from '../../Styles/adresseStyle';
+import API_BASE_URL from '../../ApiConfig';
 
 const Adresse = () => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -45,7 +46,7 @@ const Adresse = () => {
                     return;
                 }
         
-                const response = await fetch(`http://192.168.21.25:3300/adresses?userId=${userId}`);
+                const response = await fetch(`${API_BASE_URL}/adresses?userId=${userId}`);
                 const result = await response.json();
         
                 if (!response.ok) {
@@ -130,7 +131,7 @@ const Adresse = () => {
                 parDefaut: 1,
             };
         
-            const response = await fetch('http://192.168.21.25:3300/adresses', {
+            const response = await fetch(`${API_BASE_URL}/adresses`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -164,7 +165,7 @@ const Adresse = () => {
         setLoading(true);
 
         try {
-            const response = await fetch(`http://192.168.21.25:3300/adresses/${editId}`, {
+            const response = await fetch(`${API_BASE_URL}/adresses/${editId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

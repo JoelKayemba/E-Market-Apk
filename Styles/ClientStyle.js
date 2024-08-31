@@ -72,6 +72,7 @@ const ClientStyle = StyleSheet.create({
       },
       textPourToi: {
         fontWeight: 'bold',
+        color:Color.bleu
       },
       textVoirTout:{
         color:Color.orange

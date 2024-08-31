@@ -166,13 +166,13 @@ const styles = StyleSheet.create({
         fontFamily:'InriaSerif'
     },
     button: {
-        backgroundColor: Color.orange,
+        backgroundColor: '#80ED99',
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 50
     },
     buttonText: {
-        color: 'white',
+        color: 'black',
         fontSize: 12,
         fontFamily:'InriaSerif'
     },

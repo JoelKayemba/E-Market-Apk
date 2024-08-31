@@ -50,8 +50,10 @@ import BoutiqueImages from './CompteBoutique/InscriptionBoutique/BoutiqueImages'
 import BoutiqueInfo from './CompteBoutique/InscriptionBoutique/BoutiqueInfo';
 import AccueilBoutique from './CompteBoutique/Screen/AccueilBoutique';
 import AjoutLoading from './CompteBoutique/component/ajoutLoading';
-
-
+import PageMesServices from './CompteClient/Screen/PageMesServices';
+import PageServices from './CompteClient/Screen/PageServices';
+import Prestataires from './CompteClient/Screen/Prestataires';
+import Portfolios from './CompteClient/Screen/Portfolios';
 
 
 
@@ -106,6 +108,10 @@ export default function App() {
           <Stack.Screen name="BoutiqueInfo" component={BoutiqueInfo} options={{ headerShown: false }}/>
           <Stack.Screen name="AccueilBoutique" component={AccueilBoutique} options={{ headerShown: false }}/>
           <Stack.Screen name="AjoutLoading" component={AjoutLoading} options={{ headerShown: false }}/>
+          <Stack.Screen name="PageMesServices" component={PageMesServices} options={{ headerShown: false }}/>
+          <Stack.Screen name="PageServices" component={PageServices} options={{ headerShown: false }}/>
+          <Stack.Screen name="Prestataires" component={Prestataires} options={{ headerShown: false }}/>
+          <Stack.Screen name="Portfolios" component={Portfolios} options={{ headerShown: false }}/>
 
         </Stack.Navigator>
     </NavigationContainer>

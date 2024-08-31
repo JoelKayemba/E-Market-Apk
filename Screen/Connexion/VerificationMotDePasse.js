@@ -4,6 +4,7 @@ import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-
 import DismissKeyboard from '../../Component/DismissKeyboard';
 import GlobalStyles from '../../Styles/GlobalStyles';
 import Color from '../../Styles/Color';
+import API_BASE_URL from '../../ApiConfig';
 
 const CELL_COUNT = 4;
 
@@ -21,7 +22,7 @@ const VerificationMotDePasse = ({ route, navigation }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://192.168.21.25:3300/sendEmail/verifyCode', {
+      const response = await fetch(`${API_BASE_URL}/sendEmail/verifyCode`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +51,7 @@ const VerificationMotDePasse = ({ route, navigation }) => {
     setResending(true);
 
     try {
-      const response = await fetch('http://192.168.21.25:3300/sendEmail/resendCode', {
+      const response = await fetch(`${API_BASE_URL}/sendEmail/resendCode`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome } from '@expo/vector-icons';
 import Color from '../../Styles/Color';
+import API_BASE_URL from '../../ApiConfig';
 
 const AjouterAnnonce = ({ navigation }) => {
     const [titre, setTitre] = useState('');
@@ -69,7 +70,7 @@ const AjouterAnnonce = ({ navigation }) => {
         }
 
         try {
-            const response = await fetch('http://192.168.21.25:3300/annonce/ajouter', {
+            const response = await fetch(`${API_BASE_URL}/annonce/ajouter`, {
                 method: 'POST',
                 body: formData,
                 headers: {

@@ -15,7 +15,7 @@ const BoutiqueCategorie = ({ nextStep, prevStep, handleChange, formData }) => {
       ? formData.categorie.filter(item => item !== category)
       : [...formData.categorie, category];
     handleChange('categorie', updatedCategories);
-    setError(''); // Clear the error when a category is selected
+    setError(''); 
   };
 
   const handleNextStep = () => {

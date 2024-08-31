@@ -7,6 +7,7 @@ import DismissKeyboard from '../../Component/DismissKeyboard';
 import GlobalStyles from '../../Styles/GlobalStyles';
 import React, { useState } from 'react';
 import useAuth from '../../hook/useAuth';
+import API_BASE_URL from '../../ApiConfig';
 
 const Connexion = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ const Connexion = ({ navigation }) => {
     setLoading(true); // Démarrer le chargement
   
     try {
-      const response = await fetch('http://192.168.21.25:3300/auth/login', {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

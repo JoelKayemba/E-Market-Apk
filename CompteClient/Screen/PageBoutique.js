@@ -7,6 +7,7 @@ import BoutiqueProche from '../Component/BoutiqueProche';
 import ClientStyle from '../../Styles/ClientStyle';
 import MeilleursBoutique from '../Component/MeilleursBoutique';
 import CustomHeader from '../../Component/CustomHeader';
+import Services from '../Component/Services';
 
 const Boutique = ({ navigation}) => {
   // Données pour les sections
@@ -16,6 +17,7 @@ const Boutique = ({ navigation}) => {
       title: 'Recommandation',
       component: <BoutiquePourToi />
     },
+
     {
       id: '2', // Identifiant unique pour chaque section
       title: 'Nos Meilleurs Boutiques',

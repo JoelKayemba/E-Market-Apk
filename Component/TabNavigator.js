@@ -1,13 +1,14 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, TouchableOpacity ,Text } from 'react-native';
-import { Ionicons, Entypo, AntDesign } from '@expo/vector-icons';
+import { Ionicons, Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import Accueil from '../CompteClient/Screen/Accueil';
 import Boutique from '../CompteClient/Screen/PageBoutique';
 import Panier from '../CompteClient/Screen/PagePanier';
 import Profil from '../CompteClient/Screen/PageProfil';
 import Annonce from '../CompteClient/Screen/Annonce';
 import Color from '../Styles/Color';
+import Services from '../CompteClient/Screen/PageServices';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,9 +29,9 @@ const TabNavigator = () => {
           } else if (route.name === 'Panier') {
             iconName = focused ? 'cart' : 'cart-outline';
             IconComponent = Ionicons;
-          } else if (route.name === 'Profil') {
-            iconName = focused ? 'user' : 'user';
-            IconComponent = AntDesign;
+          } else if (route.name === 'Services') {
+            iconName = focused ? 'handshake' : 'handshake-outline';
+            IconComponent = MaterialCommunityIcons;
           } else if (route.name === 'Annonce') {
             iconName = 'megaphone';
             IconComponent = Entypo;
@@ -51,8 +52,8 @@ const TabNavigator = () => {
             label = 'Boutique';
           } else if (route.name === 'Panier') {
             label = 'Panier';
-          } else if (route.name === 'Profil') {
-            label = 'Profil';
+          } else if (route.name === 'Services') {
+            label = 'Service';
           } 
 
           return (
@@ -116,8 +117,8 @@ const TabNavigator = () => {
           },
         }}
       />
+      <Tab.Screen name="Services" component={Services} options={{ headerShown: false }} />
       <Tab.Screen name="Panier" component={Panier} options={{ headerShown: false }} />
-      <Tab.Screen name="Profil" component={Profil} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 };

@@ -7,6 +7,7 @@ import DismissKeyboard from '../../Component/DismissKeyboard';
 import GlobalStyles from '../../Styles/GlobalStyles';
 import Color from '../../Styles/Color';
 import { useNavigation } from '@react-navigation/native';
+import API_BASE_URL from '../../ApiConfig';
 
 const InformationInscription = () => {
   const navigation = useNavigation();
@@ -19,17 +20,13 @@ const InformationInscription = () => {
   const [loading, setLoading] = useState(false); // État pour le chargement
 
   const handleRegister = async () => {
-    console.log("Username:", username);
-    console.log("Email:", email);
-    console.log("Phone Number:", phoneNumber);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
+
 
     setLoading(true); // Démarrer le chargement
     console.log('Numéro de téléphone:', phoneNumber);
 
     try {
-      const response = await fetch('http://192.168.21.25:3300/auth/register', {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Modal, ImageBackground, Image , Text} from 'react-native';
-import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
 import Color from '../Styles/Color';
 import Recherche from '../CompteClient/Component/Recherche';
 import { useNavigation } from '@react-navigation/native';
@@ -41,8 +41,8 @@ const CustomHeader = () => {
             <TouchableOpacity onPress={() => navigation.navigate('MessageList')} style={styles.iconButton}>
               <AntDesign name="mail" size={20} color={Color.orange} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Notifications')} style={styles.iconButton}>
-              <Ionicons name="notifications-outline" size={20} color={Color.orange} />
+            <TouchableOpacity onPress={() => navigation.navigate('PageProfil')} style={styles.iconButton}>
+              <FontAwesome name="user" size={20} color={Color.orange} />
             </TouchableOpacity>
           </View>
         </View>

@@ -9,6 +9,10 @@ import produits from '../data/produits';
 import meilleursBoutiquesData from '../data/meilleursBoutiquesData';
 import boutiquePourToiData from '../data/boutiquePourToiData';
 import boutiqueProcheData from '../data/boutiqueProcheData';
+import services from '../data/serviceData';
+import TousLesServices from './TousLesServices';
+import prestataires from '../data/PrestatairesData';
+import TousPrestataires from './TousPrestataires';
 
 const fusionnerDonneesBoutiques = [
   ...meilleursBoutiquesData,
@@ -23,10 +27,11 @@ const RechercheScreen = ({ navigation }) => {
 
     const fusionnerDonnees = {
         produit: produits,
-        boutique: fusionnerDonneesBoutiques
+        boutique: fusionnerDonneesBoutiques,
+        services: services,
+        prestataires: prestataires
     };
 
-    
     useEffect(() => {
         setFilteredItems([]);
         setQuery('');
@@ -36,14 +41,15 @@ const RechercheScreen = ({ navigation }) => {
         setQuery(text);
         if (text) {
             const results = fusionnerDonnees[searchType].filter((item) =>
-                item.nom.toLowerCase().includes(text.toLowerCase()) ||
-                (item.categorie && item.categorie.toLowerCase().includes(text.toLowerCase()))
+                (item.nom?.toLowerCase().includes(text.toLowerCase()) || 
+                (item.categorie && item.categorie?.toLowerCase().includes(text.toLowerCase())))
             );
             setFilteredItems(results);
         } else {
             setFilteredItems([]);
         }
     };
+    
 
     const clearSearch = () => {
         setQuery('');
@@ -64,6 +70,18 @@ const RechercheScreen = ({ navigation }) => {
             >
                 <Text style={[styles.selectorText, searchType === 'produit' && styles.selectedText]}>Produits</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.selectorButton, searchType === 'services' && styles.selected]}
+                onPress={() => setSearchType('services')}
+            >
+                <Text style={[styles.selectorText, searchType === 'services' && styles.selectedText]}>Services</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.selectorButton, searchType === 'prestataires' && styles.selected]}
+                onPress={() => setSearchType('prestataires')}
+            >
+                <Text style={[styles.selectorText, searchType === 'prestataires' && styles.selectedText]}>Prestataires</Text>
+            </TouchableOpacity>
         </View>
     );
 
@@ -78,7 +96,7 @@ const RechercheScreen = ({ navigation }) => {
                         <Ionicons name="search" size={20} color={Color.grisIcone} />
                         <TextInput
                             style={styles.input}
-                            placeholder={`Rechercher ${searchType === 'boutique' ? 'une boutique' : 'un produit'}...`}
+                            placeholder={`Rechercher ${searchType === 'boutique' ? 'une boutique' : searchType === 'produit' ? 'un produit' : searchType === 'services' ? 'services' : 'prestataires'}...`}
                             value={query}
                             onChangeText={handleSearch}
                         />
@@ -94,21 +112,28 @@ const RechercheScreen = ({ navigation }) => {
 
                 {!query ? (
                     <View style={styles.messageContainer}>
-                        <Text style={styles.messageText}>Veuillez saisir une requête pour rechercher {searchType === 'boutique' ? 'des boutiques' : 'des produits'}.</Text>
+                        <Text style={styles.messageText}>Veuillez saisir une requête pour rechercher {searchType === 'boutique' ? 'des boutiques' : searchType === 'produit' ? 'des produits' : searchType === 'services' ? 'des services' : 'des prestataires'}.</Text>
                     </View>
                 ) : filteredItems.length === 0 ? (
                     <View style={styles.noResultsContainer}>
                         <Image source={require('../../assets/logo/vide.png')} style={styles.noResultsImage} />
-                        <Text style={styles.noResultsText}>{searchType === 'boutique' ? 'Aucune boutique trouvée' : 'Aucun produit trouvé'}</Text>
+                        <Text style={styles.noResultsText}>{searchType === 'boutique' ? 'Aucune boutique trouvée' : searchType === 'produit' ? 'Aucun produit trouvé' : searchType === 'service' ? 'Aucun service trouvé' : 'Aucun prestataire trouvé'}</Text>
                     </View>
                 ) : (
                     <View style={styles.resultsContainer}>
                         {searchType === 'boutique' ? (
                             <ToutesLesBoutiques boutiques={filteredItems} />
-                        ) : (
+                        ) : searchType === 'produit' ? (
                             <Produit produits={filteredItems} />
+                        ) : searchType === 'services' ? (
+                            <TousLesServices services={filteredItems} />
+                        ) : searchType === 'prestataires' ? (
+                            <TousPrestataires prestataires={filteredItems} />
+                        ) : (
+                            <Text>Aucun résultat trouvé.</Text>
                         )}
                     </View>
+
                 )}
             </View>
         </DismissKeyboard>
@@ -141,8 +166,8 @@ const styles = StyleSheet.create({
         borderColor: Color.grisIcone,
         height: 40,
         marginHorizontal: 10,
-        borderWidth:1,
-        borderColor:Color.bleu
+        borderWidth: 1,
+        borderColor: Color.bleu
     },
     input: {
         flex: 1,
@@ -180,12 +205,17 @@ const styles = StyleSheet.create({
     selectorContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'center', 
+        flexWrap: 'wrap', 
         marginVertical: 10,
+        paddingHorizontal: 10,
+        
     },
     selectorButton: {
         paddingHorizontal: 20,
         borderRadius: 10,
         backgroundColor: '#e0e0e0',
+        margin: 5,
         marginHorizontal: 5,
         height: 30,
         alignItems: 'center',

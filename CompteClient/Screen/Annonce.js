@@ -4,6 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Video } from 'expo-av';
 import { FontAwesome, Entypo, Ionicons } from '@expo/vector-icons';
 import Color from '../../Styles/Color';
+import API_BASE_URL from '../../ApiConfig';
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,7 +16,7 @@ const Annonce = () => {
 
   const fetchAnnonces = async () => {
     try {
-      const response = await fetch('http://192.168.21.25:3300/annonce/annonces');
+      const response = await fetch(`${API_BASE_URL}/annonce/annonces`);
       const result = await response.json();
       setAnnonces(result.annonces);
     } catch (error) {
@@ -83,8 +84,8 @@ const Annonce = () => {
 
   const renderItem = ({ item, index }) => (
     <VideoItem
-      uri={item.video ? `http://192.168.21.25:3300/uploads/${item.video}` : `http://192.168.21.25:3300/uploads/${item.image}`} 
-      profileImage={item.image ? `http://192.168.21.25:3300/uploads/${item.image}` : null} 
+      uri={item.video ? `${API_BASE_URL}/uploads/${item.video}` : `${API_BASE_URL}/uploads/${item.image}`} 
+      profileImage={item.image ? `${API_BASE_URL}/uploads/${item.image}` : null} 
       isVisible={visibleIndex === index}
       videoRef={(ref) => (videoRefs.current[index] = ref)} 
     />

@@ -20,6 +20,8 @@ const PageMonProduit = ({ navigation }) => {
         setQuantity(prevQuantity => Math.max(prevQuantity + amount, 1));
     };
 
+    const totalPrice= item.prix * quantity;
+
     const animateImageChange = (newImage) => {
         Animated.timing(animationValue, {
             toValue: 0, // Réduire l'image à zéro
@@ -190,10 +192,12 @@ const PageMonProduit = ({ navigation }) => {
     );
 
     return (
-        <ScrollView style={styles.container}>
-            {renderHeader()}
+        <View style={styles.container}>
+            <ScrollView  contentContainerStyle={styles.scrollViewContent}>
+                {renderHeader()}
+            </ScrollView >
             <View style={styles.footer}>
-                <Text style={styles.price}>${item.prix}</Text>
+                <Text style={styles.price}>${totalPrice.toFixed(2)}</Text>
                 <TouchableOpacity
                     style={styles.addButton}
                     onPress={handleAddToCart}
@@ -209,13 +213,19 @@ const PageMonProduit = ({ navigation }) => {
                     )}
                 </TouchableOpacity>
             </View>
-        </ScrollView>
+        
+
+        </View>
+        
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    scrollViewContent: {
+        paddingBottom: 100, 
     },
     imageContainer: {
         position: 'relative',
@@ -387,14 +397,19 @@ const styles = StyleSheet.create({
     footer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 15,
-        borderTopWidth: 1,
-        borderTopColor: 'lightgray',
+        position: 'absolute', 
+        left: 0,
+        right: 0,
+        bottom: 0, 
+        backgroundColor: 'white',
+        height: 50, 
+        alignItems: 'center', 
+        height:100
     },
     price: {
         fontSize: 24,
         fontWeight: 'bold',
+        marginLeft:20
     },
     addButton: {
         flexDirection: 'row',
@@ -403,6 +418,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         marginTop: 10,
+        marginRight:20
     },
     addButtonText: {
         color: 'white',

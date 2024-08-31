@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Animated, Ea
 import { AntDesign, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import Color from '../../Styles/Color';
 
-const PageMaBoutique = ({ route, navigation }) => {
+const PageMesServices = ({ route, navigation }) => {
     const { boutique } = route.params;
     const [isSearching, setIsSearching] = useState(false);
     const [searchText, setSearchText] = useState('');
@@ -105,10 +105,10 @@ const PageMaBoutique = ({ route, navigation }) => {
                     <Text style={styles.name}>{boutique.nom}</Text>
                     <View style={styles.secondContainer}>
                         <View style={styles.detailsContainer}>
-                            <MaterialCommunityIcons
-                                name="truck-delivery"
+                            <AntDesign
+                                name="home"
                                 size={15}
-                                color={boutique.livraison ? Color.vert : 'gray'}
+                                color={Color.vert}
                             />
                         </View>
                         <View style={styles.detailsContainer}>
@@ -128,7 +128,7 @@ const PageMaBoutique = ({ route, navigation }) => {
                 <Text style={styles.textDescription}>Description</Text>
                 <Text style={styles.description}>{boutique.description}</Text>
             </View>
-            <Text style={styles.textProduit}>Produits</Text>
+            <Text style={styles.textProduit}>Services</Text>
         </>
     );
 
@@ -351,4 +351,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PageMaBoutique;
+export default PageMesServices;

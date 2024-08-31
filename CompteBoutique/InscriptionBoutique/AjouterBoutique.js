@@ -5,6 +5,7 @@ import BoutiqueCategorie from './BoutiqueCategorie';
 import BoutiqueImages from './BoutiqueImages';
 import BoutiqueDescription from './BoutiqueDescription';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import API_BASE_URL from '../../ApiConfig';
 
 const AjouterBoutique = ({ navigation }) => {
   const [step, setStep] = useState(1);
@@ -73,7 +74,7 @@ const AjouterBoutique = ({ navigation }) => {
         });
       }
 
-      const response = await fetch('http://192.168.21.25:3300/boutique/ajoutBoutique', {
+      const response = await fetch(`${API_BASE_URL}/boutique/ajoutBoutique`, {
         method: 'POST',
         body: formDataToSend,
         headers: {

@@ -7,12 +7,12 @@ const { width: viewportWidth } = Dimensions.get('window');
 
 const Publicite = () => {
   const images = [
-    { source: require('../../assets/Images/imagesProduits/fashion3.jpg'), title: 'Pomotion', description: 'Venez decouvrir les grandes promo chez Wiily' },
-    { source: require('../../assets/Images/imagesProduits/food3.jpg'), title: 'Titre 2', description: 'Description pour l\'image 2' },
-    { source: require('../../assets/Images/imagesProduits/electronic3.jpg'), title: 'Titre 3', description: 'Description pour l\'image 3' },
-    { source: require('../../assets/Images/imagesProduits/health4.jpg'), title: 'Titre 4', description: 'Description pour l\'image 4' },
-    { source: require('../../assets/Images/imagesProduits/food8.jpg'), title: 'Titre 5', description: 'Description pour l\'image 5' },
-    { source: require('../../assets/Images/imagesProduits/beauty3.jpg'), title: 'Titre 6', description: 'Description pour l\'image 6' },
+    { source: require('../../assets/services/pub.jpg'), title: 'Services', description: 'Decouvrez tous les services' },
+    { source: require('../../assets/Images/imagesProduits/fashion3.jpg'), title: 'Pomotion', description: 'Venez decouvrir les grandes promo disponible' },
+    { source: require('../../assets/Images/imagesProduits/food3.jpg'), title: 'Restaurants', description: 'Explorez nos meilleurs restaurants' },
+    { source: require('../../assets/Images/imagesProduits/health4.jpg'), title: 'Santé', description: 'Consultez les meilleures pharmacies' },
+    { source: require('../../assets/Images/imagesProduits/furniture1.jpg'), title: 'Immobilier', description: 'Voir les biens immobiliers' },
+    { source: require('../../assets/Images/imagesProduits/beauty3.jpg'), title: 'Beauté', description: 'Faites places à la beauté' },
   ];
 
   return (

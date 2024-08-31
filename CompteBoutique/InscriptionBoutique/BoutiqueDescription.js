@@ -27,7 +27,7 @@ const BoutiqueDescription = ({ prevStep, handleChange, formData, handleSubmit })
           value={formData.description}
           onChangeText={(value) => {
             handleChange('description', value);
-            setError(''); // Clear error when user starts typing
+            setError(''); 
           }}
         />
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
