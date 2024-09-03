@@ -56,9 +56,10 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: Color.bleu,
     borderRadius: 10,
+    
   },
   activeTab: {
-    backgroundColor: Color.orange,
+    backgroundColor: 'grey',
   },
   tabText: {
     color: 'white',

@@ -126,7 +126,7 @@ const prestataires = [
     {
       id: '8',
       nom: 'Emmanuella',
-      service: 'Businesswoman',
+      service: 'Business Woman',
       experience: '8 ans',
       mail:'will@gmail.com',
       telephone:'+243 897654763',

@@ -1,3 +1,5 @@
+// page pour afficher les produits par categorie
+
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, View, FlatList, Text, TouchableOpacity, Image, Animated } from 'react-native';
 import ClientStyle from '../../Styles/ClientStyle';

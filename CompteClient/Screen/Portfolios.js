@@ -1,3 +1,4 @@
+// page pour afficher le portfolio de chaque prestataire
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -47,16 +48,16 @@ const Portfolios = () => {
         data={item.projets}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <View style={styles.project}>
+          <TouchableOpacity style={styles.project}>
             <Image source={item.image} style={styles.projImage} />
             <Text style={styles.projTitle}>{item.titre}</Text>
             <Text style={styles.projDescription}>{item.description}</Text>
-          </View>
+          </TouchableOpacity>
         )}
         showsHorizontalScrollIndicator={false}
       />
       <TouchableOpacity style={styles.contactButton}>
-        <Text style={styles.contactButtonText}>Contacter</Text>
+        <Text style={styles.contactButtonText}>Laissez un message</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
   },
   descriptionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '600',
     marginTop: 10,
   },
   description: {
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '600',
     marginTop: 10,
   },
   section: {
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
   },
   projTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '600',
     marginBottom: 5,
   },
   projDescription: {

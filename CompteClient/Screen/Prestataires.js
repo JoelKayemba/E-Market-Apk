@@ -1,3 +1,4 @@
+// page pour affocher les prestataires; cette page est appele dans Services.js
 import React ,{ useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity ,  ScrollView} from 'react-native';
 import prestataires from '../data/PrestatairesData';

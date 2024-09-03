@@ -1,4 +1,5 @@
-// le header de la page d'accueil et la page boutique
+// le header de la page d'accueil et la page boutique. C'est aussi ici qu'on peut ajouter une boutique apres ouverture du modal en cliquant
+// sur le logo E-Market
 
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Modal, ImageBackground, Image , Text} from 'react-native';
@@ -69,7 +70,7 @@ const CustomHeader = () => {
             <View style={styles.modalContent}>
             <TouchableOpacity style={styles.addBoutiqueButton} onPress={ajouterBoutique}>
                 <Text style={styles.addBoutiqueText}>Ajouter Boutique</Text>
-              </TouchableOpacity>
+            </TouchableOpacity>
               
             </View>
             <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
