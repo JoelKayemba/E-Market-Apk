@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
-const categories = ['Tous', 'Designer', 'Porteur', 'Electricien', 'Chauffeur', 'Coiffeuse', 'Cuisiniere', 'Architecte', 'Business Woman'];
+const categories = ['Tous', 'Designer', 'Photographe', 'Electricien', 'Chauffeur', 'Coiffeuse', 'Cuisiniere', 'Architecte', 'Business Woman','Business Mana','Programmeur','Dessinateur','Peintre','Decorateur','Charpantier'];
 
 const Prestataires = () => {
   const [selectedCategory, setSelectedCategory] = useState('Tous');
