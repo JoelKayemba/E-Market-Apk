@@ -1,4 +1,4 @@
-// Categorie.js
+// Categorie.js pour les categories de produits
 import React from 'react';
 import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native';
 import ClientStyle from '../../Styles/ClientStyle';

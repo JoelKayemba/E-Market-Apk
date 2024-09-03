@@ -1,3 +1,4 @@
+// page qui affichera tous les produits en page d'accueil
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, FlatList, Image, Text, TouchableOpacity, Animated } from 'react-native';
 import ClientStyle from '../../Styles/ClientStyle';

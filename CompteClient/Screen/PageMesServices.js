@@ -1,3 +1,5 @@
+// page servant a afficher les details de chaque services entrer et permettant la reservation du service
+
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Animated, Easing ,TextInput, ScrollView, KeyboardAvoidingView, Platform} from 'react-native';
 import { AntDesign, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons';

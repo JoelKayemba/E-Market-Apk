@@ -1,8 +1,9 @@
+// partie de la page service qui affichera les servivces
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Color from '../../Styles/Color';
-import serviceData from '../data/serviceData'; // Make sure this path is correct
+import serviceData from '../data/serviceData'; 
 import { useNavigation } from '@react-navigation/native';
 
 const categories = ['Tous', 'Coiffure', 'Design', 'Architecture' , 'Restauration'];

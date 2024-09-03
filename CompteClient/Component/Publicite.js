@@ -1,3 +1,5 @@
+// partie de la page d'accueil ou on mettra differente publicité
+
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Pressable, Dimensions, ImageBackground } from 'react-native';
 import ClientStyle from '../../Styles/ClientStyle';

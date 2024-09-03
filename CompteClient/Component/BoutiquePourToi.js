@@ -1,3 +1,4 @@
+// partie de la page Boutique.js, en gros ici nous mettrons toutes les recommandations des boutiques
 import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Animated } from 'react-native';
 import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';

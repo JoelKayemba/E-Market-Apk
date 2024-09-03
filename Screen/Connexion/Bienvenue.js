@@ -1,3 +1,5 @@
+// Page de bienvenue pour rediriger soit a la page de connexion ou la page d'inscription
+
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, ImageBackground } from 'react-native';
 import Color from '../../Styles/Color';

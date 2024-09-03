@@ -1,3 +1,5 @@
+// page pour le text input avec icone a cote
+
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons, Entypo, FontAwesome, MaterialIcons, MaterialCommunityIcons, AntDesign, Feather, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';

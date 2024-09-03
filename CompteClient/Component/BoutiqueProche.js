@@ -1,3 +1,5 @@
+// partie de la page Boutique pour afficher les boutiques proches
+
 import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Animated } from 'react-native';
 import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';

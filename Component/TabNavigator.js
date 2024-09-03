@@ -1,3 +1,4 @@
+// page du tab navigation pour parcourir toutes les pages, en gros cela renvoie la page d'accueil avec le tab en premier lieu
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, TouchableOpacity ,Text } from 'react-native';

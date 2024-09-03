@@ -1,3 +1,5 @@
+// le header de la page d'accueil et la page boutique
+
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Modal, ImageBackground, Image , Text} from 'react-native';
 import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';

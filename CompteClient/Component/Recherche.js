@@ -1,9 +1,11 @@
+// champ input qui nous dirige vers la page de recherche
+
 import React from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity ,Text} from 'react-native';
+import {StyleSheet, TouchableOpacity ,Text} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Color from '../../Styles/Color';
-import ClientStyle from '../../Styles/ClientStyle';
+
 
 const Recherche = () => {
     const navigation = useNavigation();

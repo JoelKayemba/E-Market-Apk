@@ -1,3 +1,4 @@
+// page qui affiche les boutique apres recherche dans la page de recherche
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';

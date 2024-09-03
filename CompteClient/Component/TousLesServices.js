@@ -1,3 +1,5 @@
+// cette page s'affiche dans la page de recherche apres la recherche d'un service
+
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';

@@ -1,4 +1,4 @@
-//Page pour rediriger vers la page d'accueil s'il y a deja eu connexion dans le telephone2
+//Page pour rediriger vers la page d'accueil s'il y a deja eu connexion dans le telephone
 import React, { useEffect } from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';

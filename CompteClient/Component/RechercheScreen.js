@@ -1,3 +1,5 @@
+// page de recherche
+
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, FlatList, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';

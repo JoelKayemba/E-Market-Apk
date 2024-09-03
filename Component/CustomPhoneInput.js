@@ -1,3 +1,5 @@
+// pour utiliser un input avec la proposition de code pour numero de telephone de chaque pays
+
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import PhoneInput from 'react-native-phone-input';

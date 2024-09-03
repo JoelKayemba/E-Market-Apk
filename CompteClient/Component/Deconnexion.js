@@ -1,4 +1,4 @@
-// Deconnexion.js
+// page de chargement pour ramener a la page de connexion tout en supprimanr le token
 import React, { useEffect } from 'react';
 import { StyleSheet, View, ActivityIndicator ,Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Mise à jour de l'importation

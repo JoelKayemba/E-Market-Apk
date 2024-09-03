@@ -1,4 +1,4 @@
-// Deconnexion.js
+// page de chargement pour diriger dans la page d'accueil compris dans le tabNavigation apres connexion
 import React, { useEffect } from 'react';
 import { StyleSheet, View, ActivityIndicator ,Text, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Mise à jour de l'importation
@@ -9,7 +9,7 @@ const ConnexionLoading = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const handleDeconnexion = async () => {
+    const handleConnexion = async () => {
       try {
 
         // Attendre un court instant avant de rediriger
@@ -21,12 +21,12 @@ const ConnexionLoading = () => {
         
         }, 5000); // Délai pour afficher l'écran de chargement
       } catch (error) {
-        console.error('Erreur lors de la déconnexion :', error);
+        console.error('Erreur lors de  connexion :', error);
         // Gérer les erreurs ici si nécessaire
       }
     };
 
-    handleDeconnexion();
+    handleConnexion();
   }, [navigation]);
 
   return (

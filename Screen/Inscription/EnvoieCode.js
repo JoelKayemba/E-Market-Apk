@@ -1,3 +1,4 @@
+// page d'envoie code par numero de telephone NB: non fini
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Pressable, ScrollView, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';

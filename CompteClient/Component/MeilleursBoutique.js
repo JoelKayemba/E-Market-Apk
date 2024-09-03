@@ -1,3 +1,4 @@
+// partie de la page boutique pour les meilleurs boutiques a afficher
 import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Animated } from 'react-native';
 import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
