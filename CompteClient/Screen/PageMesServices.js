@@ -1,38 +1,31 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Animated, Easing } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Animated, Easing ,TextInput, ScrollView, KeyboardAvoidingView, Platform} from 'react-native';
 import { AntDesign, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import Color from '../../Styles/Color';
 
 const PageMesServices = ({ route, navigation }) => {
     const { boutique } = route.params;
-    const [isSearching, setIsSearching] = useState(false);
-    const [searchText, setSearchText] = useState('');
-    const [likedProducts, setLikedProducts] = useState(new Set());
     const [mainImage, setMainImage] = useState(boutique.image); 
     const [animationValue] = useState(new Animated.Value(1)); // Pour l'animation de l'image
+    const [description, setDescription] = useState('');
+    const [dates, setDates] = useState(["", "", ""]);
 
-    const produits = [
-        { id: '1', nom: 'chaussure Nike', prix: '10.00', image: require('../../assets/Images/produit1.jpg'), livraison: false },
-        { id: '2', nom: 'chaussure addidas', prix: '20.00', image: require('../../assets/Images/produit2.jpg'), livraison: true },
-        { id: '3', nom: 'manette', prix: '30.00', image: require('../../assets/Images/manette.jpg'), livraison: false },
-        { id: '4', nom: 'sac', prix: '40.00', image: require('../../assets/Images/sac.jpg'), livraison: true },
-        { id: '5', nom: 'montre Rolex', prix: '40.00', image: require('../../assets/Images/montre.jpg'), livraison: true },
-    ];
+    
 
-    const handlePress = (item) => {
-        navigation.navigate('PageMonProduit', { item });
+   
+    const handleBooking = () => {
+        if (description && dates.every(date => date.trim() !== '')) {
+            alert('le service a ete reserve');
+            setDescription('');
+            setDates(["", "", ""]);
+        } else {
+            alert('Completez les cases vide');
+        }
     };
-
-    const handleLike = (productId) => {
-        setLikedProducts((prevLikes) => {
-            const updatedLikes = new Set(prevLikes);
-            if (updatedLikes.has(productId)) {
-                updatedLikes.delete(productId);
-            } else {
-                updatedLikes.add(productId);
-            }
-            return updatedLikes;
-        });
+    const handleDateChange = (text, index) => {
+        const newDates = [...dates];
+        newDates[index] = text;
+        setDates(newDates);
     };
 
     const animateImageChange = (newImage) => {
@@ -67,12 +60,7 @@ const PageMesServices = ({ route, navigation }) => {
                         <TouchableOpacity style={styles.iconContainer}>
                             <AntDesign name="hearto" size={24} color={Color.orange} />
                         </TouchableOpacity>
-                        <TouchableOpacity 
-                            style={styles.iconContainer} 
-                            onPress={() => navigation.navigate('RechercheScreen')}
-                        >
-                            <AntDesign name="search1" size={24} color={Color.orange} />
-                        </TouchableOpacity>
+                        
                     </View>
                 </View>
                 {/* Images supplémentaires positionnées sous l'image principale */}
@@ -128,40 +116,50 @@ const PageMesServices = ({ route, navigation }) => {
                 <Text style={styles.textDescription}>Description</Text>
                 <Text style={styles.description}>{boutique.description}</Text>
             </View>
-            <Text style={styles.textProduit}>Services</Text>
+            
         </>
     );
 
-    const renderProduit = ({ item }) => (
-        <TouchableOpacity style={styles.produitContainer} onPress={() => handlePress(item)}>
-            <Image source={item.image} style={styles.produitImage} />
-            <View style={styles.produitDetails}>
-                <Text style={styles.produitName}>{item.nom}</Text>
-                <Text style={styles.produitPrice}>{item.prix} €</Text>
-                <Text style={styles.produitLivraison}>
-                    Livraison {item.livraison ? 'Disponible' : 'Non Disponible'}
-                </Text>
-            </View>
-            <TouchableOpacity 
-                style={styles.likeButton}
-                onPress={() => handleLike(item.id)}
-            >
-                <AntDesign 
-                    name={likedProducts.has(item.id) ? "heart" : "hearto"} 
-                    size={24} 
-                    color={Color.orange} 
-                />
-            </TouchableOpacity>
-        </TouchableOpacity>
-    );
+    
 
     return (
-        <FlatList
-            ListHeaderComponent={renderHeader}
-            data={produits}
-            renderItem={renderProduit}
-            keyExtractor={item => item.id}
-        />
+        
+        <KeyboardAvoidingView 
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        
+    >
+        <ScrollView style={styles.container}>
+            {renderHeader()}
+            <View style={styles.inputContainer}>
+                
+                <TextInput
+                    style={styles.descriptionInput}
+                    placeholder="Descrption de la reservation"
+                    value={description}
+                    onChangeText={setDescription}
+                    multiline
+                />
+                {dates.map((date, index) => (
+                    
+                    <TextInput
+                        key={index}
+                        style={styles.dateInput}
+                        placeholder={`Date ${index + 1}`}
+                        value={date}
+                        onChangeText={(text) => handleDateChange(text, index)}
+                    />
+                ))}
+            </View>
+            <TouchableOpacity
+                style={[styles.bookingButton, { backgroundColor: description && dates.every(date => date.trim() !== '') ? Color.vert : 'lightgrey' }]}
+                disabled={!description || dates.some(date => date.trim() === '')}
+                onPress={handleBooking}
+            >
+                <Text style={styles.buttonText2}>Reserver le service</Text>
+            </TouchableOpacity>
+        </ScrollView>
+    </KeyboardAvoidingView>
     );
 };
 
@@ -309,46 +307,35 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'InriaSerif',
     },
-    textProduit: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginVertical: 10,
-        marginLeft: 20,
-    },
-    produitContainer: {
-        flexDirection: 'row',
-        marginVertical: 10,
-        marginHorizontal: 20,
-        alignItems: 'center',
-        paddingBottom: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-       
-    },
-    produitImage: {
-        width: 100,
+    descriptionInput: {
         height: 100,
+        borderColor: 'gray',
+        borderWidth: 1,
+        padding: 10,
+        margin: 20,
+        borderRadius:10
+    },
+    dateInput: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        padding: 10,
+        marginHorizontal: 20,
+        marginBottom: 10,
+        borderRadius:10
+    },
+    bookingButton: {
+        margin: 20,
+        padding: 10,
         borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    produitDetails: {
-        flex: 1,
-        marginLeft: 10,
-    },
-    produitName: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    produitPrice: {
-        fontSize: 14,
-        color: Color.orange,
-    },
-    produitLivraison: {
-        fontSize: 12,
-        color: 'gray',
-    },
-    likeButton: {
-        marginLeft: 10,
-    },
+  buttonText2:{
+    fontFamily:'InriaSerif',
+    color:'black'
+  }
+   
 });
 
 export default PageMesServices;

@@ -1,6 +1,7 @@
 import React ,{ useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity ,  ScrollView} from 'react-native';
 import prestataires from '../data/PrestatairesData';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -9,13 +10,16 @@ const categories = ['Tous', 'Designer', 'Porteur', 'Electricien', 'Chauffeur', '
 
 const Prestataires = () => {
   const [selectedCategory, setSelectedCategory] = useState('Tous');
+  const navigation = useNavigation();
 
   const filteredData = prestataires.filter(item =>
     selectedCategory === 'Tous' || item.service === selectedCategory
   );
 
+ 
+
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={()=> navigation.navigate('Portfolios', {item})}>
       <Image source={item.imageUrl} style={styles.image} />
       <Text style={styles.name}>{item.nom}</Text>
       <Text style={styles.service}>{item.service}</Text>
