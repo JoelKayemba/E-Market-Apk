@@ -68,9 +68,12 @@ const CustomHeader = () => {
           >
             <View style={styles.overlay} />
             <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.addBoutiqueButton} onPress={ajouterBoutique}>
-                <Text style={styles.addBoutiqueText}>Ajouter Boutique</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.addBoutiqueButton} onPress={ajouterBoutique}>
+                  <Text style={styles.addBoutiqueText}>Ajouter Boutique</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.addBoutiqueButton} onPress={ajouterBoutique}>
+                  <Text style={styles.addBoutiqueText}>Devenez prestataire</Text>
+              </TouchableOpacity>
               
             </View>
             <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
@@ -143,20 +146,25 @@ const styles = StyleSheet.create({
   },
   modalBackground: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     width: '100%',
     height: '100%',
+    alignItems: 'center',
+    justifyContent:'center',
+    textAlign:'center',
     
   },
   modalContent: {
     backgroundColor:'transparent',
-    padding: 20,
+    padding: 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     width: '100%',
     alignItems: 'center',
+    justifyContent:'center',
+    textAlign:'center',
     zIndex: 2, // Assure que le contenu est au-dessus de l'overlay
+    flexDirection:'row',
+   
   },
   modalText: {
     fontSize: 24,
@@ -167,12 +175,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF0000A8',
     borderRadius: 20,
     padding: 5,
-    marginTop:20,
     height:50,
     alignItems:'center',
     justifyContent:'center',
-    width:170,
-    top:100
+    top:100,
+    width:'100%',
+    bottom: 0,
+    
+
+    
 
   },
   textClose:{
@@ -183,6 +194,8 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginTop: 20,
+    marginHorizontal:5
+   
   },
   addBoutiqueText: {
     color: 'white',

@@ -53,13 +53,16 @@ const styles = StyleSheet.create({
     marginBottom:10
   },
   tab: {
-    padding: 10,
-    backgroundColor: Color.bleu,
+    padding: 5,
+    backgroundColor: '#b0b0b0',
     borderRadius: 10,
-    
+    justifyContent:'center',
+    textAlign:'center',
+    alignItems:'center',
+    width:150
   },
   activeTab: {
-    backgroundColor: 'grey',
+    backgroundColor: Color.bleu,
   },
   tabText: {
     color: 'white',

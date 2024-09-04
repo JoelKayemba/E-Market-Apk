@@ -128,7 +128,7 @@ const prestataires = [
       nom: 'Emmanuella watson',
       service: 'Business Woman',
       experience: '2 ans',
-      mail:'emmauielwatson@gmail.com',
+      mail:'emmanuielwatson@gmail.com',
       telephone:'+243 897654763',
       linkedin:'@emmanuelwatson',
       imageUrl: require('../../assets/prestataire/pres8.jpg'),

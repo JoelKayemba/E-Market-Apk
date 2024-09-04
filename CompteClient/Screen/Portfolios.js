@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   descriptionTitle: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '700',
     marginTop: 10,
   },
   description: {
@@ -109,8 +109,9 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '700',
     marginTop: 10,
+    color:'#0D1D25'
   },
   section: {
     marginBottom: 10,
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
   eduTitle: {
     fontSize: 16,
     fontWeight: '500', 
+    color:'#104C64'
   },
   project: {
     marginRight: 15,
