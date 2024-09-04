@@ -235,6 +235,7 @@ const Adresse = () => {
                 </TouchableOpacity>
             )}
             <Modal visible={modalVisible} animationType="slide">
+                
                 <ImageBackground
                     source={require('../../assets/imageBack/road.jpg')} 
                     style={styles.backgroundImage}
@@ -260,10 +261,7 @@ const Adresse = () => {
                                 ))}
                             </Picker>
 
-                        <KeyboardAvoidingView
-                        style={{ flex: 1 }}
-                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                    >
+                       
                         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                             <ScrollView contentContainerStyle={adresseStyle.container}>
                                 <TextInput
@@ -310,7 +308,6 @@ const Adresse = () => {
                                 />
                             </ScrollView>
                         </TouchableWithoutFeedback>
-                    </KeyboardAvoidingView>
                         
                         <TouchableOpacity
                             style={[adresseStyle.bouton1, loading && styles.disabledButton]} 
