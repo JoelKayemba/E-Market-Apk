@@ -163,7 +163,6 @@ const PageMonProduit = ({ navigation }) => {
                         onSelectColor={setSelectedColor}
                     />
                 )}
-
                 <View style={styles.quantityContainer}>
                     <Text style={styles.textDescription}>Quantité</Text>
                     <View style={styles.quantitySelector}>
@@ -180,14 +179,12 @@ const PageMonProduit = ({ navigation }) => {
                         >
                             <Text style={styles.quantityButtonText}>+</Text>
                         </TouchableOpacity>
+                        
                     </View>
                 </View>
             </View>
-            {notificationVisible && (
-                <View style={styles.notification}>
-                    <Text style={styles.notificationText}>Produit ajouté au panier !</Text>
-                </View>
-            )}
+           
+            
         </>
     );
 
@@ -212,6 +209,11 @@ const PageMonProduit = ({ navigation }) => {
                         </>
                     )}
                 </TouchableOpacity>
+                {notificationVisible && (
+                    <View style={styles.notification}>
+                        <Text style={styles.notificationText}>Produit ajouté au panier !</Text>
+                    </View>
+                )}
             </View>
         
 
@@ -379,12 +381,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
     },
     notification: {
-        position: 'relative',
-        top: 0,
+        position: 'absolute',
+        
         left: 0,
         right: 0,
+        bottom:20,
         padding: 15,
-        backgroundColor: Color.vert,
+        backgroundColor: '#0D1D25',
         alignItems: 'center',
         marginHorizontal:20,
         borderRadius:10
@@ -393,6 +396,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
+        fontFamily:'InriaSerif'
     },
     footer: {
         flexDirection: 'row',
