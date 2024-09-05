@@ -93,7 +93,7 @@ const AjouterBoutique = ({ navigation }) => {
         alert(result.message || 'Erreur lors de l\'ajout de la boutique');
       }
     } catch (error) {
-      alert('Erreur lors de l\'ajout de la boutique2');
+      alert('Erreur lors de l\'ajout de la boutique');
     }
   };
 

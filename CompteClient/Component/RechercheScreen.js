@@ -23,7 +23,7 @@ const fusionnerDonneesBoutiques = [
 ];
 
 const RechercheScreen = ({ navigation }) => {
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState(''); //pour detecter la valeur entrer dans le champ input
     const [filteredItems, setFilteredItems] = useState([]);
     const [searchType, setSearchType] = useState('boutique');
 
