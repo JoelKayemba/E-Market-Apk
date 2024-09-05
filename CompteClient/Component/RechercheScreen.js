@@ -41,16 +41,23 @@ const RechercheScreen = ({ navigation }) => {
 
     const handleSearch = (text) => {
         setQuery(text);
+    
         if (text) {
-            const results = fusionnerDonnees[searchType].filter((item) =>
-                (item.nom?.toLowerCase().includes(text.toLowerCase()) || 
-                (item.categorie && item.categorie?.toLowerCase().includes(text.toLowerCase())))
+            const keywords = text.toLowerCase().split(' '); // pour diviser le texte de recherche en un tableau de mots en se basant sur les espaces
+            const results = fusionnerDonnees[searchType].filter(item =>
+                keywords.every(keyword =>  // every pour vérifier si chaque mot du tableau est présent
+                    (item.nom && item.nom.toLowerCase().includes(keyword)) ||  // includes pour verifier le text entrer 
+                    (item.categorie && item.categorie.toLowerCase().includes(keyword)) ||
+                    (item.service && item.service.toLowerCase().includes(keyword)) ||
+                    (item.description && item.description.toLowerCase().includes(keyword))
+                )
             );
             setFilteredItems(results);
         } else {
             setFilteredItems([]);
         }
     };
+    
     
 
     const clearSearch = () => {
