@@ -39,6 +39,36 @@ const services=[
         categorie: 'Restauration',
         description:"Bienvenue chez 'SurfingShop', votre destination préférée pour les tendances urbaines et contemporaines. Découvrez notre collection exclusive de vêtements et accessoires soigneusement sélectionnés pour hommes et femmes. Que vous recherchiez un look décontracté pour tous les jours ou quelque chose d'élégant pour une occasion spéciale, notre équipe passionnée est là pour vous guider. Explorez notre univers où le style rencontre la qualité, et laissez-nous vous aider à exprimer votre propre style avec confiance et panache."
     },
+    {
+        id: '5',
+        nom: 'Kin Marché',
+        image: require('../../assets/Images/boutique9.jpg'), 
+        livraison: true,
+        note: '4.1',
+        adresse: '101 Rue des Saveurs, Toulouse',
+        categorie: 'Restauration',
+        description:"Bienvenue chez 'SurfingShop', votre destination préférée pour les tendances urbaines et contemporaines. Découvrez notre collection exclusive de vêtements et accessoires soigneusement sélectionnés pour hommes et femmes. Que vous recherchiez un look décontracté pour tous les jours ou quelque chose d'élégant pour une occasion spéciale, notre équipe passionnée est là pour vous guider. Explorez notre univers où le style rencontre la qualité, et laissez-nous vous aider à exprimer votre propre style avec confiance et panache."
+    },
+    {
+        id: '6',
+        nom: 'Kin Marché',
+        image: require('../../assets/Images/boutique9.jpg'), 
+        livraison: true,
+        note: '4.1',
+        adresse: '101 Rue des Saveurs, Toulouse',
+        categorie: 'Design',
+        description:"Bienvenue chez 'SurfingShop', votre destination préférée pour les tendances urbaines et contemporaines. Découvrez notre collection exclusive de vêtements et accessoires soigneusement sélectionnés pour hommes et femmes. Que vous recherchiez un look décontracté pour tous les jours ou quelque chose d'élégant pour une occasion spéciale, notre équipe passionnée est là pour vous guider. Explorez notre univers où le style rencontre la qualité, et laissez-nous vous aider à exprimer votre propre style avec confiance et panache."
+    },
+    {
+        id: '7',
+        nom: 'Kin Marché',
+        image: require('../../assets/Images/boutique9.jpg'), 
+        livraison: true,
+        note: '4.1',
+        adresse: '101 Rue des Saveurs, Toulouse',
+        categorie: 'Restauration',
+        description:"Bienvenue chez 'SurfingShop', votre destination préférée pour les tendances urbaines et contemporaines. Découvrez notre collection exclusive de vêtements et accessoires soigneusement sélectionnés pour hommes et femmes. Que vous recherchiez un look décontracté pour tous les jours ou quelque chose d'élégant pour une occasion spéciale, notre équipe passionnée est là pour vous guider. Explorez notre univers où le style rencontre la qualité, et laissez-nous vous aider à exprimer votre propre style avec confiance et panache."
+    },
 
 ];
 

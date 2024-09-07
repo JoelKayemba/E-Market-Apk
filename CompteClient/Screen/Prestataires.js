@@ -11,7 +11,19 @@ const categories = ['Tous', 'Designer', 'Photographe', 'Electricien', 'Chauffeur
 
 const Prestataires = () => {
   const [selectedCategory, setSelectedCategory] = useState('Tous');
+  const [data, setData] = useState();
+  const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        // logique pour récupérer les dernières données
+        // Par exemple, recharger les données depuis une API
+        setTimeout(() => { // Simuler un appel réseau
+            setRefreshing(false);
+        }, 2000);
+    };
+  
 
   const filteredData = prestataires.filter(item =>
     selectedCategory === 'Tous' || item.service === selectedCategory
@@ -52,6 +64,8 @@ const Prestataires = () => {
         keyExtractor={item => item.id}
         numColumns={2}
         contentContainerStyle={styles.list}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
       />
     </View>
   );

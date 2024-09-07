@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { View, FlatList, Text ,StyleSheet} from 'react-native';
 import GlobalStyles from '../../Styles/GlobalStyles';
 import ClientStyle from '../../Styles/ClientStyle';
@@ -11,6 +11,17 @@ import produits from '../data/produits';
 import CustomHeader from '../../Component/CustomHeader';
 
 const Accueil = ({ navigation }) => {
+    const [refreshing, setRefreshing] = useState(false);
+    const [data, setData] = useState(produits);
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        // logique pour récupérer les dernières données
+        // Par exemple, recharger les données depuis une API
+        setTimeout(() => { // Simuler un appel réseau
+            setRefreshing(false);
+        }, 2000);
+    };
 
     const renderHeader = () => (
         <View>
@@ -41,6 +52,8 @@ const Accueil = ({ navigation }) => {
                 keyExtractor={item => item.id}
                 numColumns={2}
                 columnWrapperStyle={ClientStyle.columnWrapper}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
             />
         </View>
     );

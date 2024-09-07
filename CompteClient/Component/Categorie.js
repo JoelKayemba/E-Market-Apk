@@ -5,14 +5,14 @@ import ClientStyle from '../../Styles/ClientStyle';
 import { useNavigation } from '@react-navigation/native';
 
 const categories = [
-  { id: '1', nom: 'Electronique', image: require('../../assets/Images/imagesProduits/electronic1.jpg') },
-  { id: '2', nom: 'Alimentation', image: require('../../assets/Images/Categorie/food9.jpg') },
-  { id: '3', nom: 'Accessoires', image: require('../../assets/Images/Categorie/accessoire.jpg') },
-  { id: '4', nom: 'Beauté', image: require('../../assets/Images/imagesProduits/beauty3.jpg')},
-  { id: '5', nom: 'Fourniture', image: require('../../assets/Images/imagesProduits/furniture6.jpg') },
-  { id: '6', nom: 'Habillement', image: require('../../assets/Images/imagesProduits/fashion6.jpg') },
-  { id: '7', nom: 'Santé', image: require('../../assets/Images/imagesProduits/health1.jpg') },
-  { id: '8', nom: 'Papetérie', image: require('../../assets/Images/Categorie/papeterie.jpg') },
+  { id: '1', nom: 'Electronique', image: require('../../assets/Images/Categorie/electro.jpeg') },
+  { id: '2', nom: 'Alimentation', image: require('../../assets/Images/Categorie/food.jpeg') },
+  { id: '3', nom: 'Accessoires', image: require('../../assets/Images/Categorie/accessoire.jpeg') },
+  { id: '4', nom: 'Beauté', image: require('../../assets/Images/Categorie/beauty.jpeg')},
+  { id: '5', nom: 'Fourniture', image: require('../../assets/Images/Categorie/furniture.jpeg') },
+  { id: '6', nom: 'Habillement', image: require('../../assets/Images/Categorie/fashion.jpeg') },
+  { id: '7', nom: 'Santé', image: require('../../assets/Images/Categorie/sante.jpeg') },
+  { id: '8', nom: 'Papetérie', image: require('../../assets/Images/Categorie/papeterie.jpeg') },
 ];
 
 const Categorie = ({ produits }) => {

@@ -8,8 +8,22 @@ import ClientStyle from '../../Styles/ClientStyle';
 import MeilleursBoutique from '../Component/MeilleursBoutique';
 import CustomHeader from '../../Component/CustomHeader';
 import Services from '../Component/Services';
+import { useState } from 'react';
 
 const Boutique = ({ navigation}) => {
+
+  const [refreshing, setRefreshing] = useState(false);
+  const [data, setData] = useState();
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    // logique pour récupérer les dernières données
+    // Par exemple, recharger les données depuis une API
+    setTimeout(() => { // Simuler un appel réseau
+        setRefreshing(false);
+    }, 2000);
+};
+
   // Données pour les sections
   const sections = [
     {
@@ -53,6 +67,8 @@ const Boutique = ({ navigation}) => {
         )}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.container} 
+        refreshing={refreshing}
+        onRefresh={onRefresh}
       />
     </View>
   );

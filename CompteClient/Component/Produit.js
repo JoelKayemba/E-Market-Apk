@@ -1,10 +1,11 @@
 // page qui affichera tous les produits en page d'accueil
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, FlatList, Image, Text, TouchableOpacity, Animated } from 'react-native';
+import { StyleSheet, View, FlatList, Image, Text, TouchableOpacity, Animated, ActivityIndicator } from 'react-native';
 import ClientStyle from '../../Styles/ClientStyle';
 import Color from '../../Styles/Color';
-import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons, FontAwesome , MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+
 
 const ImageWithFallback = ({ source, style }) => {
     const [loading, setLoading] = useState(true);
@@ -22,8 +23,8 @@ const ImageWithFallback = ({ source, style }) => {
 
     return (
         <View style={{ position: 'relative' }}>
-            {loading && <Text style={styles.imageFallback}>Chargement...</Text>}
-            {error && <Text style={styles.imageFallback}>Échec du chargement</Text>}
+            {loading && <ActivityIndicator style={styles.imageFallback} color={Color.orange}/>}
+            {error && <MaterialIcons name="error" size={24} color="black" style={styles.error} />}
             <Image
                 source={source}
                 style={style}
@@ -169,7 +170,19 @@ const styles = StyleSheet.create({
         left: '50%',
         transform: [{ translateX: -50 }, { translateY: -10 }],
         textAlign: 'center',
-        color: Color.orange
+        color: Color.orange,
+        marginLeft:30
+    },
+    error:{
+        justifyContent:'center',
+        alignItems:'center',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: [{ translateX: -50 }, { translateY: -10 }],
+        textAlign: 'center',
+        color: 'lightgray',
+        marginLeft:30
     },
     notificationContainer: {
         position: 'absolute',

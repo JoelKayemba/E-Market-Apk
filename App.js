@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { FontProvider } from './Component/FontContext';
 import * as SplashScreen from 'expo-splash-screen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+//import store from './Redux/store';
 
 
 
@@ -54,6 +55,7 @@ import PageMesServices from './CompteClient/Screen/PageMesServices';
 import PageServices from './CompteClient/Screen/PageServices';
 import Prestataires from './CompteClient/Screen/Prestataires';
 import Portfolios from './CompteClient/Screen/Portfolios';
+import { Provider } from 'react-redux';
 
 
 
@@ -62,7 +64,8 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   return (
-    <GestureHandlerRootView >
+    
+      <GestureHandlerRootView >
       <FontProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='SkipPage'>
@@ -117,6 +120,8 @@ export default function App() {
     </NavigationContainer>
     </FontProvider>
     </GestureHandlerRootView>
+    
+    
    
     
   );

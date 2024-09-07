@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Modalize } from 'react-native-modalize';
 import Color from '../../Styles/Color';
 import API_BASE_URL from '../../ApiConfig';
+import { useDispatch } from 'react-redux';
 
 const ModifierProfil = () => {
     const [prenom, setPrenom] = useState('');
@@ -39,7 +40,9 @@ const ModifierProfil = () => {
                 if (response.ok) {
                     setPrenom(result.prenom || '');
                     setSexe(result.sexe || 'Homme');
-                    setDateNaissance(result.date_naissance || '');
+                    // Si la date est au format 'YYYY-MM-DDTHH:MM:SS' renvoyer par la base de donnee, l'afficher en retirant tout ce caractere qui vient apres
+                    setDateNaissance(result.date_naissance.slice(0, 10));
+
                     setEmail(result.email || '');
                     setNomUtilisateur(result.nom_utilisation || '');
                     setNumeroTelephone(result.numero_telephone || '');  
@@ -86,7 +89,7 @@ const ModifierProfil = () => {
             setDateError(dateErrorMsg);
             return;
         }
-
+    
         setLoading(true);
         const idclient = await AsyncStorage.getItem('idclient');
         if (!idclient) {
@@ -94,7 +97,7 @@ const ModifierProfil = () => {
             setLoading(false);
             return;
         }
-
+    
         const response = await fetch(`${API_BASE_URL}/profil/modifier`, {
             method: 'PUT',
             headers: {
@@ -110,18 +113,22 @@ const ModifierProfil = () => {
                 numero_telephone: numeroTelephone, 
             }),
         });
-
+    
+        const result = await response.json();
         setLoading(false);
-
+    
         if (response.ok) {
-            const result = await response.json();
+            // Stocker le nom_utilisation et email dans AsyncStorage pour l'afficher dans la page profil tout de suite apres modification
+            await AsyncStorage.setItem('nom', nomUtilisateur);
+            await AsyncStorage.setItem('email', email);
+    
             Alert.alert('Succès', result.message);
             navigation.goBack();
         } else {
-            const result = await response.json();
-            Alert.alert('Erreur', result.message);
+            Alert.alert('Erreur', result.message || 'Une erreur est survenue lors de la sauvegarde du profil.');
         }
     };
+    
 
     const handleDeleteAccount = async () => {
         modalizeRef.current?.open(); // Ouvrir le modal lors de la tentative de suppression
@@ -176,7 +183,7 @@ const ModifierProfil = () => {
                                     <Ionicons name="arrow-back" size={30} color={Color.orange} />
                                 </TouchableOpacity>
 
-                                <Text style={styles.label}>Prénom</Text>
+                                <Text style={styles.label}>Nom et Prénom</Text>
                                 <TextInput style={styles.input} value={prenom} onChangeText={setPrenom} placeholderTextColor="#ccc" />
 
                                 <Text style={styles.label}>Sexe</Text>

@@ -51,7 +51,7 @@ const ClientStyle = StyleSheet.create({
         overflow: 'hidden',
         marginRight: 10,
         borderWidth: 3,
-        borderColor: Color.orange,
+        borderColor: '#ff4800',
       },
       categorieText: {
         fontSize: 10,

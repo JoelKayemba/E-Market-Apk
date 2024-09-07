@@ -1,11 +1,11 @@
 // page pour afficher les produits par categorie
 
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, View, FlatList, Text, TouchableOpacity, Image, Animated } from 'react-native';
+import { StyleSheet, View, FlatList, Text, TouchableOpacity, Image, Animated , ActivityIndicator} from 'react-native';
 import ClientStyle from '../../Styles/ClientStyle';
 import Color from '../../Styles/Color';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { AntDesign, FontAwesome, MaterialCommunityIcons , Ionicons} from '@expo/vector-icons';
+import { AntDesign, FontAwesome, MaterialCommunityIcons , Ionicons, MaterialIcons} from '@expo/vector-icons';
 import produits from '../data/produits';
 import Recherche from '../Component/Recherche';
 
@@ -25,8 +25,8 @@ const ImageWithFallback = ({ source, style }) => {
 
   return (
     <View style={{ position: 'relative' }}>
-      {loading && <Text style={styles.imageFallback}>Chargement...</Text>}
-      {error && <Text style={styles.imageFallback}>Échec du chargement</Text>}
+      {loading && <ActivityIndicator style={styles.imageFallback} color={Color.orange}/>}
+      {error && <MaterialIcons name="error" size={24} color="black" style={styles.error} />}
       <Image
         source={source}
         style={style}
@@ -193,8 +193,20 @@ const styles = StyleSheet.create({
     left: '50%',
     transform: [{ translateX: -50 }, { translateY: -10 }],
     textAlign: 'center',
-    color: Color.orange
-  },
+    color: Color.orange,
+    marginLeft:30
+},
+error:{
+    justifyContent:'center',
+    alignItems:'center',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -50 }, { translateY: -10 }],
+    textAlign: 'center',
+    color: 'lightgray',
+    marginLeft:30
+},
   notificationContainer: {
     position: 'absolute',
     bottom: 20,

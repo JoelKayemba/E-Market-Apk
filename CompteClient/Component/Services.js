@@ -10,7 +10,19 @@ const categories = ['Tous', 'Coiffure', 'Design', 'Architecture' , 'Restauration
 
 const Services = () => {
     const [selectedCategory, setSelectedCategory] = useState('Tous');
+    const [refreshing, setRefreshing] = useState(false);
+    const [data, setData] = useState();
     const navigation = useNavigation();
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        // logique pour récupérer les dernières données
+        // Par exemple, recharger les données depuis une API
+        setTimeout(() => { // Simuler un appel réseau
+            setRefreshing(false);
+        }, 2000);
+    };
+
 
     const handlePress = (boutique) => {
         navigation.navigate('PageMesServices', { boutique });
@@ -35,8 +47,11 @@ const Services = () => {
         </TouchableOpacity>
     );
 
-    const renderHeader = () => (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryContainer}>
+    
+
+    return (
+        <View style={styles.container}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryContainer}>
             {categories.map((category) => (
                 <TouchableOpacity
                     key={category}
@@ -47,17 +62,14 @@ const Services = () => {
                 </TouchableOpacity>
             ))}
         </ScrollView>
-    );
-
-    return (
-        <View style={styles.container}>
             <FlatList
                 data={filteredData}
                 renderItem={renderItem}
                 keyExtractor={item => item.id.toString()}
                 numColumns={2}
-                ListHeaderComponent={renderHeader}
                 columnWrapperStyle={styles.columnWrapper}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
             />
         </View>
     );
@@ -71,6 +83,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginVertical: 10,
         paddingHorizontal: 10,
+        height:40
     },
     categoryButton: {
         padding: 10,
