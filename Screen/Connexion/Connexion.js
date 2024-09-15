@@ -1,7 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Pressable, ScrollView, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
-import { AntDesign, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import Color from '../../Styles/Color';
 import IconTextInput from '../../Component/IconTextInput';
 import DismissKeyboard from '../../Component/DismissKeyboard';
 import GlobalStyles from '../../Styles/GlobalStyles';
@@ -54,7 +52,7 @@ const Connexion = ({ navigation }) => {
             await AsyncStorage.setItem('email', data.email);
         }
     
-        // Rediriger vers la page de chargement ou la page d'accueil
+        // Rediriger vers la page de chargement qui renvoie a la page d'accueil
         navigation.reset({
             index: 0,
             routes: [{ name: 'ConnexionLoading' }],

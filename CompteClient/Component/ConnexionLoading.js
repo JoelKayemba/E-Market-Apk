@@ -1,6 +1,6 @@
 // page de chargement pour diriger dans la page d'accueil compris dans le tabNavigation apres connexion
 import React, { useEffect } from 'react';
-import { StyleSheet, View, ActivityIndicator ,Text, Alert} from 'react-native';
+import { StyleSheet, View, ActivityIndicator ,Text, Alert, ImageBackground} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Mise à jour de l'importation
 import { useNavigation } from '@react-navigation/native';
 import Color from '../../Styles/Color';
@@ -30,10 +30,13 @@ const ConnexionLoading = () => {
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
+    <ImageBackground  
+      source={require('../../assets/imageBack/loading.jpg')} 
+      style={styles.backgroundImage}
+      resizeMode="cover">
       <ActivityIndicator size="large" color="white" />
       <Text style={styles.text}>Connexion en cours...</Text>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -41,6 +44,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.orange,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  backgroundImage: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

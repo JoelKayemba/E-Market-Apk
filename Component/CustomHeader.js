@@ -1,12 +1,11 @@
-// le header de la page d'accueil et la page boutique. C'est aussi ici qu'on peut ajouter une boutique apres ouverture du modal en cliquant
-// sur le logo E-Market
-
+// CustomHeader.js
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Modal, ImageBackground, Image , Text} from 'react-native';
+import { View, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native';
 import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
 import Color from '../Styles/Color';
 import Recherche from '../CompteClient/Component/Recherche';
 import { useNavigation } from '@react-navigation/native';
+import ModalAjouter from './ModalAjouter';
 
 const CustomHeader = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -20,10 +19,22 @@ const CustomHeader = () => {
     setModalVisible(false);
   };
 
-  const ajouterBoutique=()=>{
-    navigation.navigate('AjouterBoutique'),
+  const ajouterBoutique = () => {
+    navigation.navigate('AjouterBoutique');
     setModalVisible(false);
-  }
+  };
+
+  const devenirPrestataire = () =>{
+    navigation.navigate('InscriptionPrestataire');
+    setModalVisible(false)
+  };
+
+  const openBoutique = (boutique) => {
+    console.log(boutique);
+    navigation.navigate('BoutiqueNavigator', { boutique });
+    setModalVisible(false)
+    
+  };
 
   return (
     <View>
@@ -51,38 +62,16 @@ const CustomHeader = () => {
         </View>
         <View style={styles.rechercheContainer}>
           <Recherche />
-          
         </View>
       </ImageBackground>
 
-      <Modal
-        transparent={true}
+      <ModalAjouter
         visible={modalVisible}
-        onRequestClose={closeModal}
-        animationType="slide"
-      >
-        <View style={styles.modalContainer}>
-          <ImageBackground
-            source={require('../assets/imageBack/e.jpg')} 
-            style={styles.modalBackground}
-          >
-            <View style={styles.overlay} />
-            <View style={styles.modalContent}>
-              <TouchableOpacity style={styles.addBoutiqueButton} onPress={ajouterBoutique}>
-                  <Text style={styles.addBoutiqueText}>Ajouter Boutique</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.addBoutiqueButton} onPress={ajouterBoutique}>
-                  <Text style={styles.addBoutiqueText}>Devenez prestataire</Text>
-              </TouchableOpacity>
-              
-            </View>
-            <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
-                <Text style={styles.textClose}>Fermer</Text>
-              </TouchableOpacity>
-          </ImageBackground>
-        </View>
-      </Modal>
-
+        closeModal={closeModal}
+        ajouterBoutique={ajouterBoutique}
+        devenirPrestataire={devenirPrestataire}
+        openBoutique= {openBoutique}
+      />
     </View>
   );
 };
@@ -92,7 +81,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     position: 'relative', 
-    
   },
   headerContainer: {
     flexDirection: 'row',
@@ -133,73 +121,11 @@ const styles = StyleSheet.create({
   rechercheContainer: {
     paddingHorizontal: 10,
     zIndex: 2, 
-    marginTop:-20
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    marginTop: -20
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Couche sombre pour améliorer la lisibilité
-  },
-  modalBackground: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent:'center',
-    textAlign:'center',
-    
-  },
-  modalContent: {
-    backgroundColor:'transparent',
-    padding: 10,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent:'center',
-    textAlign:'center',
-    zIndex: 2, // Assure que le contenu est au-dessus de l'overlay
-    flexDirection:'row',
-   
-  },
-  modalText: {
-    fontSize: 24,
-    marginBottom: 20,
-    color: 'white',
-  },
-  closeButton: {
-    backgroundColor: '#FF0000A8',
-    borderRadius: 20,
-    padding: 5,
-    height:50,
-    alignItems:'center',
-    justifyContent:'center',
-    top:100,
-    width:'100%',
-    bottom: 0,
-    
-
-    
-
-  },
-  textClose:{
-    color:'white'
-  },
-  addBoutiqueButton: {
-    backgroundColor: Color.bleu,
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 20,
-    marginHorizontal:5
-   
-  },
-  addBoutiqueText: {
-    color: 'white',
-    fontSize: 18,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });
 

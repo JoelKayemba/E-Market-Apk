@@ -16,7 +16,7 @@ const AjoutLoading = () => {
         setTimeout(() => {
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'AccueilBoutique' }],
+                routes: [{ name: 'BoutiqueNavigator' }],
               });
         
         }, 5000); // Délai pour afficher l'écran de chargement

@@ -55,6 +55,13 @@ import PageMesServices from './CompteClient/Screen/PageMesServices';
 import PageServices from './CompteClient/Screen/PageServices';
 import Prestataires from './CompteClient/Screen/Prestataires';
 import Portfolios from './CompteClient/Screen/Portfolios';
+import InscriptionPres from './ComptePrestataire/screen/InscriptionPres';
+import BoutiqueNavigator from './CompteBoutique/component/BoutiqueNavigator';
+import GestionProduits from './CompteBoutique/Screen/GestionProduits';
+import Commandes from './CompteBoutique/Screen/Commandes';
+import NotificationsBoutique from './CompteBoutique/Screen/NotificationsBoutique';
+import Messages from './CompteBoutique/Screen/Messages';
+import Parametres from './CompteBoutique/Screen/Parametres';
 import { Provider } from 'react-redux';
 
 
@@ -115,6 +122,13 @@ export default function App() {
           <Stack.Screen name="PageServices" component={PageServices} options={{ headerShown: false }}/>
           <Stack.Screen name="Prestataires" component={Prestataires} options={{ headerShown: false }}/>
           <Stack.Screen name="Portfolios" component={Portfolios} options={{ headerShown: false }}/>
+          <Stack.Screen name="InscriptionPrestataire" component={InscriptionPres} options={{ headerShown: false }}/>
+          <Stack.Screen name="BoutiqueNavigator" component={BoutiqueNavigator} options={{ headerShown: false }}/>
+          <Stack.Screen name="GestionProduits" component={GestionProduits} options={{ headerShown: false }}/>
+          <Stack.Screen name="Commandes" component={Commandes} options={{ headerShown: false }}/>
+          <Stack.Screen name="Parametres" component={Parametres} options={{ headerShown: false }}/>
+          <Stack.Screen name="NotificationsBoutique" component={NotificationsBoutique} options={{ headerShown: false }}/>
+          <Stack.Screen name="Messages" component={Messages} options={{ headerShown: false }}/>
 
         </Stack.Navigator>
     </NavigationContainer>

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, ImageBackground } from 'react-native';
 import Color from '../../Styles/Color';
-import useAuth from '../../hook/useAuth';
+
 
 const Bienvenue = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -21,13 +21,13 @@ const Bienvenue = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../../assets/imageBack/commencer.jpg')} 
+        source={require('../../assets/imageBack/commencer.jpeg')} 
         style={styles.backgroundImage}
         resizeMode="cover"
       >
         <View style={styles.overlay}>
           <Text style={styles.title}>Prêt à commencer?</Text>
-          <Text style={styles.subtitle}>Trouvez et vendez en quelques clics seulement</Text>
+          <Text style={styles.subtitle}>Rejoins-nous et créons un nouveau monde ensemble</Text>
           {loading ? (
             <ActivityIndicator size="large" color="white" />
           ) : null}

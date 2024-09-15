@@ -14,18 +14,18 @@ const SkipPage = ({ navigation }) => {
   useAuth(); //permet de rediriger direcement en page d'accueil s'il y a deja eu connexion 
 
   const images = [
-    require('../../assets/imageBack/a.jpg'),
+    require('../../assets/imageBack/c.jpeg'),
     require('../../assets/imageBack/b.jpg'),
-    require('../../assets/imageBack/c.jpg'),
+    require('../../assets/imageBack/a.jpeg'),
     require('../../assets/imageBack/d.jpg'),
     
   ];
 
   const texts = [
-    { main: 'Bienvenue dans notre plateforme E-Market', description: 'Votre guichet unique pour tous vos besoins de shopping.' },
-    { main: 'Découvrez des produits de qualité', description: 'Nous offrons une gamme variée de produits premium.' },
-    { main: 'Trouvez ce dont vous avez besoin', description: 'Parcourez nos catégories pour trouver des articles parfaits pour vous.' },
-    { main: 'Connectez-vous et profitez de nos offres', description: 'Inscrivez-vous pour recevoir des offres exclusives et des remises.' },
+    { main: 'Bienvenue dans notre plateforme E-Market', description: 'Votre guichet unique pour tous vos besoins.' },
+    { main: 'Découvrez et vendez des produits', description: 'Explorez divers produits et ouvrez votre propre boutique.' },
+    { main: 'Trouvez et offrez des services', description: 'Parcourez nos catégories pour trouver des services parfaits pour vous.' },
+    { main: 'Connectez-vous et profitez...', description: 'Inscrivez-vous et entrez dans un nouveau monde.' },
   ];
 
   const animatedValues = images.map((_, index) => new Animated.Value(0));
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 30,
-    backgroundColor: Color.orange,
+    backgroundColor: '#ff4800',
     padding: 10,
     borderRadius: 50,
     height: 50,
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 30,
-    backgroundColor: Color.orange,
+    backgroundColor: '#ff4800',
     padding: 10,
     borderRadius: 10,
   },

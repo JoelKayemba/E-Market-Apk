@@ -23,7 +23,7 @@ const BoutiqueInfo = ({ nextStep, handleChange, formData }) => {
       newErrors.numero_telephone = "Le numéro de téléphone est requis.";
       valid = false;
     } else if (!/^\+\d{1,3}\s?\d{1,14}$/.test(formData.numero_telephone)) {
-      newErrors.numero_telephone = "Le numéro de téléphone doit être au format +1 6774667773.";
+      newErrors.numero_telephone = "Le numéro de téléphone doit être au format +243 6774667773.";
       valid = false;
       setPhoneStatus('error');
     } else {
@@ -77,7 +77,7 @@ const BoutiqueInfo = ({ nextStep, handleChange, formData }) => {
         <Text style={styles.label}>Numéro de téléphone</Text>
         <TextInput
           style={styles.input}
-          placeholder="exemple:+1 6774667773"
+          placeholder="exemple:+243 897654352"
           value={formData.numero_telephone}
           onChangeText={(value) => handleChange('numero_telephone', value)}
         />

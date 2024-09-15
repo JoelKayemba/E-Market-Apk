@@ -1,13 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, FlatList, Text } from 'react-native';
-import Recherche from '../Component/Recherche';
 import Publicite from '../Component/Publicite';
 import BoutiquePourToi from '../Component/BoutiquePourToi';
 import BoutiqueProche from '../Component/BoutiqueProche';
 import ClientStyle from '../../Styles/ClientStyle';
 import MeilleursBoutique from '../Component/MeilleursBoutique';
 import CustomHeader from '../../Component/CustomHeader';
-import Services from '../Component/Services';
 import { useState } from 'react';
 
 const Boutique = ({ navigation}) => {

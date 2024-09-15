@@ -10,10 +10,14 @@ const GlobalStyles = StyleSheet.create({
     img: {
       width: '100%',
       height: 300,
+      borderBottomLeftRadius:50,
+      borderBottomRightRadius:50
     },
     img2:{
         width: '100%',
         height: 270,
+        borderBottomLeftRadius:50,
+        borderBottomRightRadius:50
 
     },
     containerTitre: {
