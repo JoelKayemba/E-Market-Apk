@@ -1,48 +1,45 @@
-import React from 'react';
-import { StyleSheet, View, FlatList, Text } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { StyleSheet, View, FlatList, Text, Animated, SafeAreaView } from 'react-native';
 import Publicite from '../Component/Publicite';
 import BoutiquePourToi from '../Component/BoutiquePourToi';
 import BoutiqueProche from '../Component/BoutiqueProche';
 import ClientStyle from '../../Styles/ClientStyle';
 import MeilleursBoutique from '../Component/MeilleursBoutique';
 import CustomHeader from '../../Component/CustomHeader';
-import { useState } from 'react';
 
-const Boutique = ({ navigation}) => {
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
+const Boutique = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
-  const [data, setData] = useState();
+  const scrollY = useRef(new Animated.Value(0)).current; // Reference for scroll position
 
   const onRefresh = async () => {
     setRefreshing(true);
-    // logique pour récupérer les dernières données
-    // Par exemple, recharger les données depuis une API
-    setTimeout(() => { // Simuler un appel réseau
-        setRefreshing(false);
+    setTimeout(() => { // Simulate network call
+      setRefreshing(false);
     }, 2000);
-};
+  };
 
-  // Données pour les sections
+  // Data for sections
   const sections = [
     {
-      id: '1', // Identifiant unique pour chaque section
+      id: '1', // Unique identifier for each section
       title: 'Recommandation',
       component: <BoutiquePourToi />
     },
-
     {
-      id: '2', // Identifiant unique pour chaque section
+      id: '2',
       title: 'Nos Meilleurs Boutiques',
       component: <MeilleursBoutique />
     },
     {
-      id: '3', // Identifiant unique pour chaque section
+      id: '3',
       title: 'Proche de Vous',
       component: <BoutiqueProche />
     }
   ];
 
-  // Fonction pour rendre l'en-tête
+  // Function to render the header
   const renderHeader = () => (
     <View>
       <Publicite />
@@ -50,25 +47,48 @@ const Boutique = ({ navigation}) => {
   );
 
   return (
-    <View style={{ flex: 1 }}>
-            <CustomHeader navigation={navigation} />
-      <FlatList
+    <SafeAreaView style={{ flex: 1 }}>
+      {/* Animated Header */}
+      <Animated.View style={{
+        transform: [{
+          translateY: scrollY.interpolate({
+            inputRange: [0, 200],
+            outputRange: [0, -200], // Hides the header by moving it up
+            extrapolate: 'clamp'
+          })
+        }],
+        zIndex: 1,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0
+      }}>
+        <CustomHeader navigation={navigation} />
+      </Animated.View>
+
+      <AnimatedFlatList
         ListHeaderComponent={renderHeader}
         data={sections}
         renderItem={({ item }) => (
-          <View key={item.id}>
-            <View style={ClientStyle.containerRecommandation}>
-              <Text style={ClientStyle.textPourToi}>{item.title}</Text>
+            <View key={item.id}>
+                <View style={ClientStyle.containerRecommandation}>
+                    <Text style={ClientStyle.textPourToi}>{item.title}</Text>
+                </View>
+                {item.component}
             </View>
-            {item.component}
-          </View>
         )}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.container} 
         refreshing={refreshing}
         onRefresh={onRefresh}
-      />
-    </View>
+        onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: true }
+        )}
+        
+        contentContainerStyle={{ paddingTop: 150 }}
+    />
+
+    </SafeAreaView>
   );
 };
 

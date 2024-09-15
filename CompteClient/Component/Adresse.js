@@ -231,7 +231,7 @@ const Adresse = () => {
                         })()}
                     </Text>
                     <Entypo name="arrow-with-circle-down" size={15} color="black" />
-                    {adresses[0].parDefaut && <Text style={adresseStyle.defaultText}>(Par défaut)</Text>}
+                    <Text style={{color:'green'}}> Changer</Text>
                 </TouchableOpacity>
             )}
             <Modal visible={modalVisible} animationType="slide">

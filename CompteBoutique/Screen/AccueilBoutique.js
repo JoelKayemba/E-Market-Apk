@@ -1,37 +1,38 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import React from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const AccueilBoutique = () => {
   return (
     <ScrollView style={styles.container}>
       {/* Section du Tableau de Bord */}
-      <View style={styles.section}>
+      <TouchableOpacity style={styles.section}>
         <Text style={styles.title}>Tableau de Bord</Text>
         <Text>Ventes Aujourd'hui: $500</Text>
         <Text>Commandes en Cours: 10</Text>
         <Text>Produits en Rupture de Stock: 3</Text>
-      </View>
+      </TouchableOpacity>
 
       {/* Section de Gestion des Produits */}
-      <View style={styles.section}>
+      <TouchableOpacity style={styles.section}>
         <Text style={styles.title}>Gestion des Produits</Text>
         <Text>Ajouter un Nouveau Produit</Text>
         <Text>Liste des Produits</Text>
-      </View>
+      </TouchableOpacity>
 
       {/* Section des Commandes */}
-      <View style={styles.section}>
+      <TouchableOpacity style={styles.section}>
         <Text style={styles.title}>Commandes et Livraisons</Text>
         <Text>Commandes en Cours</Text>
         <Text>Historique des Commandes</Text>
-      </View>
+      </TouchableOpacity>
 
       {/* Section des Rapports */}
-      <View style={styles.section}>
+      <TouchableOpacity style={styles.section}>
         <Text style={styles.title}>Rapports</Text>
         <Text>Rapports de Vente</Text>
         <Text>Rapports de Performance</Text>
-      </View>
+      </TouchableOpacity>
     </ScrollView>
   );
 }

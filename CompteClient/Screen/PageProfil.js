@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, ImageBackground, Alert } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Modalize } from 'react-native-modalize';
 import Color from '../../Styles/Color';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons'; // Ajoutez des icônes supplémentaires
 
 const defaultProfileImage = require('../../assets/imageBack/pp.png');
 
@@ -24,7 +24,6 @@ const PageProfil = () => {
         setUser({ ...user, nom, email });
     };
 
-    // Recharger les données chaque fois que la page de profil est affichée
     useFocusEffect(
         React.useCallback(() => {
             loadUserData();
@@ -42,51 +41,59 @@ const PageProfil = () => {
             routes: [{ name: 'Deconnexion' }],
         });
         modalizeRef.current?.close();
+        Alert.alert('Déconnexion réussie', 'Vous avez été déconnecté avec succès.');
     };
 
     return (
         <ImageBackground
-            source={require('../../assets/imageBack/profile.jpg')}
+            source={require('../../assets/imageBack/profile2.jpg')}
             style={styles.backgroundImage}
         >
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={()=> navigation.goBack()} style={styles.backIcon}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
                         <AntDesign name="left" size={24} color={Color.orange} />
                     </TouchableOpacity>
-                    
+
                     <View style={styles.profileHeader}>
                         <Image source={user.photo} style={styles.profileImage} />
                         <Text style={styles.name}>{user.nom}</Text>
                         <Text style={styles.email}>{user.email}</Text>
-                     </View>
+                    </View>
                 </View>
-                
+
                 <View style={styles.section}>
                     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ModifierProfil')}>
+                        <MaterialIcons name="edit" size={20} color="white" />
                         <Text style={styles.buttonText}>Modifier le Profil</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ModifierMotDePasse')}>
+                        <Ionicons name="key-outline" size={20} color="white" />
                         <Text style={styles.buttonText}>Changer le Mot de Passe</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('HistoriqueCommandes')}>
+                        <FontAwesome name="history" size={20} color="white" />
                         <Text style={styles.buttonText}>Historique des Commandes</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AjouterAnnonce')}>
-                        <Text style={styles.buttonText}>Ajouter une annonce</Text>
+                        <AntDesign name="pluscircleo" size={20} color="white" />
+                        <Text style={styles.buttonText}>Ajouter une Annonce</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AjouterAnnonce')}>
-                        <Text style={styles.buttonText}>Vos préférences</Text>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Preferences')}>
+                        <Ionicons name="heart-outline" size={20} color="white" />
+                        <Text style={styles.buttonText}>Vos Préférences</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PaymentScreen')}>
-                        <Text style={styles.buttonText}>Payement</Text>
+                        <FontAwesome name="credit-card" size={20} color="white" />
+                        <Text style={styles.buttonText}>Paiement</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Nous contactez</Text>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ContactUs')}>
+                        <Ionicons name="help-circle-outline" size={20} color="white" />
+                        <Text style={styles.buttonText}>Nous Contacter</Text>
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity onPress={handleLogout} style={styles.buttonDeconnexion}>
-                    <Text style={styles.deconnexionText}>Deconnexion</Text>
+                    <Text style={styles.deconnexionText}>Déconnexion</Text>
                 </TouchableOpacity>
             </ScrollView>
 
@@ -119,16 +126,14 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     },
-    header:{
-        flexDirection:'row',
+    header: {
+        flexDirection: 'row',
         marginBottom: 30,
         marginTop: 30,
-        
     },
     profileHeader: {
         alignItems: 'center',
-        marginLeft:50
-        
+        marginLeft: 50,
     },
     profileImage: {
         width: 120,
@@ -159,26 +164,29 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         borderColor: Color.bleu,
         borderWidth: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     buttonText: {
         color: 'white',
         textAlign: 'center',
         fontSize: 16,
         fontWeight: '500',
-        fontFamily:'InriaSerif',
+        fontFamily: 'InriaSerif',
+        marginLeft: 10,
     },
-    buttonDeconnexion:{
-        backgroundColor:'#FF0057C2',
-        height:50,
-        alignItems:'center',
-        justifyContent:'center',
-        borderRadius:10,
-        marginBottom:20
+    buttonDeconnexion: {
+        backgroundColor: '#FF0057C2',
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        marginBottom: 20,
     },
-    deconnexionText:{
-        color:'white',
-        fontFamily:'InriaSerif',
-        fontSize:16
+    deconnexionText: {
+        color: 'white',
+        fontFamily: 'InriaSerif',
+        fontSize: 16,
     },
     modalContent: {
         padding: 20,

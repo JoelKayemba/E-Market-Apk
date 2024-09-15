@@ -1,7 +1,7 @@
 // CustomHeader.js
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native';
-import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
+import { Ionicons, AntDesign, FontAwesome ,Entypo} from '@expo/vector-icons';
 import Color from '../Styles/Color';
 import Recherche from '../CompteClient/Component/Recherche';
 import { useNavigation } from '@react-navigation/native';
@@ -39,24 +39,21 @@ const CustomHeader = () => {
   return (
     <View>
       <ImageBackground
-        source={require('../assets/imageBack/header.jpg')} 
+        source={require('../assets/imageBack/head.jpg')} 
         style={styles.headerBackground}
       >
         <View style={styles.overlay} />
         <View style={styles.headerContainer}>
           <TouchableOpacity style={styles.headerButton} onPress={openModal}>
-            <Image
-              source={require('../assets/logo/emarketLogo.png')} 
-              style={styles.profileImage}
-            />
-            <Ionicons name="chevron-down" size={20} color='white' />
+           
+            <Entypo name="menu" size={35} color="white"  style={styles.profileImage}/>
           </TouchableOpacity>
           <View style={styles.iconContainer}>
             <TouchableOpacity onPress={() => navigation.navigate('MessageList')} style={styles.iconButton}>
-              <AntDesign name="mail" size={20} color={Color.orange} />
+              <AntDesign name="mail" size={20} color='white' />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('PageProfil')} style={styles.iconButton}>
-              <FontAwesome name="user" size={20} color={Color.orange} />
+              <FontAwesome name="user" size={20} color='white' />
             </TouchableOpacity>
           </View>
         </View>
@@ -98,10 +95,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileImage: {
-    width: 120,
-    height: 60,
-    borderRadius: 20,
     marginRight: 5,
+    marginLeft:10
   },
   iconContainer: {
     flexDirection: 'row',
@@ -109,14 +104,14 @@ const styles = StyleSheet.create({
   iconButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 5,
+    padding: 8,
     marginHorizontal: 5,
-    borderRadius: 10,
-    backgroundColor: '#00000091', 
+    borderRadius: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Ajoutez un fond semi-transparent
     borderWidth: 1,
-    borderColor: Color.bleu,
-    height: 40,
-    width: 40,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    height: 44,
+    width: 44,
   },
   rechercheContainer: {
     paddingHorizontal: 10,

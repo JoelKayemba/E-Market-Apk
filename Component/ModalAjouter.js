@@ -57,7 +57,7 @@ const ModalAjouter = ({ visible, closeModal, ajouterBoutique ,openBoutique, deve
           <View style={styles.modalContent}>
             {/* Icône de fermeture en haut à droite */}
             <TouchableOpacity onPress={closeModal} style={styles.closeIcon}>
-              <AntDesign name="closecircle" size={30} color="#FF0000A8" />
+              <AntDesign name="closecircle" size={30} color="white" />
             </TouchableOpacity>
             
             <ScrollView contentContainerStyle={styles.scrollContainer}>
