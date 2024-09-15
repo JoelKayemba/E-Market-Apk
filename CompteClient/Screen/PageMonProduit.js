@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator, Alert, Animated, Easing } from 'react-native';
-import { AntDesign, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons, Ionicons ,MaterialIcons} from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 import Color from '../../Styles/Color';
 import CouleurProduit from '../../Styles/CouleurProduit';
@@ -85,7 +85,7 @@ const PageMonProduit = ({ navigation }) => {
                 <Animated.Image source={mainImage} style={[styles.image, { transform: [{ scale: animationValue }] }]} />
                 <View style={styles.overlay}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
-                        <Ionicons name="arrow-back" size={24} color={Color.orange} />
+                        <MaterialIcons name="arrow-back-ios" size={24} color="black" />
                     </TouchableOpacity>
                     <View style={styles.headerIcons}>
                         <TouchableOpacity style={styles.iconContainer}>
@@ -251,19 +251,20 @@ const styles = StyleSheet.create({
     },
     backIcon: {
         marginRight: 10,
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        backgroundColor: '#FFFFFF38',
         borderRadius: 10,
         width: 40,
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingLeft:10
     },
     headerIcons: {
         flexDirection: 'row',
     },
     iconContainer: {
         marginHorizontal: 5,
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        backgroundColor: '#FFFFFF38',
         borderRadius: 10,
         width: 40,
         height: 40,

@@ -39,7 +39,7 @@ const Boutique = ({ navigation }) => {
     }
   ];
 
-  // Function to render the header
+  
   const renderHeader = () => (
     <View>
       <Publicite />
@@ -48,12 +48,12 @@ const Boutique = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {/* Animated Header */}
+     
       <Animated.View style={{
         transform: [{
           translateY: scrollY.interpolate({
             inputRange: [0, 200],
-            outputRange: [0, -200], // Hides the header by moving it up
+            outputRange: [0, -200], 
             extrapolate: 'clamp'
           })
         }],

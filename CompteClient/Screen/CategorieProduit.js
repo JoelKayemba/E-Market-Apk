@@ -89,6 +89,14 @@ const CategorieProduit = () => {
     });
   };
 
+  // pour gerer le nombre de lettre
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  };
+
   const handlePress = (item) => {
     navigation.navigate('PageMonProduit', { item });
   };
@@ -110,7 +118,7 @@ const CategorieProduit = () => {
         </TouchableOpacity>
         <View style={ClientStyle.nomProduitContainer}>
           <Text style={ClientStyle.nomProduit} numberOfLines={1} ellipsizeMode='tail'>
-            {item.nom}
+            {truncateText(item.nom, 15)}
           </Text>
           <MaterialCommunityIcons
             name="truck-delivery"
@@ -118,6 +126,11 @@ const CategorieProduit = () => {
             color={item.livraison ? Color.vert : 'gray'}
             style={ClientStyle.iconDelivery}
           />
+        </View>
+        <View style={styles.nomBoutique}>
+            <Text style={styles.textNomBoutique}>
+                {item.nomBoutique}
+            </Text>
         </View>
         <View style={styles.ligne2}>
           <Text style={ClientStyle.prixProduit}>${item.prix}</Text>
@@ -133,13 +146,11 @@ const CategorieProduit = () => {
     <View>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
-          <Ionicons name="arrow-back" size={30} color={Color.orange} />
+          <MaterialIcons name="arrow-back-ios" size={30} color="black" />
         </TouchableOpacity>
         <Text style={styles.titreCategorie}>{categorie}</Text>
       </View>
-      <View style={styles.containerRecherche}>
-        <Recherche/>
-      </View>
+      
     </View>
   );
 
@@ -166,12 +177,13 @@ const styles = StyleSheet.create({
     
   },
   titreCategorie: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40
+    marginTop: 40,
+    
   },
   ligne2: {
     flexDirection: 'row',
@@ -230,7 +242,7 @@ error:{
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 35
+    marginTop: 40
   },
   containerRecherche: {
     marginHorizontal: 20,
@@ -238,7 +250,15 @@ error:{
   },
   flatListContainer: {
     paddingBottom: 20, // Utilisation du paddingBottom pour créer de l'espace au bas de la liste
+    
   },
+  nomBoutique:{
+    marginLeft:5
+  },
+  textNomBoutique:{
+      fontFamily:'InriaSerif',
+      fontSize:10
+  }
 });
 
 export default CategorieProduit;

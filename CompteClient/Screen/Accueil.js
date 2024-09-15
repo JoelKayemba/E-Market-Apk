@@ -38,16 +38,16 @@ const Accueil = ({ navigation }) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            {/* Using Animated.View for the header */}
+           
             <Animated.View style={{
                 transform: [{
                     translateY: scrollY.interpolate({
                         inputRange: [0, 200],
-                        outputRange: [0, -200], // Hides the header by moving it up
+                        outputRange: [0, -200], 
                         extrapolate: 'clamp'
                     })
                 }],
-                zIndex: 1, // Ensure the header stays on top
+                zIndex: 1, 
                 position: 'absolute',
                 top: 0,
                 left: 0,
@@ -73,14 +73,14 @@ const Accueil = ({ navigation }) => {
                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
                     { useNativeDriver: true }
                 )}
-                contentContainerStyle={{ paddingTop: 155 }} // Add space for the header
+                contentContainerStyle={{ paddingTop: 155 }} 
             />
         </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
-  // Add styles if needed
+ 
 });
 
 export default Accueil;
