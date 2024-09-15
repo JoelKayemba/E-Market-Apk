@@ -3,10 +3,10 @@ import { View, TouchableOpacity, Text, StyleSheet, Modal, ImageBackground, Image
 import Color from '../Styles/Color';
 import API_BASE_URL from '../ApiConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FontAwesome, AntDesign , Entypo } from '@expo/vector-icons'; 
+import { FontAwesome, AntDesign, Entypo, Ionicons } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 
-const ModalAjouter = ({ visible, closeModal, ajouterBoutique ,openBoutique, devenirPrestataire}) => {
+const ModalAjouter = ({ visible, closeModal, ajouterBoutique, openBoutique, devenirPrestataire }) => {
   const [boutiques, setBoutiques] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
@@ -15,12 +15,10 @@ const ModalAjouter = ({ visible, closeModal, ajouterBoutique ,openBoutique, deve
     const fetchBoutiques = async () => {
       try {
         const idclient = await AsyncStorage.getItem('idclient');
-        //console.log('idclient récupéré :', idclient);
 
         if (idclient) {
           const response = await fetch(`${API_BASE_URL}/ownBoutique/boutiquesUtilisateur?idclient=${idclient}`);
           const data = await response.json();
-          //console.log('Data récupérée :', data);
 
           if (response.ok && data) {
             setBoutiques(data);
@@ -38,8 +36,6 @@ const ModalAjouter = ({ visible, closeModal, ajouterBoutique ,openBoutique, deve
     }
   }, [visible]);
 
-  
-
   return (
     <Modal
       transparent={true}
@@ -49,31 +45,30 @@ const ModalAjouter = ({ visible, closeModal, ajouterBoutique ,openBoutique, deve
     >
       <View style={styles.modalContainer}>
         <ImageBackground
-          source={require('../assets/imageBack/e.jpg')} 
+          source={require('../assets/imageBack/head.jpg')} 
           style={styles.modalBackground}
         >
+          <TouchableOpacity onPress={closeModal} style={styles.closeIcon}>
+            <AntDesign name="close" size={30} color="red" />
+          </TouchableOpacity>
           <View style={styles.overlay} />
-          
+
           <View style={styles.modalContent}>
-            {/* Icône de fermeture en haut à droite */}
-            <TouchableOpacity onPress={closeModal} style={styles.closeIcon}>
-              <AntDesign name="closecircle" size={30} color="white" />
-            </TouchableOpacity>
-            
             <ScrollView contentContainerStyle={styles.scrollContainer}>
               {boutiques.length > 0 && (
                 <View style={styles.sectionContainer}>
                   <Text style={styles.sectionTitle}>Vos Boutiques</Text>
                   {boutiques.map((boutique, index) => (
-                    <TouchableOpacity key={index} style={styles.boutiqueContainer}  onPress={() => openBoutique(boutique)}>
+                    <TouchableOpacity key={index} style={styles.boutiqueContainer} onPress={() => openBoutique(boutique)}>
                       <View style={styles.boutiqueImageContainer}>
                         {boutique.image1 ? (
                           <Image source={{ uri: `${API_BASE_URL}/${boutique.image1.replace(/\\/g, '/')}` }} style={styles.boutiqueImage} />
                         ) : (
-                            <Entypo name="shop" size={24} color="black" />
+                          <Entypo name="shop" size={24} color="black" />
                         )}
                       </View>
                       <Text style={styles.boutiqueName}>{boutique.nom}</Text>
+                      <Ionicons name="chevron-forward-outline" size={24} color="white" style={styles.arrowIcon} />
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -112,47 +107,34 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    textAlign: 'center',
   },
   modalContent: {
     backgroundColor: 'transparent',
-    padding: 10,
+    padding: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     width: '90%',
-    
     zIndex: 2,
   },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'left',
+    alignItems: 'center',
   },
   sectionContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
     padding: 20,
     borderRadius: 10,
     marginBottom: 20,
-    alignItems: 'left',
+    alignItems: 'center',
     width: '100%',
-    marginTop:10,
-  },
-  sectionContainer2: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    padding: 20,
-    borderRadius: 10,
-    marginBottom: 20,
-    alignItems: 'left',
-    width: '100%',
-    marginTop:10,
-    justifyContent:'center',
-    alignItems:'center'
   },
   sectionTitle: {
     color: 'white',
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 30,
+    marginBottom: 20,
+    textAlign: 'center',
   },
   boutiqueContainer: {
     flexDirection: 'row',
@@ -161,9 +143,9 @@ const styles = StyleSheet.create({
     paddingBottom: 10, 
     borderBottomWidth: 1, 
     borderBottomColor: 'gray', 
-    
-},
-
+    width: '100%',
+    justifyContent: 'space-between', // To align the arrow icon to the right
+  },
   boutiqueImageContainer: {
     width: 50,
     height: 50,
@@ -181,8 +163,12 @@ const styles = StyleSheet.create({
   },
   boutiqueName: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '300',
     color: 'white',
+    flex: 1, 
+  },
+  arrowIcon: {
+    marginLeft: 10,
   },
   addButton: {
     flexDirection: 'row',
@@ -190,9 +176,9 @@ const styles = StyleSheet.create({
     backgroundColor: Color.bleu,
     padding: 15,
     borderRadius: 10,
-    marginTop: 10,
-    alignItems: 'center',
+    marginTop: 0,
     justifyContent: 'center',
+   
   },
   addButton2: {
     flexDirection: 'row',
@@ -201,8 +187,8 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginTop: 10,
-    alignItems: 'center',
     justifyContent: 'center',
+    
   },
   icon: {
     marginRight: 10,
@@ -210,13 +196,14 @@ const styles = StyleSheet.create({
   addButtonText: {
     color: 'white',
     fontSize: 18,
+    justifyContent:'center',
+    alignItems:'center'
   },
   closeIcon: {
     position: 'absolute',
-    top: 20,
-    right:0,
+    top: 40,
+    right: 20,
     zIndex: 3,
-    marginTop:20
   },
 });
 

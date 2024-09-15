@@ -41,7 +41,7 @@ const PageProfil = () => {
             routes: [{ name: 'Deconnexion' }],
         });
         modalizeRef.current?.close();
-        Alert.alert('Déconnexion réussie', 'Vous avez été déconnecté avec succès.');
+        
     };
 
     return (
