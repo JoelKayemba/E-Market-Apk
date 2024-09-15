@@ -1,13 +1,19 @@
-import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import Octicons from '@expo/vector-icons/Octicons';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const GestionProduits = () => {
-  // Exemple de données pour les produits
+  
   const [products, setProducts] = useState([
     { id: '1', name: 'Produit 1', price: '$10', stock: 20 },
     { id: '2', name: 'Produit 2', price: '$15', stock: 5 },
     { id: '3', name: 'Produit 3', price: '$20', stock: 0 },
   ]);
+
+  const navigation = useNavigation();
 
   const renderItem = ({ item }) => (
     <View style={styles.productItem}>
@@ -15,24 +21,31 @@ const GestionProduits = () => {
       <Text>Prix: {item.price}</Text>
       <Text>Stock: {item.stock}</Text>
       <View style={styles.actions}>
-        <Button title="Éditer" onPress={() => editProduct(item.id)} />
-        <Button title="Supprimer" color="red" onPress={() => deleteProduct(item.id)} />
+        <TouchableOpacity style={styles.editButton} onPress={() => editProduct(item.id)}>
+          <AntDesign name="edit" size={30} color="#4CAF50" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.deleteButton} onPress={() => deleteProduct(item.id)}>
+          <EvilIcons name="trash" size={30} color="red" />
+        </TouchableOpacity>
       </View>
     </View>
   );
 
   const editProduct = (id) => {
-    // Logique pour éditer un produit
+    
   };
 
   const deleteProduct = (id) => {
-    // Logique pour supprimer un produit
+   
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Liste des Produits</Text>
-      <Button title="Ajouter un Nouveau Produit" onPress={() => { /* Logique pour ajouter un produit */ }} />
+      <TouchableOpacity onPress={() => navigation.navigate('AjouterProduits')} style={styles.buttonAdd}>
+        <Octicons name="plus" size={24} color="white" />
+        <Text style={styles.textButtonAdd}>Ajouter un Nouveau Produit</Text>
+      </TouchableOpacity>
       <FlatList
         data={products}
         renderItem={renderItem}
@@ -40,7 +53,7 @@ const GestionProduits = () => {
       />
     </View>
   );
-}
+};
 
 export default GestionProduits;
 
@@ -48,12 +61,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#f7f9fc', 
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#333',
   },
   productItem: {
     padding: 20,
@@ -70,10 +84,37 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: '#333',
   },
   actions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
+  },
+  editButton: {
+    padding: 10,
+    alignItems: 'center',
+  },
+  deleteButton: { 
+    padding: 10,
+    alignItems: 'center',
+  },
+  actionText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  buttonAdd: {
+    backgroundColor: '#0098FF', 
+    padding: 15,
+    alignItems: 'center',
+    borderRadius: 10,
+    marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  textButtonAdd: {
+    color: 'white',
+    fontSize: 18,
+    paddingLeft: 10,
   },
 });

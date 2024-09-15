@@ -62,6 +62,7 @@ import Commandes from './CompteBoutique/Screen/Commandes';
 import NotificationsBoutique from './CompteBoutique/Screen/NotificationsBoutique';
 import Messages from './CompteBoutique/Screen/Messages';
 import Parametres from './CompteBoutique/Screen/Parametres';
+import AjouterProduits from './CompteBoutique/component/AjouterProduits';
 import { Provider } from 'react-redux';
 
 
@@ -129,6 +130,7 @@ export default function App() {
           <Stack.Screen name="Parametres" component={Parametres} options={{ headerShown: false }}/>
           <Stack.Screen name="NotificationsBoutique" component={NotificationsBoutique} options={{ headerShown: false }}/>
           <Stack.Screen name="Messages" component={Messages} options={{ headerShown: false }}/>
+          <Stack.Screen name="AjouterProduits" component={AjouterProduits} options={{ headerShown: false }}/>
 
         </Stack.Navigator>
     </NavigationContainer>
