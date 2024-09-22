@@ -32,10 +32,10 @@ const BoutiqueNavigator = () => {
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="Accueil" component={AccueilBoutique} />
-      <Tab.Screen name="Produits" component={GestionProduits} />
-      <Tab.Screen name="Commandes" component={Commandes} />
-      <Tab.Screen name="Paramètres" component={Parametres} />
+      <Tab.Screen name="Accueil" component={AccueilBoutique} options={{ headerShown: false }}/>
+      <Tab.Screen name="Produits" component={GestionProduits} options={{ headerShown: false }}/>
+      <Tab.Screen name="Commandes" component={Commandes} options={{ headerShown: false }}/>
+      <Tab.Screen name="Paramètres" component={Parametres} options={{ headerShown: false }}/>
     </Tab.Navigator>
   );
 }

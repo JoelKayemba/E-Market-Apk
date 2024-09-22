@@ -1,91 +1,115 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Modal, ImageBackground, Image, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Modal, Image, ScrollView } from 'react-native';
 import Color from '../Styles/Color';
 import API_BASE_URL from '../ApiConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FontAwesome, AntDesign, Entypo, Ionicons } from '@expo/vector-icons'; 
+import { FontAwesome, AntDesign, Ionicons, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const ModalAjouter = ({ visible, closeModal, ajouterBoutique, openBoutique, devenirPrestataire }) => {
+const ModalAjouter = ({ visible, closeModal, ajouterBoutique, openBoutique, devenirPrestataire, openPrestataire }) => {
   const [boutiques, setBoutiques] = useState([]);
+  const [prestataires, setPrestataires] = useState([]); // Pour les comptes prestataires
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
   useEffect(() => {
-    const fetchBoutiques = async () => {
+    const fetchBoutiquesEtPrestataires = async () => {
       try {
         const idclient = await AsyncStorage.getItem('idclient');
 
         if (idclient) {
-          const response = await fetch(`${API_BASE_URL}/ownBoutique/boutiquesUtilisateur?idclient=${idclient}`);
-          const data = await response.json();
+          const [boutiqueResponse, prestataireResponse] = await Promise.all([
+            fetch(`${API_BASE_URL}/ownBoutique/boutiquesUtilisateur?idclient=${idclient}`),
+            //fetch(`${API_BASE_URL}/ownPrestataire/prestatairesUtilisateur?idclient=${idclient}`)
+          ]);
 
-          if (response.ok && data) {
-            setBoutiques(data);
+          const boutiquesData = await boutiqueResponse.json();
+          //const prestatairesData = await prestataireResponse.json();
+
+          if (boutiqueResponse.ok && boutiquesData) {
+            setBoutiques(boutiquesData);
           }
+
+          /*if (prestataireResponse.ok && prestatairesData) {
+            setPrestataires(prestatairesData);
+          }*/
         }
         setLoading(false);
       } catch (error) {
-        console.error('Erreur lors de la récupération des boutiques:', error);
+        console.error('Erreur lors de la récupération des boutiques et prestataires:', error);
         setLoading(false);
       }
     };
 
     if (visible) {
-      fetchBoutiques();
+      fetchBoutiquesEtPrestataires();
     }
   }, [visible]);
 
   return (
     <Modal
-      transparent={true}
+      transparent={false} // Le modal occupe tout l'espace
       visible={visible}
       onRequestClose={closeModal}
       animationType="slide"
     >
       <View style={styles.modalContainer}>
-        <ImageBackground
-          source={require('../assets/imageBack/head.jpg')} 
-          style={styles.modalBackground}
-        >
-          <TouchableOpacity onPress={closeModal} style={styles.closeIcon}>
-            <AntDesign name="close" size={30} color="red" />
-          </TouchableOpacity>
-          <View style={styles.overlay} />
+        {/* Bouton de fermeture */}
+        <TouchableOpacity onPress={closeModal} style={styles.closeIcon}>
+          <AntDesign name="close" size={24} color="black" />
+        </TouchableOpacity>
 
-          <View style={styles.modalContent}>
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-              {boutiques.length > 0 && (
-                <View style={styles.sectionContainer}>
-                  <Text style={styles.sectionTitle}>Vos Boutiques</Text>
-                  {boutiques.map((boutique, index) => (
-                    <TouchableOpacity key={index} style={styles.boutiqueContainer} onPress={() => openBoutique(boutique)}>
-                      <View style={styles.boutiqueImageContainer}>
-                        {boutique.image1 ? (
-                          <Image source={{ uri: `${API_BASE_URL}/${boutique.image1.replace(/\\/g, '/')}` }} style={styles.boutiqueImage} />
-                        ) : (
-                          <Entypo name="shop" size={24} color="black" />
-                        )}
-                      </View>
-                      <Text style={styles.boutiqueName}>{boutique.nom}</Text>
-                      <Ionicons name="chevron-forward-outline" size={24} color="white" style={styles.arrowIcon} />
-                    </TouchableOpacity>
-                  ))}
-                </View>
-              )}
-              <View style={styles.sectionContainer2}>
-                <TouchableOpacity style={styles.addButton} onPress={ajouterBoutique}>
-                  <FontAwesome name="plus-circle" size={20} color="white" style={styles.icon} />
-                  <Text style={styles.addButtonText}>Ajouter Boutique</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.addButton2} onPress={devenirPrestataire}>
-                  <FontAwesome name="user-plus" size={20} color="white" style={styles.icon} />
-                  <Text style={styles.addButtonText}>Devenir Prestataire</Text>
-                </TouchableOpacity>
+        <View style={styles.modalContent}>
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
+            {/* Boutiques existantes */}
+            {boutiques.length > 0 && (
+              <View style={styles.sectionContainer}>
+                <Text style={styles.sectionTitle}>Vos Boutiques</Text>
+                {boutiques.map((boutique, index) => (
+                  <TouchableOpacity key={index} style={styles.boutiqueContainer} onPress={() => openBoutique(boutique)}>
+                    <View style={styles.boutiqueImageContainer}>
+                      {boutique.image1 ? (
+                        <Image source={{ uri: `${API_BASE_URL}/${boutique.image1.replace(/\\/g, '/')}` }} style={styles.boutiqueImage} />
+                      ) : (
+                        <Entypo name="shop" size={24} color="gray" />
+                      )}
+                    </View>
+                    <Text style={styles.boutiqueName}>{boutique.nom}</Text>
+                    <Ionicons name="chevron-forward-outline" size={24} color="gray" />
+                  </TouchableOpacity>
+                ))}
               </View>
-            </ScrollView>
-          </View>
-        </ImageBackground>
+            )}
+
+            {/* Comptes Prestataires existants */}
+            {prestataires.length > 0 && (
+              <View style={styles.sectionContainer}>
+                <Text style={styles.sectionTitle}>Vos Comptes Prestataires</Text>
+                {prestataires.map((prestataire, index) => (
+                  <TouchableOpacity key={index} style={styles.boutiqueContainer} onPress={() => openPrestataire(prestataire)}>
+                    <View style={styles.boutiqueImageContainer}>
+                      <FontAwesome name="user-tie" size={24} color="gray" />
+                    </View>
+                    <Text style={styles.boutiqueName}>{prestataire.nom}</Text>
+                    <Ionicons name="chevron-forward-outline" size={24} color="gray" />
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+
+            {/* Boutons d'actions */}
+            <View style={styles.sectionContainer2}>
+              <TouchableOpacity style={styles.addButton} onPress={ajouterBoutique}>
+                <FontAwesome name="plus-circle" size={20} color="white" style={styles.icon} />
+                <Text style={styles.addButtonText}>Ajouter Boutique</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.addButton2} onPress={devenirPrestataire}>
+                <FontAwesome name="user-plus" size={20} color="white" style={styles.icon} />
+                <Text style={styles.addButtonText}>Devenir Prestataire</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </View>
       </View>
     </Modal>
   );
@@ -94,27 +118,12 @@ const ModalAjouter = ({ visible, closeModal, ajouterBoutique, openBoutique, deve
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalBackground: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'white',
   },
   modalContent: {
-    backgroundColor: 'transparent',
+    flex: 1,
     padding: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    width: '90%',
-    zIndex: 2,
   },
   scrollContainer: {
     flexGrow: 1,
@@ -122,29 +131,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sectionContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-    padding: 20,
-    borderRadius: 10,
-    marginBottom: 20,
-    alignItems: 'center',
+    paddingBottom: 20,
     width: '100%',
   },
   sectionTitle: {
-    color: 'white',
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
+    color: '#333',
+    marginBottom: 10,
   },
   boutiqueContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 15,
-    paddingBottom: 10, 
-    borderBottomWidth: 1, 
-    borderBottomColor: 'gray', 
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
     width: '100%',
-    justifyContent: 'space-between', // To align the arrow icon to the right
+    justifyContent: 'space-between',
   },
   boutiqueImageContainer: {
     width: 50,
@@ -154,56 +157,50 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
-    overflow: 'hidden',
   },
   boutiqueImage: {
     width: '100%',
     height: '100%',
+    borderRadius: 25,
     resizeMode: 'cover',
   },
   boutiqueName: {
-    fontSize: 18,
-    fontWeight: '300',
-    color: 'white',
-    flex: 1, 
-  },
-  arrowIcon: {
-    marginLeft: 10,
+    fontSize: 16,
+    color: '#333',
+    flex: 1,
   },
   addButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Color.bleu,
+    backgroundColor: '#0077b5',
     padding: 15,
     borderRadius: 10,
-    marginTop: 0,
+    marginBottom: 10,
     justifyContent: 'center',
-   
+    width: 300,
   },
   addButton2: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#9EABA2',
+    backgroundColor: '#555',
     padding: 15,
     borderRadius: 10,
-    marginTop: 10,
     justifyContent: 'center',
-    
-  },
-  icon: {
-    marginRight: 10,
+    width: 300,
   },
   addButtonText: {
     color: 'white',
-    fontSize: 18,
-    justifyContent:'center',
-    alignItems:'center'
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  icon: {
+    marginRight: 10,
   },
   closeIcon: {
     position: 'absolute',
     top: 40,
     right: 20,
-    zIndex: 3,
+    zIndex: 1,
   },
 });
 

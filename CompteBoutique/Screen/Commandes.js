@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
 import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Commandes = () => {
   // Exemple de données pour les commandes
@@ -32,14 +33,17 @@ const Commandes = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+     
       <Text style={styles.title}>Liste des Commandes</Text>
       <FlatList
         data={orders}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
-    </View>
+ 
+    </SafeAreaView>
+    
   );
 }
 
@@ -52,9 +56,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4f4f4',
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
+    textAlign:'center'
   },
   orderItem: {
     padding: 20,

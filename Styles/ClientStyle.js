@@ -35,31 +35,30 @@ const ClientStyle = StyleSheet.create({
         
       },
       containerCategorie: {
-        paddingStart:2,
-        paddingTop: 0,
-      },
-      iconeCategorie: {
-        height: '100%',
-        width: '100%'
-      },
-      cercleCategorie: {
-        width: 70,
-        height: 70,
-        borderRadius: 35,
+        paddingVertical: 2,
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        overflow: 'hidden',
-        marginRight: 10,
-        borderWidth: 3,
-        borderColor: 'gray',
+      },
+      categorieButton: {
+        backgroundColor: 'white',
+        padding: 10,
+        marginHorizontal: 5,
+        borderRadius: 50,
+        minWidth: 120,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 0,
       },
       categorieText: {
-        fontSize: 10,
-        fontFamily:'InriaSerif',
-        marginTop: 5, 
-        textAlign: 'center', 
-        width: 100, 
-        paddingRight:10
+        color: 'black',
+        fontSize: 16,
+        fontWeight: '600', 
+        textAlign: 'center',
+        fontFamily:'InriaSerif'
       },
       textPub: {
         flexDirection: 'row',
@@ -157,8 +156,8 @@ const ClientStyle = StyleSheet.create({
       imageProduit: {
         width: '100%',
         height: 170,
-        borderTopLeftRadius:20,
-        borderTopRightRadius:20,
+        borderTopLeftRadius:10,
+        borderTopRightRadius:10,
       },
       
       heartIconContainer: {
