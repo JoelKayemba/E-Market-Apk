@@ -16,7 +16,7 @@ const AjouterProduits = ({ navigation }) => {
     const [newColor, setNewColor] = useState('');
     const [newSize, setNewSize] = useState('');
 
-    const categoriesList = ['Electronique', 'habit', 'livre', 'Fourniture', 'Beauty', 'Jouer']; // Example categories
+    const categoriesList = ['Electronique', 'habit', 'livre', 'Fourniture', 'Beauty', 'Jouer','Chaussure',]; // recuperer les categories stocker dans la base de donnees
 
     const pickImages = async () => {
         try {

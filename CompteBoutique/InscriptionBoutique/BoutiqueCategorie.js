@@ -26,6 +26,7 @@ const BoutiqueCategorie = ({ nextStep, prevStep, handleChange, formData }) => {
     }
   };
 
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.label}>Sélectionnez les catégories :</Text>
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 50,
   },
+ 
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',

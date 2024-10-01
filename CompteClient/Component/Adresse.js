@@ -91,7 +91,7 @@ const Adresse = () => {
                 modalizeRef.current?.open();
             }, 1000); // 1 seconde avant l'apparition du Modalize
 
-            return () => clearTimeout(timer); // Nettoyage du timeout si le modal se ferme
+            return () => clearTimeout(timer); // Nettoyage du timeout si le modal se referme
         }
     }, [modalVisible]);
 

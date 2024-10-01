@@ -7,10 +7,9 @@ import { useNavigation } from '@react-navigation/native';
 import { Modalize } from 'react-native-modalize';
 import Color from '../../Styles/Color';
 import API_BASE_URL from '../../ApiConfig';
-import { useDispatch } from 'react-redux';
 
 const ModifierProfil = () => {
-    const [prenom, setPrenom] = useState('');
+    const [bio, setBio] = useState('');
     const [sexe, setSexe] = useState('Homme');
     const [dateNaissance, setDateNaissance] = useState('');
     const [email, setEmail] = useState('');
@@ -20,7 +19,6 @@ const ModifierProfil = () => {
     const [dateError, setDateError] = useState('');
     
     const modalizeRef = useRef(null); // Référence pour le modal
-
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -38,14 +36,12 @@ const ModifierProfil = () => {
                 const result = await response.json();
 
                 if (response.ok) {
-                    setPrenom(result.prenom || '');
+                    setBio(result.bio || '');
                     setSexe(result.sexe || 'Homme');
-                    // Si la date est au format 'YYYY-MM-DDTHH:MM:SS' renvoyer par la base de donnee, l'afficher en retirant tout ce caractere qui vient apres
-                    setDateNaissance(result.date_naissance.slice(0, 10));
-
+                    setDateNaissance(result.date_naissance ? result.date_naissance.slice(0, 10) : '');
                     setEmail(result.email || '');
-                    setNomUtilisateur(result.nom_utilisation || '');
-                    setNumeroTelephone(result.numero_telephone || '');  
+                    setNomUtilisateur(result.username || '');
+                    setNumeroTelephone(result.telephone || '');  
                 } else {
                     Alert.alert('Erreur', result.message || 'Erreur lors du chargement du profil.');
                 }
@@ -105,7 +101,7 @@ const ModifierProfil = () => {
             },
             body: JSON.stringify({
                 idclient,
-                prenom,
+                bio,
                 sexe,
                 date_naissance: dateNaissance,
                 email,
@@ -118,7 +114,6 @@ const ModifierProfil = () => {
         setLoading(false);
     
         if (response.ok) {
-            // Stocker le nom_utilisation et email dans AsyncStorage pour l'afficher dans la page profil tout de suite apres modification
             await AsyncStorage.setItem('nom', nomUtilisateur);
             await AsyncStorage.setItem('email', email);
     
@@ -128,7 +123,6 @@ const ModifierProfil = () => {
             Alert.alert('Erreur', result.message || 'Une erreur est survenue lors de la sauvegarde du profil.');
         }
     };
-    
 
     const handleDeleteAccount = async () => {
         modalizeRef.current?.open(); // Ouvrir le modal lors de la tentative de suppression
@@ -183,8 +177,8 @@ const ModifierProfil = () => {
                                     <Ionicons name="arrow-back" size={30} color={Color.orange} />
                                 </TouchableOpacity>
 
-                                <Text style={styles.label}>Nom et Prénom</Text>
-                                <TextInput style={styles.input} value={prenom} onChangeText={setPrenom} placeholderTextColor="#ccc" />
+                                <Text style={styles.label}>Bio</Text>
+                                <TextInput style={styles.input} value={bio} onChangeText={setBio} placeholderTextColor="#ccc" />
 
                                 <Text style={styles.label}>Sexe</Text>
                                 <View style={styles.pickerContainer}>
