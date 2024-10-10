@@ -133,7 +133,9 @@ const styles = StyleSheet.create({
     },
     profileHeader: {
         alignItems: 'center',
-        marginLeft: 50,
+        textAlign:'center',
+        justifyContent:'center',
+        marginLeft: 100,
     },
     profileImage: {
         width: 120,

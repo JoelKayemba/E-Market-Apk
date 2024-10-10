@@ -42,23 +42,21 @@ const ClientStyle = StyleSheet.create({
       },
       categorieButton: {
         backgroundColor: 'white',
-        padding: 10,
+        padding: 8,
         marginHorizontal: 5,
-        borderRadius: 50,
+        borderRadius: 10,
         minWidth: 120,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
+        
+        
         elevation: 0,
       },
       categorieText: {
         color: 'black',
-        fontSize: 16,
-        fontWeight: '600', 
+        fontSize: 15,
         textAlign: 'center',
-        fontFamily:'InriaSerif'
+        
       },
       textPub: {
         flexDirection: 'row',
