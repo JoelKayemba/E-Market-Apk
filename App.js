@@ -37,7 +37,6 @@ import InscriptionLoading from './CompteClient/Component/InscriptionLoading';
 import ModifierProfil from './CompteClient/Screen/ModifierProfil';
 import PageProfil from './CompteClient/Screen/PageProfil';
 import PaymentScreen from './CompteClient/Screen/PaymentScreen';
-import MapScreen from './CompteClient/Screen/MapScreen';
 import AjouterAnnonce from './CompteClient/Screen/AjouterAnnonce';
 import Notifications from './CompteClient/Screen/Notifications';
 import ChatScreen from './CompteClient/Screen/ChatScreen';
@@ -104,8 +103,7 @@ export default function App() {
             <Stack.Screen name="InscriptionLoading" component={InscriptionLoading} options={{ headerShown: false }}/>
             <Stack.Screen name="ModifierProfil" component={ModifierProfil} options={{ headerShown: false }}/>
             <Stack.Screen name="PageProfil" component={PageProfil} options={{ headerShown: false }}/>
-            <Stack.Screen name="PaymentScreen" component={PaymentScreen} options={{ headerShown: false }}/>
-            <Stack.Screen name="MapScreen" component={MapScreen} options={{ headerShown: false }}/>
+            <Stack.Screen name="PaymentScreen" component={PaymentScreen} options={{ headerShown: false }}/>         
             <Stack.Screen name="AjouterAnnonce" component={AjouterAnnonce} options={{ headerShown: false }}/>
             <Stack.Screen name="MessageList" component={MessageList} options={{ headerShown: false }}/>
             <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerShown: false }}/>

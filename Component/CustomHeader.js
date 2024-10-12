@@ -30,11 +30,10 @@ const CustomHeader = () => {
   };
 
   const openBoutique = (boutique) => {
-    console.log(boutique);
     navigation.navigate('BoutiqueNavigator', { boutique });
-    setModalVisible(false)
-    
+    setModalVisible(false);
   };
+  
 
   return (
     <View>

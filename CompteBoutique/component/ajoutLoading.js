@@ -1,33 +1,31 @@
-// Deconnexion.js
 import React, { useEffect } from 'react';
-import { StyleSheet, View, ActivityIndicator ,Text, Alert} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Mise à jour de l'importation
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View, ActivityIndicator, Text } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native'; // Mise à jour pour utiliser `useRoute`
 import Color from '../../Styles/Color';
 
 const AjoutLoading = () => {
   const navigation = useNavigation();
+  const route = useRoute(); // Utilisez `useRoute` pour obtenir les paramètres
 
+  // Récupérer les données de la boutique depuis les paramètres de navigation
+  const boutique = route.params?.boutique;
+  console.log('Données de la boutique :', JSON.stringify(boutique, null, 2));
   useEffect(() => {
-    const handleDeconnexion = async () => {
-      try {
-
-        // Attendre un court instant avant de rediriger
-        setTimeout(() => {
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'BoutiqueNavigator' }],
-              });
-        
-        }, 5000); // Délai pour afficher l'écran de chargement
-      } catch (error) {
-        console.error('Erreur lors de la déconnexion :', error);
-        // Gérer les erreurs ici si nécessaire
-      }
+    const handleRedirection = () => {
+      // Attendre un court instant avant de rediriger
+      setTimeout(() => {
+        navigation.reset({
+          index: 0,
+          routes: [{ 
+            name: 'BoutiqueNavigator', 
+            params: { boutique } // Transmettez les données de la boutique ici
+          }],
+        });
+      }, 5000); // Délai pour afficher l'écran de chargement
     };
 
-    handleDeconnexion();
-  }, [navigation]);
+    handleRedirection();
+  }, [navigation, boutique]);
 
   return (
     <View style={styles.container}>
@@ -52,4 +50,3 @@ const styles = StyleSheet.create({
 });
 
 export default AjoutLoading;
-

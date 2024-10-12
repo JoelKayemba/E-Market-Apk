@@ -1,99 +1,65 @@
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity, Image, ScrollView, Modal } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Image, Modal, StyleSheet, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import Color from '../../Styles/Color';
 
 const BoutiqueImages = ({ nextStep, prevStep, handleChange, formData }) => {
+  const images = Array.isArray(formData.images) ? formData.images : [];
+  
   const [selectedImage, setSelectedImage] = useState(null);
-  const [activeField, setActiveField] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(null);
 
-  const pickImage = async (fieldName) => {
+  useEffect(() => {
+    console.log('Images dans BoutiqueImages:', images); // Vérifiez les images à chaque changement
+  }, [images]);
+
+  const pickMultipleImages = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
       alert('Permission to access gallery is required!');
       return;
     }
+
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
+      allowsMultipleSelection: true,
       quality: 1,
     });
+
     if (!result.canceled) {
-      await handleChange(fieldName, result.assets[0].uri);  
+      const newImages = result.assets.map(asset => asset.uri);
+      handleChange([...images, ...newImages]);
     }
   };
 
-  const replaceImage = async () => {
-    if (!activeField) return;
-
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
-      alert('Permission to access gallery is required!');
-      return;
-    }
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.canceled) {
-      await handleChange(activeField, result.assets[0].uri);
-      setSelectedImage(null);
-      setActiveField(null);
-    }
+  const deleteImage = () => {
+    if (activeIndex === null) return;
+    const updatedImages = images.filter((_, index) => index !== activeIndex);
+    handleChange(updatedImages);
+    setSelectedImage(null);
+    setActiveIndex(null);
   };
 
-  const takePhoto = async (fieldName) => {
-    const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== 'granted') {
-      alert('Permission to access camera is required!');
-      return;
-    }
-    const result = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.canceled) {
-      await handleChange(fieldName, result.assets[0].uri);  
-      setSelectedImage(null); // Fermer le modal
-    }
-  };
-
-  const deleteImage = (fieldName) => {
-    handleChange(fieldName, null);
-    setSelectedImage(null); // Fermer le modal
-  };
-
-  const openImage = (uri, fieldName) => {
+  const openImage = (uri, index) => {
     setSelectedImage(uri);
-    setActiveField(fieldName);
+    setActiveIndex(index);
   };
 
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Images de la Boutique</Text>
-      <Text style={styles.subTitle}>Choisir les images liées à la boutique </Text>
+      <Text style={styles.subTitle}>Ajouter plusieurs images en une seule fois</Text>
+
       <View style={styles.imageGrid}>
-        {[1, 2, 3, 4].map((index) => {
-          const fieldName = `image${index}`;
-          return (
-            <TouchableOpacity
-              key={index}
-              style={styles.imageBox}
-              onPress={() => formData[fieldName] ? openImage(formData[fieldName], fieldName) : pickImage(fieldName)}
-            >
-              {formData[fieldName] ? (
-                <Image source={{ uri: formData[fieldName] }} style={styles.imageThumbnail} />
-              ) : (
-                <Ionicons name="image-outline" size={40} color="gray" />
-              )}
-            </TouchableOpacity>
-          );
-        })}
+        {images.map((item, index) => (
+          <TouchableOpacity key={index} onPress={() => openImage(item, index)} style={styles.imageBox}>
+            <Image source={{ uri: item }} style={styles.imageThumbnail} />
+          </TouchableOpacity>
+        ))}
+        <TouchableOpacity onPress={pickMultipleImages} style={styles.addImageBox}>
+          <Ionicons name="add" size={40} color="gray" />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.navButtons}>
@@ -111,20 +77,13 @@ const BoutiqueImages = ({ nextStep, prevStep, handleChange, formData }) => {
             <View style={styles.modalContent}>
               <Image source={{ uri: selectedImage }} style={styles.fullImage} />
               <View style={styles.modalActions}>
-                <TouchableOpacity onPress={() => deleteImage(activeField)} style={styles.actionButton}>
+                <TouchableOpacity onPress={deleteImage} style={styles.actionButton}>
                   <Ionicons name="trash-bin" size={24} color="red" />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={replaceImage} style={styles.actionButton}>
-                  <Ionicons name="image-outline" size={24} color="blue" />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => takePhoto(activeField)} style={styles.actionButton}>
-                  <Ionicons name="camera-outline" size={24} color="green" />
-                </TouchableOpacity>
               </View>
-              <TouchableOpacity onPress={() => setSelectedImage(null)} style={styles.fermer}>
+              <TouchableOpacity onPress={() => setSelectedImage(null)} style={styles.closeButton}>
                 <Text style={styles.textClose}>Fermer</Text>
               </TouchableOpacity>
-              
             </View>
           </View>
         </Modal>
@@ -137,7 +96,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    marginTop:50
+    marginTop: 50,
   },
   title: {
     fontSize: 24,
@@ -145,20 +104,17 @@ const styles = StyleSheet.create({
     color: Color.bleu,
     textAlign: 'center',
     marginBottom: 20,
-    marginTop: 20,
   },
-  subTitle:{
-    fontSize:24,
-    fontWeight:'1s00',
-    textAlign:'center',
-    marginBottom:10,
+  subTitle: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginBottom: 20,
     color: Color.bleu,
   },
-  
   imageGrid: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
   },
   imageBox: {
     width: 80,
@@ -168,11 +124,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
+    marginRight: 10,
+    marginBottom: 10,
   },
   imageThumbnail: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
+  },
+  addImageBox: {
+    width: 80,
+    height: 80,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   navButtons: {
     flexDirection: 'row',
@@ -223,18 +190,17 @@ const styles = StyleSheet.create({
   actionButton: {
     padding: 10,
   },
-  fermer:{
-    backgroundColor:Color.bleu,
-    width:100,
-    height:30,
-    borderRadius:10,
-    textAlign:'center',
-    justifyContent:'center',
-    alignItems:'center'
+  closeButton: {
+    backgroundColor: Color.bleu,
+    width: 100,
+    height: 30,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  textClose:{
-    color:'white'
-  }
+  textClose: {
+    color: 'white',
+  },
 });
 
 export default BoutiqueImages;

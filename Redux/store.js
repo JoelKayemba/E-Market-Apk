@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import boutiqueReducer from "./reducers/boutiqueReducer";
+import { boutiqueReducer } from "./reducers/boutiqueReducer";
 import clientReducer from "./reducers/clientReducer";
 import favoriteReducer from "./reducers/favoriteReducer";
 import mailReducer from "./reducers/mailReducer";
@@ -9,6 +9,7 @@ import prestataireReducer from "./reducers/prestataireReducer";
 import productReducer from "./reducers/productReducer";
 import profileReducer from "./reducers/profileReducer";
 import serviceReducer from "./reducers/serviceReducer";
+import MesBoutiquesReducer from "./reducers/MesBoutiquesReducer";
 
 const store = configureStore(
     {
@@ -23,6 +24,7 @@ const store = configureStore(
             notifications: notificationReducer,
             mails: mailReducer,
             favorite: favoriteReducer,
+            mesBoutiques: MesBoutiquesReducer
 
         }
     }

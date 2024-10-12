@@ -5,11 +5,14 @@ import AccueilBoutique from '../Screen/AccueilBoutique';
 import GestionProduits from '../Screen/GestionProduits';
 import Commandes from '../Screen/Commandes';
 import Parametres from '../Screen/Parametres';
-
+import { useRoute } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 const BoutiqueNavigator = () => {
+  const route = useRoute();
+  const { boutique } = route.params; // Récupérer l'objet boutique
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -32,10 +35,30 @@ const BoutiqueNavigator = () => {
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="Accueil" component={AccueilBoutique} options={{ headerShown: false }}/>
-      <Tab.Screen name="Produits" component={GestionProduits} options={{ headerShown: false }}/>
-      <Tab.Screen name="Commandes" component={Commandes} options={{ headerShown: false }}/>
-      <Tab.Screen name="Paramètres" component={Parametres} options={{ headerShown: false }}/>
+      <Tab.Screen 
+        name="Accueil" 
+        component={AccueilBoutique} 
+        initialParams={{ boutique }}  // Passer boutique en tant que paramètre initial
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen 
+        name="Produits" 
+        component={GestionProduits} 
+        initialParams={{ boutique }}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen 
+        name="Commandes" 
+        component={Commandes} 
+        initialParams={{ boutique }}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen 
+        name="Paramètres" 
+        component={Parametres} 
+        initialParams={{ boutique }}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 }

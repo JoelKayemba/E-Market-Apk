@@ -1,16 +1,18 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Header from '../component/Header'; // Assurez-vous que le chemin est correct
+import Header from '../component/Header'; 
+import { useRoute } from '@react-navigation/native';
 
-const AccueilBoutique = () => {
+const AccueilBoutique = ({route}) => {
 
   
+  const boutique = route.params?.boutique;
 
   return (
     <View style={styles.container}>
       {/* Ajout du Header */}
-      <Header  />
+      <Header  boutique={boutique}/>
 
       {/* Contenu de la page */}
       <ScrollView>
