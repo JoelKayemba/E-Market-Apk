@@ -54,7 +54,7 @@ const AjouterProduits = ({ navigation }) => {
     const handleAddProduct = () => {
         if (nomProduit && description && prix && categorie) {
             console.log('Produits ajouites:', { nomProduit, description, prix, categorie, images, colors, sizes });
-            // Add logic to handle the product data, such as sending it to a backend
+            
         } else {
             alert('Veuillez remplir tous les champs obligatoires.');
         }
