@@ -4,7 +4,7 @@ import { FontAwesome, AntDesign, Ionicons, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { fetchMesBoutiques} from '../Redux/actions/MesBoutiquesAction'
+import { fetchMesBoutiques } from '../Redux/actions/MesBoutiquesAction';
 import API_BASE_URL from '../ApiConfig';
 
 const ModalAjouter = ({ visible, closeModal, ajouterBoutique, openBoutique, devenirPrestataire }) => {

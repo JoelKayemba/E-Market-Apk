@@ -6,7 +6,9 @@ import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Header from '../component/Header';
 
-const GestionProduits = () => {
+const GestionProduits = ({route}) => {
+
+  const boutique = route.params?.boutique;
   
   const [products, setProducts] = useState([
     { id: '1', name: 'Produit 1', price: '$10', stock: 20 ,image: require('../../assets/Images/imagesProduits/fashion1.jpg')},
@@ -52,7 +54,7 @@ const GestionProduits = () => {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.secondContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('AjouterProduits')} style={styles.buttonAdd}>
+          <TouchableOpacity onPress={() => navigation.navigate('AjouterProduits', {boutique})} style={styles.buttonAdd}>
             <Octicons name="plus" size={20} color="white" style={styles.iconAdd} />
             <Text style={styles.textButtonAdd}>Ajouter un Produit</Text>
           </TouchableOpacity>

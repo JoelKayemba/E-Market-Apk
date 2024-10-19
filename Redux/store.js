@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { boutiqueReducer } from "./reducers/boutiqueReducer";
+import {boutiqueReducer} from "./reducers/boutiqueReducer";
 import clientReducer from "./reducers/clientReducer";
 import favoriteReducer from "./reducers/favoriteReducer";
 import mailReducer from "./reducers/mailReducer";
 import notificationReducer from "./reducers/notificationReducer";
 import orderReducer from "./reducers/orderReducer";
 import prestataireReducer from "./reducers/prestataireReducer";
-import productReducer from "./reducers/productReducer";
+import { productReducer } from "./reducers/productReducer";
 import profileReducer from "./reducers/profileReducer";
 import serviceReducer from "./reducers/serviceReducer";
 import MesBoutiquesReducer from "./reducers/MesBoutiquesReducer";
