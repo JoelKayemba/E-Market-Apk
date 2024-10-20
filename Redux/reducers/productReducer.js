@@ -46,13 +46,14 @@ import {
           loading: true,
           error: null,
         };
-      case ADD_PRODUCT_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          products: [...state.products, action.payload],
-          error: null,
-        };
+        case ADD_PRODUCT_SUCCESS:
+           
+            return {
+              ...state,
+              loading: false,
+              products: [...state.products, action.payload],
+              error: null,
+            };
       case ADD_PRODUCT_FAILURE:
         return {
           ...state,

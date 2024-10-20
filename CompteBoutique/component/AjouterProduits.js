@@ -7,6 +7,7 @@ import Color from '../../Styles/Color';
 import API_BASE_URL from '../../ApiConfig';
 import { addProduct } from '../../Redux/actions/productActions';
 
+
 const AjouterProduits = ({ route , navigation }) => {
     const { boutique } = route.params;
 
@@ -33,7 +34,7 @@ const AjouterProduits = ({ route , navigation }) => {
    
     
 
-    const defaultCategories = ['Electronique', 'Habit', 'Livre', 'Fourniture', 'Beauty', 'Jouer', 'Chaussure'];
+    const defaultCategories = ['Electronique', 'Habit', 'Livre', 'Fourniture', 'Beauty', 'Jouet', 'Chaussure'];
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -84,23 +85,41 @@ const AjouterProduits = ({ route , navigation }) => {
 
     const handleAddProduct = () => {
         if (nomProduit && description && prix && categorie) {
-            const productData = {
-                nomProduit,
-                description,
-                prix,
-                categorie,
-                images,
-                colors,
-                sizes,
-                idBoutique:boutique.idBoutique, 
-            };
-
+            const formData = new FormData();
+            formData.append('nom', nomProduit);
+            formData.append('description', description);
+            formData.append('prix', prix);
+            formData.append('idBoutique', boutique.idBoutique);
+    
+            // Envoyer la liste des catégories (y compris les nouvelles) sous forme de tableau
+            const categoriesArray = [categorie]; // Ajouter la catégorie sélectionnée
+            formData.append('categories', JSON.stringify(categoriesArray));  // Envoyer les catégories comme tableau JSON
+    
+            // Ajouter les images
+            images.forEach((image, index) => {
+                formData.append('images', {
+                    uri: image,
+                    type: 'image/jpeg',
+                    name: `image${index + 1}.jpg`,
+                });
+            });
+    
+            // Ajouter les couleurs et tailles si nécessaire
+            colors.forEach((color, index) => {
+                formData.append('colors[]', color);
+            });
+            sizes.forEach((size, index) => {
+                formData.append('sizes[]', size);
+            });
+    
             // Appel de l'action Redux pour ajouter un produit
-            dispatch(addProduct(productData));
+            dispatch(addProduct(formData, navigation));
         } else {
             alert('Veuillez remplir tous les champs obligatoires.');
         }
     };
+    
+    
 
     const addCategory = () => {
         if (newCategory.trim()) {

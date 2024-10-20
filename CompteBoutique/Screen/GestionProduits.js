@@ -1,46 +1,66 @@
-import { StyleSheet, Text, View, FlatList, TouchableOpacity , Image, SafeAreaView } from 'react-native';
-import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image, SafeAreaView, ActivityIndicator } from 'react-native';
+import React, { useEffect } from 'react';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 import Octicons from '@expo/vector-icons/Octicons';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import Header from '../component/Header';
+import { fetchProducts } from '../../Redux/actions/productActions';
+import API_BASE_URL from '../../ApiConfig';
 
-const GestionProduits = ({route}) => {
-
+const GestionProduits = ({ route }) => {
   const boutique = route.params?.boutique;
-  
-  const [products, setProducts] = useState([
-    { id: '1', name: 'Produit 1', price: '$10', stock: 20 ,image: require('../../assets/Images/imagesProduits/fashion1.jpg')},
-    { id: '2', name: 'Produit 2', price: '$15', stock: 5 ,image: require('../../assets/Images/imagesProduits/fashion2.jpg')},
-    { id: '3', name: 'Produit 3', price: '$20', stock: 0 ,image: require('../../assets/Images/imagesProduits/fashion3.jpg')},
-  ]);
-
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  const renderItem = ({ item }) => (
-    <View style={styles.productItem}>
-      <View style={styles.card}>
-        <View>
-          <Text style={styles.productName}>{item.name}</Text>
-          <Text>Prix: {item.price}</Text>
-          <Text>Stock: {item.stock}</Text>
-        </View>
-        <View>
-          <Image source={item.image} style={styles.image}/>
-        </View>
-      </View>
-      
-      <View style={styles.actions}>
-        <TouchableOpacity style={styles.editButton} onPress={() => editProduct(item.id)}>
-          <AntDesign name="edit" size={20} color="#4CAF50" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.deleteButton} onPress={() => deleteProduct(item.id)}>
-          <EvilIcons name="trash" size={30} color="red" />
-        </TouchableOpacity>
-      </View>
-    </View>
+  const { products, loading, error } = useSelector((state) => state.products);
+
+  // Utilisez `useFocusEffect` pour récupérer les produits à chaque fois que la page devient active
+  useFocusEffect(
+    React.useCallback(() => {
+      if (boutique?.idBoutique) {
+        dispatch(fetchProducts(boutique.idBoutique));
+      }
+    }, [dispatch, boutique])
   );
+
+  // Filtrer les produits pour supprimer les doublons (basé sur l'idProduit)
+  const uniqueProducts = products.filter(
+    (product, index, self) =>
+      index === self.findIndex((p) => p.idProduit === product.idProduit)
+  );
+
+  const renderItem = ({ item }) => {
+    const correctedImagePath = item.image ? item.image.replace(/\\/g, '/') : null;
+
+    return (
+      <View style={styles.productItem}>
+        <View style={styles.card}>
+          <View>
+            <Text style={styles.productName}>{item.nom}</Text>
+            <Text>Prix: {item.prix}</Text>
+            <Text>Description: {item.description}</Text>
+          </View>
+          <View>
+            {correctedImagePath ? (
+              <Image source={{ uri: `${API_BASE_URL}/${correctedImagePath}` }} style={styles.image} />
+            ) : (
+              <Text>Aucune image disponible</Text>
+            )}
+          </View>
+        </View>
+
+        <View style={styles.actions}>
+          <TouchableOpacity style={styles.editButton} onPress={() => editProduct(item.idProduit)}>
+            <AntDesign name="edit" size={20} color="#4CAF50" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.deleteButton} onPress={() => deleteProduct(item.idProduit)}>
+            <EvilIcons name="trash" size={30} color="red" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
 
   const editProduct = (id) => {
     // Logique pour éditer le produit
@@ -50,20 +70,43 @@ const GestionProduits = ({route}) => {
     // Logique pour supprimer le produit
   };
 
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text style={styles.loadingText}>Chargement des produits...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.secondContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('AjouterProduits', {boutique})} style={styles.buttonAdd}>
+          <TouchableOpacity onPress={() => navigation.navigate('AjouterProduits', { boutique })} style={styles.buttonAdd}>
             <Octicons name="plus" size={20} color="white" style={styles.iconAdd} />
             <Text style={styles.textButtonAdd}>Ajouter un Produit</Text>
           </TouchableOpacity>
-          <FlatList
-            data={products}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            showsVerticalScrollIndicator={false}
-          />
+          {uniqueProducts.length > 0 ? (
+            <FlatList
+              data={uniqueProducts}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.idProduit ? item.idProduit.toString() : Math.random().toString()} // Utiliser un fallback si l'id est undefined
+              showsVerticalScrollIndicator={false}
+            />
+          ) : (
+            <View style={styles.noProductsContainer}>
+              <Text style={styles.noProductsText}>Aucun produit trouvé</Text>
+            </View>
+          )}
         </View>
       </View>
     </SafeAreaView>
@@ -124,7 +167,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonAdd: {
-    backgroundColor: '#1E90FF', 
+    backgroundColor: '#1E90FF',
     padding: 12,
     alignItems: 'center',
     borderRadius: 8,
@@ -135,15 +178,43 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
-    elevation: 5, 
+    elevation: 5,
   },
   textButtonAdd: {
     color: 'white',
     fontSize: 16,
-    fontWeight: '600', 
+    fontWeight: '600',
     paddingLeft: 10,
   },
   iconAdd: {
     marginRight: 8,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#000',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    fontSize: 18,
+    color: 'red',
+  },
+  noProductsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noProductsText: {
+    fontSize: 18,
+    color: '#666',
   },
 });
