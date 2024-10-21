@@ -7,7 +7,7 @@ export const initialState = {
   description: '',
   idclient: null,
   images: [],
-  idBoutique: null,  // Ajoutez l'ID de la boutique ici
+  idBoutique: null, 
 };
 
 export const boutiqueReducer = (state = initialState, action) => {
@@ -27,7 +27,7 @@ export const boutiqueReducer = (state = initialState, action) => {
         ...state,
         images: action.images,
       };
-    case 'SET_BOUTIQUE_ID':  // Ajouter la gestion de l'ID de la boutique
+    case 'SET_BOUTIQUE_ID': 
       return {
         ...state,
         idBoutique: action.idBoutique,

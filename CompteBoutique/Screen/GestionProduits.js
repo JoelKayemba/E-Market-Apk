@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Octicons from '@expo/vector-icons/Octicons';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { fetchProducts } from '../../Redux/actions/productActions';
 import API_BASE_URL from '../../ApiConfig';
 
@@ -45,7 +46,7 @@ const GestionProduits = ({ route }) => {
             {correctedImagePath ? (
               <Image source={{ uri: `${API_BASE_URL}/${correctedImagePath}` }} style={styles.image} />
             ) : (
-              <Text>Aucune image disponible</Text>
+              <MaterialIcons name="error-outline" size={24} color="orange" />
             )}
           </View>
         </View>
