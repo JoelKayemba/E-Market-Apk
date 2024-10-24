@@ -10,6 +10,14 @@ export const ADD_PRODUCT_REQUEST = 'ADD_PRODUCT_REQUEST';
 export const ADD_PRODUCT_SUCCESS = 'ADD_PRODUCT_SUCCESS';
 export const ADD_PRODUCT_FAILURE = 'ADD_PRODUCT_FAILURE';
 
+export const UPDATE_PRODUCT_REQUEST = 'UPDATE_PRODUCT_REQUEST';
+export const UPDATE_PRODUCT_SUCCESS = 'UPDATE_PRODUCT_SUCCESS';
+export const UPDATE_PRODUCT_FAILURE = 'UPDATE_PRODUCT_FAILURE';
+
+export const DELETE_PRODUCT_REQUEST = 'DELETE_PRODUCT_REQUEST';
+export const DELETE_PRODUCT_SUCCESS = 'DELETE_PRODUCT_SUCCESS';
+export const DELETE_PRODUCT_FAILURE = 'DELETE_PRODUCT_FAILURE';
+
 
 export const fetchProducts = (idBoutique) => {
     return async (dispatch) => {
@@ -51,6 +59,7 @@ export const fetchProducts = (idBoutique) => {
         });
   
         const data = await response.json();
+        
       
         if (response.ok) {
           // Ajoutez le produit directement au state Redux
@@ -81,3 +90,72 @@ export const fetchProducts = (idBoutique) => {
     };
   };
   
+
+  export const updateProduct = (idProduit, formData, navigation) => {
+    return async (dispatch) => {
+      dispatch({ type: UPDATE_PRODUCT_REQUEST });
+  
+      try {
+        const response = await fetch(`${API_BASE_URL}/produit/modifierProduit/${idProduit}`, {
+          method: 'PUT',
+          body: formData,
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          dispatch({
+            type: UPDATE_PRODUCT_SUCCESS,
+            payload: data, // Les données du produit modifié
+          });
+  
+          alert('Produit modifié avec succès');
+        
+        } else {
+          dispatch({
+            type: UPDATE_PRODUCT_FAILURE,
+            payload: data.message || 'Échec de la modification du produit',
+          });
+        }
+      } catch (error) {
+        dispatch({
+          type: UPDATE_PRODUCT_FAILURE,
+          payload: error.message,
+        });
+      }
+    };
+  };
+
+
+  export const deleteProduct = (idProduit) => {
+    return async (dispatch) => {
+      dispatch({ type: DELETE_PRODUCT_REQUEST });
+  
+      try {
+        const response = await fetch(`${API_BASE_URL}/produit/supprimerProduit/${idProduit}`, {
+          method: 'DELETE',
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          dispatch({
+            type: DELETE_PRODUCT_SUCCESS,
+            payload: idProduit, // L'ID du produit supprimé
+          });
+  
+          alert('Produit supprimé avec succès');
+        } else {
+          dispatch({
+            type: DELETE_PRODUCT_FAILURE,
+            payload: data.message || 'Échec de la suppression du produit',
+          });
+        }
+      } catch (error) {
+        dispatch({
+          type: DELETE_PRODUCT_FAILURE,
+          payload: error.message,
+        });
+      }
+    };
+  };

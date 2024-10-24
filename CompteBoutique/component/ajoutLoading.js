@@ -9,7 +9,7 @@ const AjoutLoading = () => {
 
   // Récupérer les données de la boutique depuis les paramètres de navigation
   const boutique = route.params?.boutique;
-  console.log('Données de la boutique :', JSON.stringify(boutique, null, 2));
+ 
   useEffect(() => {
     const handleRedirection = () => {
       // Attendre un court instant avant de rediriger

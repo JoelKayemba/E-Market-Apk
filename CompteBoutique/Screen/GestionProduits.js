@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image, SafeAreaView, ActivityIndicator } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect , useState } from 'react';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Octicons from '@expo/vector-icons/Octicons';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { fetchProducts } from '../../Redux/actions/productActions';
+import { fetchProducts , deleteProduct } from '../../Redux/actions/productActions';
 import API_BASE_URL from '../../ApiConfig';
+import EditerProduit from '../component/EditerProduit';
 
 const GestionProduits = ({ route }) => {
   const boutique = route.params?.boutique;
@@ -15,6 +16,10 @@ const GestionProduits = ({ route }) => {
   const dispatch = useDispatch();
 
   const { products, loading, error } = useSelector((state) => state.products);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+
+  
 
   // Utilisez `useFocusEffect` pour récupérer les produits à chaque fois que la page devient active
   useFocusEffect(
@@ -32,8 +37,11 @@ const GestionProduits = ({ route }) => {
   );
 
   const renderItem = ({ item }) => {
-    const correctedImagePath = item.image ? item.image.replace(/\\/g, '/') : null;
-
+    // Vérifier si le tableau d'images existe et s'il contient des images
+    const correctedImagePath = (item.images && item.images.length > 0)
+      ? item.images[0].replace(/\\/g, '/') // Prendre la première image et corriger le chemin
+      : null;
+  
     return (
       <View style={styles.productItem}>
         <View style={styles.card}>
@@ -50,26 +58,32 @@ const GestionProduits = ({ route }) => {
             )}
           </View>
         </View>
-
+  
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.editButton} onPress={() => editProduct(item.idProduit)}>
+          <TouchableOpacity style={styles.editButton} onPress={() => openEditModal(item)}>
             <AntDesign name="edit" size={20} color="#4CAF50" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.deleteButton} onPress={() => deleteProduct(item.idProduit)}>
+          <TouchableOpacity style={styles.deleteButton} onPress={() => dispatch(deleteProduct(item.idProduit))}>
             <EvilIcons name="trash" size={30} color="red" />
           </TouchableOpacity>
         </View>
       </View>
     );
   };
+  
+  
+  const openEditModal = (product) => {
+    setSelectedProduct({ ...product, boutique });
+    setEditModalVisible(true);
+  };
+  
 
-  const editProduct = (id) => {
-    // Logique pour éditer le produit
+  const closeEditModal = () => {
+    setEditModalVisible(false);
   };
 
-  const deleteProduct = (id) => {
-    // Logique pour supprimer le produit
-  };
+ 
+  
 
   if (loading) {
     return (
@@ -109,6 +123,13 @@ const GestionProduits = ({ route }) => {
             </View>
           )}
         </View>
+
+        <EditerProduit
+          visible={editModalVisible}
+          onClose={closeEditModal}
+          product={selectedProduct}
+          boutique={boutique}
+        />
       </View>
     </SafeAreaView>
   );
