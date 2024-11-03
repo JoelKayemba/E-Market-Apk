@@ -68,7 +68,7 @@ const AccueilBoutique = ({ route, navigation }) => {
         </TouchableOpacity>
 
         {/* Section des Adresses */}
-        <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Adresses', { boutique })}>
+        <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('AdresseBoutique', { boutique })}>
           <Ionicons name="location-outline" size={24} color="#FF5722" style={styles.icon} />
           <View style={styles.textContainer}>
             <Text style={styles.title}>Adresses</Text>

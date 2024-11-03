@@ -64,6 +64,7 @@ import Parametres from './CompteBoutique/Screen/Parametres';
 import AjouterProduits from './CompteBoutique/component/AjouterProduits';
 import Devises from './CompteBoutique/component/Devises';
 import AddAnnonce from './CompteBoutique/component/AddAnnonce';
+import AdresseBoutique from './CompteBoutique/component/AdresseBoutique';
 import { Provider } from 'react-redux';
 
 
@@ -133,6 +134,7 @@ export default function App() {
             <Stack.Screen name="AjouterProduits" component={AjouterProduits} options={{ headerShown: false }}/>
             <Stack.Screen name="Devises" component={Devises} options={{ headerShown: false }}/>
             <Stack.Screen name="AddAnnonce" component={AddAnnonce} options={{ headerShown: false }}/>
+            <Stack.Screen name="AdresseBoutique" component={AdresseBoutique} options={{ headerShown: false }}/>
 
           </Stack.Navigator>
       </NavigationContainer>
