@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image, SafeAreaView, ActivityIndicator } from 'react-native';
-import React, { useEffect , useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, FlatList, TouchableOpacity, Image, SafeAreaView, ActivityIndicator, StyleSheet } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Octicons from '@expo/vector-icons/Octicons';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { fetchProducts , deleteProduct } from '../../Redux/actions/productActions';
+import { fetchProducts, deleteProduct } from '../../Redux/actions/productActions';
 import API_BASE_URL from '../../ApiConfig';
 import EditerProduit from '../component/EditerProduit';
 
@@ -16,12 +16,10 @@ const GestionProduits = ({ route }) => {
   const dispatch = useDispatch();
 
   const { products, loading, error } = useSelector((state) => state.products);
+  const [searchText, setSearchText] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [editModalVisible, setEditModalVisible] = useState(false);
 
-  
-
-  // Utilisez `useFocusEffect` pour récupérer les produits à chaque fois que la page devient active
   useFocusEffect(
     React.useCallback(() => {
       if (boutique?.idBoutique) {
@@ -30,25 +28,50 @@ const GestionProduits = ({ route }) => {
     }, [dispatch, boutique])
   );
 
-  // Filtrer les produits pour supprimer les doublons (basé sur l'idProduit)
+  useEffect(() => {
+    if (!editModalVisible && boutique?.idBoutique) {
+      dispatch(fetchProducts(boutique.idBoutique));
+    }
+  }, [editModalVisible, dispatch, boutique]);
+
   const uniqueProducts = products.filter(
-    (product, index, self) =>
-      index === self.findIndex((p) => p.idProduit === product.idProduit)
+    (product, index, self) => index === self.findIndex((p) => p.idProduit === product.idProduit)
   );
 
+  const filteredProducts = uniqueProducts.filter((product) =>
+    product.nom.toLowerCase().includes(searchText.toLowerCase()) ||
+    product.description.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  const openEditModal = (product) => {
+    setSelectedProduct({ ...product, boutique });
+    setEditModalVisible(true);
+  };
+
+  const closeEditModal = () => {
+    setEditModalVisible(false);
+  };
+
+  const MAX_DESCRIPTION_LENGTH = 15;
+  const truncateDescription = (description) => {
+    if (description.length > MAX_DESCRIPTION_LENGTH) {
+      return `${description.substring(0, MAX_DESCRIPTION_LENGTH)}...`;
+    }
+    return description;
+  };
+
   const renderItem = ({ item }) => {
-    // Vérifier si le tableau d'images existe et s'il contient des images
     const correctedImagePath = (item.images && item.images.length > 0)
-      ? item.images[0].replace(/\\/g, '/') // Prendre la première image et corriger le chemin
+      ? item.images[0].replace(/\\/g, '/')
       : null;
-  
+
     return (
       <View style={styles.productItem}>
         <View style={styles.card}>
           <View>
             <Text style={styles.productName}>{item.nom}</Text>
             <Text>Prix: {item.prix}</Text>
-            <Text>Description: {item.description}</Text>
+            <Text>Description: {truncateDescription(item.description)}</Text>
           </View>
           <View>
             {correctedImagePath ? (
@@ -58,7 +81,7 @@ const GestionProduits = ({ route }) => {
             )}
           </View>
         </View>
-  
+
         <View style={styles.actions}>
           <TouchableOpacity style={styles.editButton} onPress={() => openEditModal(item)}>
             <AntDesign name="edit" size={20} color="#4CAF50" />
@@ -70,20 +93,6 @@ const GestionProduits = ({ route }) => {
       </View>
     );
   };
-  
-  
-  const openEditModal = (product) => {
-    setSelectedProduct({ ...product, boutique });
-    setEditModalVisible(true);
-  };
-  
-
-  const closeEditModal = () => {
-    setEditModalVisible(false);
-  };
-
- 
-  
 
   if (loading) {
     return (
@@ -105,16 +114,25 @@ const GestionProduits = ({ route }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Rechercher un produit..."
+            value={searchText}
+            onChangeText={(text) => setSearchText(text)}
+          />
+        </View>
+
         <View style={styles.secondContainer}>
           <TouchableOpacity onPress={() => navigation.navigate('AjouterProduits', { boutique })} style={styles.buttonAdd}>
             <Octicons name="plus" size={20} color="white" style={styles.iconAdd} />
             <Text style={styles.textButtonAdd}>Ajouter un Produit</Text>
           </TouchableOpacity>
-          {uniqueProducts.length > 0 ? (
+          {filteredProducts.length > 0 ? (
             <FlatList
-              data={uniqueProducts}
+              data={filteredProducts}
               renderItem={renderItem}
-              keyExtractor={(item) => item.idProduit ? item.idProduit.toString() : Math.random().toString()} // Utiliser un fallback si l'id est undefined
+              keyExtractor={(item) => item.idProduit ? item.idProduit.toString() : Math.random().toString()}
               showsVerticalScrollIndicator={false}
             />
           ) : (
@@ -145,6 +163,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f7f9fc',
+  },
+  searchContainer: {
+    padding: 10,
+    
+    marginHorizontal:10
+    
+  },
+  searchInput: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 8,
+    
   },
   secondContainer: {
     padding: 20,
