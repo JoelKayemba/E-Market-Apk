@@ -10,6 +10,8 @@ import { productReducer } from "./reducers/productReducer";
 import profileReducer from "./reducers/profileReducer";
 import serviceReducer from "./reducers/serviceReducer";
 import MesBoutiquesReducer from "./reducers/MesBoutiquesReducer";
+import annonceReducer from "./reducers/annonceReducer";
+import deviseReducer from "./reducers/deviseReducer";
 
 const store = configureStore(
     {
@@ -24,7 +26,9 @@ const store = configureStore(
             notifications: notificationReducer,
             mails: mailReducer,
             favorite: favoriteReducer,
-            mesBoutiques: MesBoutiquesReducer
+            mesBoutiques: MesBoutiquesReducer,
+            annonces: annonceReducer,
+            devise: deviseReducer,
 
         }
     }

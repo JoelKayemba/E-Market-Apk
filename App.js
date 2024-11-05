@@ -8,7 +8,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import store from './Redux/store';
 
 
-
+// import des differentes pages de navigation
 import Bienvenue from './Screen/Connexion/Bienvenue';
 import Connexion from './Screen/Connexion/Connexion';
 import MotDePasseOublie from './Screen/Connexion/MotDePasseOublie';
@@ -65,6 +65,8 @@ import AjouterProduits from './CompteBoutique/component/AjouterProduits';
 import Devises from './CompteBoutique/component/Devises';
 import AddAnnonce from './CompteBoutique/component/AddAnnonce';
 import AdresseBoutique from './CompteBoutique/component/AdresseBoutique';
+
+// import du provider
 import { Provider } from 'react-redux';
 
 
