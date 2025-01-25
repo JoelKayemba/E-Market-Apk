@@ -33,7 +33,7 @@ const AjouterProduits = ({ route , navigation }) => {
     
    
     
-
+    // recuperer les categories deja existantes, s'il n'y en a pas, mettre dans l'API de categories par defaut 
     const defaultCategories = ['Electronique', 'Habit', 'Livre', 'Fourniture', 'Beauty', 'Jouet', 'Chaussure'];
 
     useEffect(() => {
